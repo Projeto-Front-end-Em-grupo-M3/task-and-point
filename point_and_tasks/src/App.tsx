@@ -1,16 +1,15 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles } from "./styles/GlobalStyles";
+import { AppRoutes } from "./routes/routes";
 
 function App() {
   return (
-    <div>
-      Point and tasks
+    <>
       <GlobalStyles />
+      <AppRoutes />
       <ToastContainer />
-    </div>
+    </>
   );
 }
 

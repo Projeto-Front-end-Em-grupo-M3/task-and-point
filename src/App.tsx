@@ -1,17 +1,14 @@
 import { GlobalStyles } from "./styles/GlobalStyles";
+import { AppRoutes } from "./routes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import { AdminContextProvider } from "./contexts/AdminContext";
-import Router from "./routes";
-
-function App() {
+export function App() {
   return (
     <>
       <GlobalStyles />
-      <AdminContextProvider>
-        <Router />
-      </AdminContextProvider>
+      <AppRoutes />
+      <ToastContainer />
     </>
   );
 }
-
-export default App;

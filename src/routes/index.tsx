@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import AdminDashboard from "../pages/AdminDashboard";
+import AdminDashboard from "../pages/adminDashboard";
 
 export const AppRoutes = () => {
   return (

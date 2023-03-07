@@ -11,6 +11,8 @@ interface IAdminContext {
   setAdm: React.Dispatch<SetStateAction<IUser | null>>;
   employeSearch: IUser[];
   setEmployeSearch: React.Dispatch<SetStateAction<IUser[]>>;
+  modal: boolean;
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IUser {
@@ -30,9 +32,9 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [adm, setAdm] = useState<IUser | null>(null);
   const [employeSearch, setEmployeSearch] = useState<IUser[]>([]);
+  const [modal, setModal] = useState<boolean>(false);
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4MjAzNTg3LCJleHAiOjE2NzgyMDcxODcsInN1YiI6IjEifQ.waJg47SD3yPJxhfccdqAreio7-0OOj9B7MP_qMxAMfY";
-
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4MjIwNzQ1LCJleHAiOjE2NzgyMjQzNDUsInN1YiI6IjEifQ.sx1MuuXNtiqU0H2vDfa_n6dZV5rZCXJKI0FzYtNxYKU";
   useEffect(() => {
     getAllUsers();
     getAdminInfo(1);
@@ -72,6 +74,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setAdm,
         employeSearch,
         setEmployeSearch,
+        modal,
+        setModal,
       }}
     >
       {children}

@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 import { AdminContext } from "../../contexts/AdminContext";
 import { toast } from "react-toastify";
-import { StyledDash } from "./styles";
 import Header from "../../components/Header";
 import MainModal from "../../components/MainModal";
+import { StyledDash } from "./styles";
 
 const AdminDashboard = () => {
-  const { adm, users, setUsers, employeSearch, setModal, modal } =
+  const { adm, users, setUsers, employeSearch, setModal, modal, setIdButton } =
     useContext(AdminContext);
 
   const [searchValue, setSearchValue] = useState("");
@@ -36,8 +36,9 @@ const AdminDashboard = () => {
     setSearchValue("");
   };
 
-  function openModal() {
+  function openModal(id: any) {
     setModal(true);
+    setIdButton(id);
   }
 
   return (
@@ -86,7 +87,7 @@ const AdminDashboard = () => {
                     <p>{user.email}</p>
                     <p>{user.office}</p>
                     <span>{user.shift}</span>
-                    <button type="button" onClick={openModal}>
+                    <button type="button" onClick={() => openModal(user.id)}>
                       Ver mais
                     </button>
                   </li>

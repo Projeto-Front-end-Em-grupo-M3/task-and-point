@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router";
+import { Routes, Route } from "react-router-dom";
+import AdminDashboard from "../pages/adminDashboard";
 
 export const AppRoutes = () => {
   return (
@@ -9,10 +10,7 @@ export const AppRoutes = () => {
         path="/userDashboard"
         element={"Colocar a pagina dashboard de usuario"}
       />
-      <Route
-        path="/adminDashboard"
-        element={"Colocar a pagina dashboard do administrador"}
-      />
+      <Route path="/adminDashboard" element={<AdminDashboard />} />
     </Routes>
   );
 };

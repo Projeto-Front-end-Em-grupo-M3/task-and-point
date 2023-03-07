@@ -71,5 +71,4 @@ button {
   --font-primary: "Inter", sans-serif;
 }
 
-
 `;

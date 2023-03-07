@@ -6,11 +6,11 @@ import { IDefaultProps } from "./userContext";
 interface IAdminContext {
   users: IUser[] | null;
   setUsers: React.Dispatch<SetStateAction<IUser[]>>;
-  /*   getAllUsers: () => Promise<void>;
-   */
   getAdminInfo: (id: number) => Promise<void>;
   adm: IUser | null;
   setAdm: React.Dispatch<SetStateAction<IUser | null>>;
+  employeSearch: IUser[];
+  setEmployeSearch: React.Dispatch<SetStateAction<IUser[]>>;
 }
 
 export interface IUser {
@@ -26,11 +26,12 @@ export interface IUser {
 export const AdminContext = createContext({} as IAdminContext);
 
 export const AdminContextProvider = ({ children }: IDefaultProps) => {
-  /*   const token = localStorage.getItem("@task-and-point-token");
-   */ const [users, setUsers] = useState<IUser[]>([]);
+  /*   const token = localStorage.getItem("@task-and-point-token");*/
+  const [users, setUsers] = useState<IUser[]>([]);
   const [adm, setAdm] = useState<IUser | null>(null);
+  const [employeSearch, setEmployeSearch] = useState<IUser[]>([]);
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4MTQ2NzE5LCJleHAiOjE2NzgxNTAzMTksInN1YiI6IjEifQ.tQn9r9zjL6OmlNcBRdV3eSJPEEfdpZvwb_hhqZ77K3A";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4MjAzNTg3LCJleHAiOjE2NzgyMDcxODcsInN1YiI6IjEifQ.waJg47SD3yPJxhfccdqAreio7-0OOj9B7MP_qMxAMfY";
 
   useEffect(() => {
     getAllUsers();
@@ -41,7 +42,11 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     try {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       const response = await api.get("/users");
-      setUsers(response.data);
+      const employes = response.data.filter(
+        (employe: { id: number }) => employe.id != 1
+      );
+      setUsers(employes);
+      setEmployeSearch(employes);
     } catch (error) {
       toast.error("Algo deu errado, tente novamente mais tarde");
     }
@@ -61,10 +66,12 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     <AdminContext.Provider
       value={{
         users,
+        adm,
         setUsers,
         getAdminInfo,
-        adm,
         setAdm,
+        employeSearch,
+        setEmployeSearch,
       }}
     >
       {children}

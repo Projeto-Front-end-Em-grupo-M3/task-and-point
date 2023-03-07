@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
+import AdminDashboard from "../pages/AdminDashboard";
 
 export const AppRoutes = () => {
   return (
@@ -10,10 +10,7 @@ export const AppRoutes = () => {
         path="/userDashboard"
         element={"Colocar a pagina dashboard de usuario"}
       />
-      <Route
-        path="/adminDashboard"
-        element={"Colocar a pagina dashboard do administrador"}
-      />
+      <Route path="/adminDashboard" element={<AdminDashboard />} />
     </Routes>
   );
 };

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { SetStateAction, useContext, useState } from "react";
 import { AdminContext, ITasks } from "../../contexts/AdminContext";
 import { toast } from "react-toastify";
 import Header from "../../components/Header";
@@ -7,6 +7,7 @@ import { StyledDash } from "./styles";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import Input from "../../components/Input";
 
 const schema = yup
   .object({
@@ -29,6 +30,7 @@ const AdminDashboard = () => {
     createTask,
     deleteTask,
     tasksSearch,
+    logout,
   } = useContext(AdminContext);
 
   const {
@@ -106,12 +108,17 @@ const AdminDashboard = () => {
             <span>Gerencie as atividades da equipe</span>
           </div>
           <div>
-            <input
+            <Input
               type="text"
-              placeholder="Procurar funcionário"
+              label="Nome do funcionário"
+              register={register("name")}
+              error={errors.name}
               value={searchValue}
-              onChange={(event) => setSearchValue(event.target.value)}
+              onChange={(event: {
+                target: { value: SetStateAction<string> };
+              }) => setSearchValue(event.target.value)}
             />
+
             <button type="submit" onClick={search}>
               Pesquisar
             </button>
@@ -153,19 +160,26 @@ const AdminDashboard = () => {
           <div>
             <label htmlFor="users">Escolha o funcionário</label>
             <select id="users" {...register("name")}>
+              <option value="">Escolha o funcionário</option>
               {users?.map((user) => {
-                return <option value={user.name}>{user.name}</option>;
+                return (
+                  <option value={user.name} key={crypto.randomUUID()}>
+                    {user.name}
+                  </option>
+                );
               })}
             </select>
 
-            <label htmlFor="task">Escreva a tarefa</label>
-            <input
+            <Input
               type="text"
-              id="task"
-              placeholder="Escreva a tarefa"
-              {...register("task")}
+              label="Escreva a tarefa"
+              register={register("task")}
+              error={errors.task}
+              value={searchValue}
+              onChange={(event: {
+                target: { value: SetStateAction<string> };
+              }) => setSearchValue(event.target.value)}
             />
-            <span>{errors.task?.message}</span>
           </div>
           <button type="submit">Criar</button>
         </form>
@@ -189,7 +203,7 @@ const AdminDashboard = () => {
                 );
               })
             ) : (
-              <h1>Nenhuma atividade atribuída</h1>
+              <p>Nenhuma atividade atribuída</p>
             )}
           </ul>
         </section>

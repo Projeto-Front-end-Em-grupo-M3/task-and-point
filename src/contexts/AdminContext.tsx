@@ -1,4 +1,5 @@
 import { createContext, SetStateAction, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
 import { IDefaultProps } from "./userContext";
@@ -24,6 +25,7 @@ interface IAdminContext {
   deleteUser: (id: number) => Promise<void>;
   getPointsUser: (id: number) => void;
   pointsUser: IPoints[];
+  logout: () => void;
 }
 
 export interface IUser {
@@ -52,7 +54,7 @@ export interface IPoints {
 export const AdminContext = createContext({} as IAdminContext);
 
 export const AdminContextProvider = ({ children }: IDefaultProps) => {
-  /*   const token = localStorage.getItem("@task-and-point-token");*/
+  const token = localStorage.getItem("@TaskandPoint:token");
   const [users, setUsers] = useState<IUser[]>([]);
   const [adm, setAdm] = useState<IUser | null>(null);
   const [employeSearch, setEmployeSearch] = useState<IUser[]>([]);
@@ -63,8 +65,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
   const [allPoints, setAllPoints] = useState<IPoints[]>([]);
   const [pointsUser, setPointsUser] = useState<IPoints[]>([]);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4Mzc1NTI5LCJleHAiOjE2NzgzNzkxMjksInN1YiI6IjEifQ.B-S8aP5Mr9kjInS6zZZQ6RRjQO3cshsRakwGNxXHbdk";
+  const navigate = useNavigate();
+
   useEffect(() => {
     getAllUsers();
     getAdminInfo(1);
@@ -72,90 +74,133 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
   }, []);
 
   const getAllUsers = async () => {
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await api.get("/users");
-      const employes = response.data.filter(
-        (employe: { id: number }) => employe.id != 1
-      );
-      setUsers(employes);
-      setEmployeSearch(employes);
-    } catch (error) {
-      toast.error("Algo deu errado, tente novamente mais tarde");
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+          token
+        )}`;
+        const response = await api.get("/users");
+        const employes = response.data.filter(
+          (employe: { id: number }) => employe.id != 1
+        );
+        setUsers(employes);
+        setEmployeSearch(employes);
+      } catch (error) {
+        toast.error("Algo deu errado, tente novamente mais tarde");
+      }
     }
   };
 
   const getAdminInfo = async (id: number) => {
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await api.get(`/users/${id}`);
-      setAdm(response.data);
-    } catch (error) {
-      toast.error("Algo deu errado, tente novamente mais tarde");
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+          token
+        )}`;
+        const response = await api.get(`/users/${id}`);
+        setAdm(response.data);
+      } catch (error) {
+        toast.error("Algo deu errado, tente novamente mais tarde");
+      }
     }
   };
 
   const getTaskById = async (id: number) => {
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await api.get(`/tasks/${id}`);
-      setTasks(response.data.taskList);
-    } catch (error) {
-      toast.error("Algo deu errado, tente novamente mais tarde");
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+          token
+        )}`;
+        const response = await api.get(`/tasks/${id}`);
+        setTasks(response.data.taskList);
+      } catch (error) {
+        toast.error("Algo deu errado, tente novamente mais tarde");
+      }
     }
   };
 
   const getAllTasks = async () => {
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await api.get(`/tasks`);
-      setTasks(response.data);
-      setTasksSearch(response.data);
-    } catch (error) {
-      toast.error("error");
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+          token
+        )}`;
+        const response = await api.get(`/tasks`);
+        setTasks(response.data);
+        setTasksSearch(response.data);
+      } catch (error) {
+        toast.error("Tente novamente");
+      }
     }
   };
 
   const createTask = async (data: ITasks) => {
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await api.post(`/tasks`, data);
-      setTasks([...tasks, response.data]);
-      toast.success("Atividade cadastrada");
-    } catch (error) {}
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+          token
+        )}`;
+        const response = await api.post(`/tasks`, data);
+        setTasks([...tasks, response.data]);
+        toast.success("Atividade cadastrada");
+      } catch (error) {
+        toast.error("Tente novamente");
+      }
+    }
   };
 
   const deleteTask = async (id: number) => {
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      await api.delete(`/tasks/${id}`);
-      const newTasks = tasks.filter((task) => task.id !== id);
-      setTasks(newTasks);
-      toast.success("Atividade excluída");
-    } catch (error) {}
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+          token
+        )}`;
+        await api.delete(`/tasks/${id}`);
+        const newTasks = tasks.filter((task) => task.id !== id);
+        setTasks(newTasks);
+        toast.success("Atividade excluída");
+      } catch (error) {
+        toast.error("Tente novamente");
+      }
+    }
   };
 
   const deleteUser = async (id: number) => {
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      await api.delete(`/users/${id}`);
-      const newUsers = users.filter((user) => user.id !== id);
-      setUsers(newUsers);
-      setModal(false);
-      toast.warning("usuário excluído");
-    } catch (error) {
-      toast.error("Tente novamente");
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+          token
+        )}`;
+        await api.delete(`/users/${id}`);
+        const newUsers = users.filter((user) => user.id !== id);
+        setUsers(newUsers);
+        setModal(false);
+        toast.warning("usuário excluído");
+      } catch (error) {
+        toast.error("Tente novamente");
+      }
     }
   };
 
   const getAllPoints = async () => {
-    try {
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await api.get(`/points/`);
-      setAllPoints(response.data);
-    } catch (error) {
-      toast.error("Tente novamente");
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+          token
+        )}`;
+        const response = await api.get(`/points/`);
+        setAllPoints(response.data);
+      } catch (error) {
+        toast.error("Tente novamente");
+      }
     }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("@TaskandPoint:token");
+    localStorage.removeItem("@TaskandPoint:isAdmin");
+    toast.warning("Você saiu");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -190,6 +235,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         deleteUser,
         getPointsUser,
         pointsUser,
+        logout,
       }}
     >
       {children}

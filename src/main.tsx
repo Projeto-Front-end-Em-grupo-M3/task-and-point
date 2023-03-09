@@ -7,12 +7,12 @@ import { UserContextProvider } from "./contexts/userContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <AdminContextProvider>
-      <UserContextProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+      <AdminContextProvider>
+        <UserContextProvider>
           <App />
-        </BrowserRouter>
-      </UserContextProvider>
-    </AdminContextProvider>
+        </UserContextProvider>
+      </AdminContextProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

@@ -48,7 +48,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
   const [tasks, setTasks] = useState<ITasks[]>([]);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4MjMxMjQ2LCJleHAiOjE2NzgyMzQ4NDYsInN1YiI6IjEifQ.DHJi7p0Ylt4LkKJFDNj4b3kD_sHW3PApSbaAdwv3KV4";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4Mjk0NTc3LCJleHAiOjE2NzgyOTgxNzcsInN1YiI6IjEifQ.6qdeJRCET2GvNhZLONTMkaZsz-QuzmTl40PbJohjWDg";
   useEffect(() => {
     getAllUsers();
     getAdminInfo(1);
@@ -80,11 +80,13 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     }
   };
 
-  const getTaskById = async (id: number) => {
+  const getTaskById = async (/* id: number */) => {
     try {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await api.get(`/tasks/${id}`);
-      console.log(response.data.taskList);
+      /*       const response = await api.get(`/tasks/${id}`);
+       */ const response = await api.get(`/tasks/`);
+      console.log(response.data);
+      /*  console.log(response.data.taskList); */
       /*       setTasks(response.data.taskList);
        */
     } catch (error) {
@@ -92,6 +94,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
        */
     }
   };
+  getTaskById();
 
   return (
     <AdminContext.Provider

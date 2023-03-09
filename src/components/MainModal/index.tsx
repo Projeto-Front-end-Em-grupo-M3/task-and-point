@@ -11,8 +11,9 @@ const MainModal = () => {
   };
 
   const seeTasks = (id: number) => {
-    getTaskById(id - 1);
-    console.log(tasks);
+    console.log(id); /*    console.log(tasks); */
+    /*     getTaskById(id);
+     */
   };
 
   const user = users?.find((user) => user.id == idButton);

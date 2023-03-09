@@ -6,13 +6,13 @@ const StyledForm = styled.form`
   justify-content: center;
   align-items: center;
   padding: 32px 40px;
-  gap: 16px;
+  gap: 32px;
 
   position: absolute;
   width: 400px;
-  min-height: 511px;
+  height: 343px;
   left: calc(50% - 400px / 2);
-  top: calc(50% - 511px / 2 + 22px);
+  top: calc(50% - 343px / 2 + 18px);
 
   background: #ffffff;
   box-shadow: 5px 6px 60px rgba(128, 128, 128, 0.5);
@@ -22,7 +22,7 @@ const StyledForm = styled.form`
     font-family: "Nunito";
     font-style: normal;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 28px;
     line-height: 25px;
 
     color: #262626;
@@ -74,7 +74,7 @@ const StyledForm = styled.form`
     justify-content: center;
     align-items: center;
 
-    margin-top: 12px;
+    margin-top: 6px;
   }
 
   > div > h3 {

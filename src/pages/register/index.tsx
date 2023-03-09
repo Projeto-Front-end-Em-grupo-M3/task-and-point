@@ -3,9 +3,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useContext } from "react";
-import { IUserRegister, UserContext } from "../../contexts/UserContext";
-import { StyledForm } from "./style";
 import { useNavigate } from "react-router-dom";
+import { IUserRegister, UserContext } from "../../contexts/userContext";
+import StyledForm from "./style";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -27,10 +27,11 @@ const RegisterForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IUserRegister>({ resolver: yupResolver(schema) });
+
   const { registerUser } = useContext(UserContext);
 
   const submit: SubmitHandler<IUserRegister> = (formData: IUserRegister) => {
-    registerUser(formData);
+    registerUser({ ...formData, isAdmin: false });
   };
 
   return (
@@ -69,7 +70,7 @@ const RegisterForm = () => {
         />
         <button type="submit">Cadastrar</button>
         <div>
-          <h4>Já possui uma conta ?</h4>
+          <h3>Já possui uma conta ?</h3>
           <button
             onClick={(event) => {
               event.preventDefault();

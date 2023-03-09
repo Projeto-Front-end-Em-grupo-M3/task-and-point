@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { IDefaultProps } from "./UserContext";
+import { IDefaultProps } from "./userContext";
 
 interface ItasksPointContext {}
 

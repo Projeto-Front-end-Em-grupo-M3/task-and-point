@@ -21,6 +21,8 @@ interface IAdminContext {
   createTask: (data: ITasks) => Promise<void>;
   deleteTask: (id: any) => Promise<void>;
   tasksSearch: ITasks[];
+  deleteUser: (id: number) => Promise<void>;
+  getPointsUser: (id: number) => void;
 }
 
 export interface IUser {
@@ -40,6 +42,12 @@ export interface ITasks {
   status: string;
 }
 
+export interface IPoints {
+  point: string;
+  name: string;
+  userId: number;
+}
+
 export const AdminContext = createContext({} as IAdminContext);
 
 export const AdminContextProvider = ({ children }: IDefaultProps) => {
@@ -51,10 +59,11 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
   const [idButton, setIdButton] = useState<number>(0);
   const [tasks, setTasks] = useState<ITasks[]>([]);
   const [tasksSearch, setTasksSearch] = useState<ITasks[]>([]);
-  console.log(tasks);
+  const [allPoints, setAllPoints] = useState<IPoints[]>([]);
+  const [pointsUser, setPointsUser] = useState<IPoints[]>([]);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4MzI5Mzc4LCJleHAiOjE2NzgzMzI5NzgsInN1YiI6IjEifQ.xabriSW5I29Rz89MIvvEui9htPYsQPtKBXPNUSDBNWg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4MzcyMjM4LCJleHAiOjE2NzgzNzU4MzgsInN1YiI6IjEifQ.J5UZBVPYn15gpW9aOLyGTBVU97T3IUjKD-_e2p0OY6U";
   useEffect(() => {
     getAllUsers();
     getAdminInfo(1);
@@ -116,7 +125,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     } catch (error) {}
   };
 
-  const deleteTask = async (id: any) => {
+  const deleteTask = async (id: number) => {
     try {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       await api.delete(`/tasks/${id}`);
@@ -125,6 +134,40 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
       toast.success("Atividade excluída");
     } catch (error) {}
   };
+
+  const deleteUser = async (id: number) => {
+    try {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      await api.delete(`/users/${id}`);
+      const newUsers = users.filter((user) => user.id !== id);
+      setUsers(newUsers);
+      setModal(false);
+      toast.warning("usuário excluído");
+    } catch (error) {
+      toast.error("Tente novamente");
+    }
+  };
+
+  const getAllPoints = async () => {
+    try {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await api.get(`/points/`);
+      setAllPoints(response.data);
+    } catch (error) {
+      toast.error("Tente novamente");
+    }
+  };
+
+  useEffect(() => {
+    getAllPoints();
+  }, []);
+
+  const getPointsUser = (id: number) => {
+    const newPoints = allPoints.filter((point) => point.userId === id);
+    setPointsUser(newPoints);
+  };
+
+  console.log(allPoints);
 
   return (
     <AdminContext.Provider
@@ -146,6 +189,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         createTask,
         deleteTask,
         tasksSearch,
+        deleteUser,
+        getPointsUser,
       }}
     >
       {children}

@@ -88,7 +88,6 @@ const AdminDashboard = () => {
   function openModal(id: any) {
     setModal(true);
     setIdButton(id);
-    console.log(id);
   }
 
   return (
@@ -152,16 +151,21 @@ const AdminDashboard = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3>Criar e atribuir tarefas</h3>
           <div>
+            <label htmlFor="users">Escolha o funcionário</label>
+            <select id="users" {...register("name")}>
+              {users?.map((user) => {
+                return <option value={user.name}>{user.name}</option>;
+              })}
+            </select>
+
+            <label htmlFor="task">Escreva a tarefa</label>
             <input
               type="text"
-              placeholder="Digite o nome do funcionário"
-              {...register("name")}
-            />
-            <input
-              type="text"
-              placeholder="Escreva a atividade"
+              id="task"
+              placeholder="Escreva a tarefa"
               {...register("task")}
             />
+            <span>{errors.task?.message}</span>
           </div>
           <button type="submit">Criar</button>
         </form>

@@ -56,19 +56,40 @@ button {
 }
 
 :root {
-  --Color-primary: #ff577f;
-  --Color-secondary: #ff427f;
-  --Color-primary-Negative: #59323f;
-  --grey-1: #868e96;
-  --grey-2: #343b41;
-  --grey-3: #212529;
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:ital@1&display=swap');
+  --Color-primary: #2380FB;
+  --Color-primary-2: #0747A6;
+  --Color-secondary:#2CD1EA;
+  --Color-secondary-2: #19191F;
+  --grey-1: #F8F9FA;
+  --grey-2: #E9ECEF;
+  --grey-3:#868E96;
   --grey-4: #121214;
-  --grey-0: #f8f9fa;
-
-  --negative: #e83f5b;
-  --sucess: #3fe864;
-
-  --font-primary: "Inter", sans-serif;
+  --grey-0: #212529;
+  --color-toast-sucess: #14AE5C;
+  --color-toast-error: #BD1A1A;
+  --color-toast-alert: #FBBC05;
+  --color-toast-info: #8900FF;
+  
+  --font-primary: 'Nunito', sans-serif;
+  h1{
+    font-size: 38px;
+    font-weight: bold;
+  }
+  h2{
+    font-size: 22px;
+    font-weight: bold;
+  }
+  h3{
+    font-size: 16px;
+    font-weight: bold;
+  }
+  h4{
+    font-size: 12px;
+    font-weight: bold;
+  }
+body{
+  font-size: 16px;
 }
-
+}
 `;

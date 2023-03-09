@@ -18,6 +18,12 @@ interface IAdminContext {
   getTaskById: (id: number) => Promise<void>;
   tasks: ITasks[];
   setTasks: React.Dispatch<SetStateAction<ITasks[]>>;
+  createTask: (data: ITasks) => Promise<void>;
+  deleteTask: (id: any) => Promise<void>;
+  tasksSearch: ITasks[];
+  deleteUser: (id: number) => Promise<void>;
+  getPointsUser: (id: number) => void;
+  pointsUser: IPoints[];
 }
 
 export interface IUser {
@@ -31,9 +37,16 @@ export interface IUser {
 }
 
 export interface ITasks {
+  name: string;
+  id: number;
   task: string;
-  taskId: number;
-  taskCheck: boolean;
+  status: string;
+}
+
+export interface IPoints {
+  point: string;
+  name: string;
+  userId: number;
 }
 
 export const AdminContext = createContext({} as IAdminContext);
@@ -46,12 +59,16 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
   const [modal, setModal] = useState<boolean>(false);
   const [idButton, setIdButton] = useState<number>(0);
   const [tasks, setTasks] = useState<ITasks[]>([]);
+  const [tasksSearch, setTasksSearch] = useState<ITasks[]>([]);
+  const [allPoints, setAllPoints] = useState<IPoints[]>([]);
+  const [pointsUser, setPointsUser] = useState<IPoints[]>([]);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4Mjk0NTc3LCJleHAiOjE2NzgyOTgxNzcsInN1YiI6IjEifQ.6qdeJRCET2GvNhZLONTMkaZsz-QuzmTl40PbJohjWDg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4Mzc1NTI5LCJleHAiOjE2NzgzNzkxMjksInN1YiI6IjEifQ.B-S8aP5Mr9kjInS6zZZQ6RRjQO3cshsRakwGNxXHbdk";
   useEffect(() => {
     getAllUsers();
     getAdminInfo(1);
+    getAllTasks();
   }, []);
 
   const getAllUsers = async () => {
@@ -64,8 +81,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
       setUsers(employes);
       setEmployeSearch(employes);
     } catch (error) {
-      /*       toast.error("Algo deu errado, tente novamente mais tarde");
-       */
+      toast.error("Algo deu errado, tente novamente mais tarde");
     }
   };
 
@@ -75,26 +91,81 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
       const response = await api.get(`/users/${id}`);
       setAdm(response.data);
     } catch (error) {
-      /*       toast.error("Algo deu errado, tente novamente mais tarde");
-       */
+      toast.error("Algo deu errado, tente novamente mais tarde");
     }
   };
 
-  const getTaskById = async (/* id: number */) => {
+  const getTaskById = async (id: number) => {
     try {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      /*       const response = await api.get(`/tasks/${id}`);
-       */ const response = await api.get(`/tasks/`);
-      console.log(response.data);
-      /*  console.log(response.data.taskList); */
-      /*       setTasks(response.data.taskList);
-       */
+      const response = await api.get(`/tasks/${id}`);
+      setTasks(response.data.taskList);
     } catch (error) {
-      /*       toast.error("Algo deu errado, tente novamente mais tarde");
-       */
+      toast.error("Algo deu errado, tente novamente mais tarde");
     }
   };
-  getTaskById();
+
+  const getAllTasks = async () => {
+    try {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await api.get(`/tasks`);
+      setTasks(response.data);
+      setTasksSearch(response.data);
+    } catch (error) {
+      toast.error("error");
+    }
+  };
+
+  const createTask = async (data: ITasks) => {
+    try {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await api.post(`/tasks`, data);
+      setTasks([...tasks, response.data]);
+      toast.success("Atividade cadastrada");
+    } catch (error) {}
+  };
+
+  const deleteTask = async (id: number) => {
+    try {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      await api.delete(`/tasks/${id}`);
+      const newTasks = tasks.filter((task) => task.id !== id);
+      setTasks(newTasks);
+      toast.success("Atividade excluída");
+    } catch (error) {}
+  };
+
+  const deleteUser = async (id: number) => {
+    try {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      await api.delete(`/users/${id}`);
+      const newUsers = users.filter((user) => user.id !== id);
+      setUsers(newUsers);
+      setModal(false);
+      toast.warning("usuário excluído");
+    } catch (error) {
+      toast.error("Tente novamente");
+    }
+  };
+
+  const getAllPoints = async () => {
+    try {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      const response = await api.get(`/points/`);
+      setAllPoints(response.data);
+    } catch (error) {
+      toast.error("Tente novamente");
+    }
+  };
+
+  useEffect(() => {
+    getAllPoints();
+  }, []);
+
+  const getPointsUser = (id: number) => {
+    const newPoints = allPoints.filter((point) => point.userId === id);
+    setPointsUser(newPoints);
+  };
 
   return (
     <AdminContext.Provider
@@ -113,6 +184,12 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         getTaskById,
         tasks,
         setTasks,
+        createTask,
+        deleteTask,
+        tasksSearch,
+        deleteUser,
+        getPointsUser,
+        pointsUser,
       }}
     >
       {children}

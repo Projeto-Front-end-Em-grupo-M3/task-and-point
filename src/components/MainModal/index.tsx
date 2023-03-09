@@ -3,17 +3,20 @@ import { AdminContext } from "../../contexts/AdminContext";
 import { DivMainModal, DivMainModalWrapper } from "./styles";
 
 const MainModal = () => {
-  const { setModal, modal, idButton, users, getTaskById, tasks } =
-    useContext(AdminContext);
+  const {
+    setModal,
+    modal,
+    idButton,
+    users,
+    getTaskById,
+    tasks,
+    deleteUser,
+    getPointsUser,
+    pointsUser,
+  } = useContext(AdminContext);
 
   const closeModal = () => {
     setModal(false);
-  };
-
-  const seeTasks = (id: number) => {
-    console.log(id); /*    console.log(tasks); */
-    /*     getTaskById(id);
-     */
   };
 
   const user = users?.find((user) => user.id == idButton);
@@ -33,17 +36,27 @@ const MainModal = () => {
                   </div>
                   <button onClick={closeModal}>fechar</button>
                 </header>
-
-                <div>
-                  <button onClick={() => seeTasks(user.id)}>
-                    Ver tarefas atribuídas
-                  </button>
-                  <button>Incluir tarefa</button>
-                  <button>Ver folha ponto</button>
-                  <button>Excluir usuário</button>
-                </div>
               </>
             )}
+
+            <div>
+              <button type="button" onClick={() => deleteUser(idButton)}>
+                Demitir
+              </button>
+              <button type="button" onClick={() => getPointsUser(idButton)}>
+                Ver folha ponto
+              </button>
+              {pointsUser.length > 0 && (
+                <ul>
+                  {pointsUser.map((point) => (
+                    <li>
+                      <p>{point.name}</p>
+                      <p>{point.point}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </DivMainModal>
         </DivMainModalWrapper>
       )}

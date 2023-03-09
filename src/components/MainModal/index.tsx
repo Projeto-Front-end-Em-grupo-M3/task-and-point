@@ -32,15 +32,6 @@ const MainModal = () => {
                   </div>
                   <button onClick={closeModal}>fechar</button>
                 </header>
-
-                <div>
-                  <button onClick={() => seeTasks(user.id)}>
-                    Ver tarefas atribuídas
-                  </button>
-                  <button>Incluir tarefa</button>
-                  <button>Ver folha ponto</button>
-                  <button>Excluir usuário</button>
-                </div>
               </>
             )}
           </DivMainModal>

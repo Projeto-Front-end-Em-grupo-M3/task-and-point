@@ -8,8 +8,6 @@ const MainModal = () => {
     modal,
     idButton,
     users,
-    getTaskById,
-    tasks,
     deleteUser,
     getPointsUser,
     pointsUser,
@@ -30,7 +28,7 @@ const MainModal = () => {
     <>
       {modal && (
         <DivMainModalWrapper>
-          <DivMainModal>
+          <DivMainModal key={crypto.randomUUID()}>
             {user && (
               <>
                 <header key={crypto.randomUUID()}>
@@ -44,7 +42,7 @@ const MainModal = () => {
               </>
             )}
 
-            <div>
+            <div className="main_div">
               <button
                 type="button"
                 onClick={() => setModalDelete(true) /* deleteUser(idButton) */}
@@ -52,7 +50,7 @@ const MainModal = () => {
                 Demitir
               </button>
               {modalDelete && (
-                <div>
+                <div className="dismiss_confirm">
                   <p>Tem certeza que deseja demitir essa pessoa?</p>
                   <div>
                     <button onClick={() => deleteUser(idButton)}>
@@ -68,18 +66,20 @@ const MainModal = () => {
                 Ver folha ponto
               </button>
               {modalPoints && pointsUser.length > 0 ? (
-                <ul>
-                  {pointsUser.map(
-                    (point) =>
-                      point.userId == idButton && (
-                        <li>
-                          <p>{point.name}</p>
-                          <p>{point.point}</p>
-                        </li>
-                      )
-                  )}
+                <div className="modal_points">
+                  <ul className="list_points">
+                    {pointsUser.map(
+                      (point) =>
+                        point.userId == idButton && (
+                          <li key={crypto.randomUUID()}>
+                            <p>{point.name}</p>
+                            <span>{point.point}</span>
+                          </li>
+                        )
+                    )}
+                  </ul>
                   <button onClick={() => setModalPoints(false)}>X</button>
-                </ul>
+                </div>
               ) : (
                 modalPoints && (
                   <div>

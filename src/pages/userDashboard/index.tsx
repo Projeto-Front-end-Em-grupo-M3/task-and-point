@@ -42,8 +42,11 @@ const userDashboard = () => {
 
     const [searchValue, setSearchValue] = useState("");
 
+
     const search = (event: { preventDefault: () => void }) => {
         event.preventDefault();
+
+        const date = new Date().getHours; 
 
         setSearchValue("");
     };

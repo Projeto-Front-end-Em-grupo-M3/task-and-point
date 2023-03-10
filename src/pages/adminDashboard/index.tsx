@@ -30,7 +30,6 @@ const AdminDashboard = () => {
     createTask,
     deleteTask,
     tasksSearch,
-    logout,
   } = useContext(AdminContext);
 
   const {
@@ -98,25 +97,21 @@ const AdminDashboard = () => {
       <Header />
       <StyledDash>
         <div className="info_div">
-          <h1>Usuário: {adm ? adm.name : null}</h1>
+          <h1>Usúario: {adm ? adm.name : null}</h1>
           <p>Email: {adm ? adm.email : null}</p>
         </div>
 
         <div className="search_div">
-          <div>
+          <div className="info_login">
             <p>Lista de usuários</p>
             <span>Gerencie as atividades da equipe</span>
           </div>
-          <div>
+          <div className="search_input">
             <Input
               type="text"
-              label="Nome do funcionário"
-              register={register("name")}
-              error={errors.name}
+              placeholder="Digitar pesquisa"
               value={searchValue}
-              onChange={(event: {
-                target: { value: SetStateAction<string> };
-              }) => setSearchValue(event.target.value)}
+              onChange={(event) => setSearchValue(event.target.value)}
             />
 
             <button type="submit" onClick={search}>
@@ -175,13 +170,9 @@ const AdminDashboard = () => {
               label="Escreva a tarefa"
               register={register("task")}
               error={errors.task}
-              value={searchValue}
-              onChange={(event: {
-                target: { value: SetStateAction<string> };
-              }) => setSearchValue(event.target.value)}
             />
+            <button type="submit">Criar</button>
           </div>
-          <button type="submit">Criar</button>
         </form>
 
         <section className="employeesList_section">

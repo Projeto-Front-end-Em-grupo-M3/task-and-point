@@ -1,18 +1,18 @@
 import { SetStateAction, useContext, useState } from "react";
 import { UserContext, IUserLogin, IUser } from "../../contexts/userContext";
-import * as yup from "yup";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 import Header from "../../components/Header";
 import Input from "../../components/Input";
 import { StyledDash } from "./styles";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { ITasks, IPoints } from "../../contexts/AdminContext";
-import React from "react";
+//import React from "react";
 
 const schema = yup
   .object({
-    name: yup.string().required("Digite um nome"),
     task: yup.string().required("Digite a atividade"),
   })
   .required();

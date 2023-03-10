@@ -39,8 +39,11 @@ export const StyledDash = styled.div`
     display: flex;
     flex-direction: row;
     gap: 8px;
-    height: 55px;
     align-items: center;
+    height: 55px;
+    width: 360px;
+    border-radius: 3px;
+    border: 1px solid rgba(224, 224, 224, 1);
   }
 
   .employeesList_section {

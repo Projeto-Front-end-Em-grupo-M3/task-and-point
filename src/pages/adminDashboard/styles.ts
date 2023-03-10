@@ -2,6 +2,8 @@
  */ import styled from "styled-components";
 
 export const StyledDash = styled.div`
+  font-family: var(--font-primary);
+
   max-width: 100%;
   width: 976px;
   margin: 0 auto;

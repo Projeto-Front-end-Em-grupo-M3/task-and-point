@@ -26,6 +26,10 @@ interface IAdminContext {
   getPointsUser: (id: number) => void;
   pointsUser: IPoints[];
   logout: () => void;
+  modalPoints: boolean;
+  setModalPoints: React.Dispatch<SetStateAction<boolean>>;
+  modalDelete: boolean;
+  setModalDelete: React.Dispatch<SetStateAction<boolean>>;
 }
 
 export interface IUser {
@@ -64,6 +68,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
   const [tasksSearch, setTasksSearch] = useState<ITasks[]>([]);
   const [allPoints, setAllPoints] = useState<IPoints[]>([]);
   const [pointsUser, setPointsUser] = useState<IPoints[]>([]);
+  const [modalPoints, setModalPoints] = useState<boolean>(false);
+  const [modalDelete, setModalDelete] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -236,6 +242,10 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         getPointsUser,
         pointsUser,
         logout,
+        modalPoints,
+        setModalPoints,
+        modalDelete,
+        setModalDelete,
       }}
     >
       {children}

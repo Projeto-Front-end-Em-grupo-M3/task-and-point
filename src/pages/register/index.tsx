@@ -74,7 +74,7 @@ const RegisterForm = () => {
           <button
             onClick={(event) => {
               event.preventDefault();
-              navigate("/login");
+              navigate("/");
             }}
           >
             Conecte-se

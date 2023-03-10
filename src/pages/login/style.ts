@@ -17,6 +17,7 @@ const StyledForm = styled.form`
   background: #ffffff;
   box-shadow: 5px 6px 60px rgba(128, 128, 128, 0.5);
   border-radius: 16px;
+  font-family: "Nunito";
 
   > h2 {
     font-family: "Nunito";

@@ -70,7 +70,6 @@ button {
   --color-toast-error: #BD1A1A;
   --color-toast-alert: #FBBC05;
   --color-toast-info: #8900FF;
-  
   --font-primary: 'Nunito', sans-serif;
   h1{
     font-size: 38px;
@@ -90,6 +89,7 @@ button {
   }
 body{
   font-size: 16px;
+  font-family: var(--font-primary);
 }
 }
 `;

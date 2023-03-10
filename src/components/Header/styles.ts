@@ -16,4 +16,10 @@ export const StyledHeader = styled.header`
     justify-content: space-between;
     align-items: center;
   }
+
+  figure {
+    width: 211px;
+    height: 45px;
+    background-color: antiquewhite;
+  }
 `;

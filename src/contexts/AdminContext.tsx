@@ -77,7 +77,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     getAllUsers();
     getAdminInfo(1);
     getAllTasks();
-  }, []);
+  }, [users]);
 
   const getAllUsers = async () => {
     if (token) {

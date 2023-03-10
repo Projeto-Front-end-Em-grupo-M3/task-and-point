@@ -1,4 +1,4 @@
-import { SetStateAction, useContext, useState } from "react";
+import { SetStateAction, useContext, useEffect, useState } from "react";
 import { AdminContext, ITasks } from "../../contexts/AdminContext";
 import { toast } from "react-toastify";
 import Header from "../../components/Header";
@@ -31,6 +31,8 @@ const AdminDashboard = () => {
     deleteTask,
     tasksSearch,
     logout,
+    getAllUsers,
+    getAllTasks,
   } = useContext(AdminContext);
 
   const {
@@ -44,6 +46,11 @@ const AdminDashboard = () => {
     createTask({ ...data, status: "Em andamento" });
     reset();
   };
+
+  useEffect(() => {
+    getAllUsers();
+    getAllTasks();
+  }, []);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -95,7 +102,7 @@ const AdminDashboard = () => {
   return (
     <>
       {modal && <MainModal />}
-      <Header />
+      <Header content={"Sair"} />
       <StyledDash>
         <div className="info_div">
           <h1>Usúario: {adm ? adm.name : null}</h1>

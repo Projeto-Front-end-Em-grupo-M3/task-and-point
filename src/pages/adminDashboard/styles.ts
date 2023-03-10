@@ -4,7 +4,7 @@
 export const StyledDash = styled.div`
   font-family: var(--font-primary);
 
-  max-width: 100%;
+  max-width: 90%;
   width: 976px;
   margin: 0 auto;
 

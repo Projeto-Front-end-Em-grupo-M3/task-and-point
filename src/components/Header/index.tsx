@@ -1,25 +1,29 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { AdminContext } from "../../contexts/AdminContext";
 import { StyledHeader } from "./styles";
+/* import { logo } from "../../assets/logo.png";
+ */
+interface IContentProps {
+  content: string;
+}
 
-const Header = () => {
+const Header = ({ content }: IContentProps) => {
   const { logout } = useContext(AdminContext);
-
-  /*   const navigate = useNavigate(); */
-  /*   const logOut = () => {
-    localStorage.removeItem("@task-and-point-token");
-    setUsers(null);
-    navigate("/");
-  }; */
 
   return (
     <StyledHeader>
       <nav>
-        <figure>
-          <img src="../../assets/logo.svg" alt="logo" />
-        </figure>
-        <button onClick={() => logout()}>Sair</button>
+        {/*         <img src={logo} alt="logo" />
+         */}{" "}
+        {content == "Sair" && (
+          <button onClick={() => logout()}>{content}</button>
+        )}
+        {content == "Inscreva-se" && (
+          <button onClick={() => logout()}>{content}</button>
+        )}
+        {content == "Conecte-se" && (
+          <button onClick={() => logout()}>{content}</button>
+        )}
       </nav>
     </StyledHeader>
   );

@@ -30,6 +30,8 @@ interface IAdminContext {
   setModalPoints: React.Dispatch<SetStateAction<boolean>>;
   modalDelete: boolean;
   setModalDelete: React.Dispatch<SetStateAction<boolean>>;
+  getAllUsers: () => Promise<void>;
+  getAllTasks: () => Promise<void>;
 }
 
 export interface IUser {
@@ -77,7 +79,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     getAllUsers();
     getAdminInfo(1);
     getAllTasks();
-  }, [users]);
+  }, []);
 
   const getAllUsers = async () => {
     if (token) {
@@ -246,6 +248,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setModalPoints,
         modalDelete,
         setModalDelete,
+        getAllTasks,
+        getAllUsers,
       }}
     >
       {children}

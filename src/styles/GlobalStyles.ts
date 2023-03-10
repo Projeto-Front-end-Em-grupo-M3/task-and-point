@@ -54,9 +54,10 @@ table {
 button {
   cursor: pointer;
 }
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital@1&display=swap');
 
 :root {
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:ital@1&display=swap');
+
   --Color-primary: #2380FB;
   --Color-primary-2: #0747A6;
   --Color-secondary:#2CD1EA;
@@ -71,6 +72,7 @@ button {
   --color-toast-alert: #FBBC05;
   --color-toast-info: #8900FF;
   --font-primary: 'Nunito', sans-serif;
+  
   h1{
     font-size: 38px;
     font-weight: bold;

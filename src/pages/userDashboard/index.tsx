@@ -1,50 +1,113 @@
-import React from "react";
 import { SetStateAction, useContext, useState } from "react";
+import { UserContext, IUserLogin, IUser } from "../../contexts/userContext";
 import * as yup from "yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { StyledDash } from "./styles";
 import Header from "../../components/Header";
-import MainModal from "../../components/MainModal";
 import Input from "../../components/Input";
-import { UserContext } from "../../contexts/userContext";
-
+import { StyledDash } from "./styles";
+import { useNavigate } from "react-router-dom";
+import { ITasks, IPoints } from "../../contexts/AdminContext";
+import React from "react";
 
 const schema = yup
   .object({
     name: yup.string().required("Digite um nome"),
     task: yup.string().required("Digite a atividade"),
   })
-.required();
+  .required();
 
 const userDashboard = () => {
+    const navigate = useNavigate();
+
     const {
         user,
-      } = useContext(userContext);
+        registerUser,
+        loginUser,
+        logout,
+        pointsUser,
+        tasks,
+    } = useContext(UserContext);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<IUserLogin>({ resolver: yupResolver(schema) });    
     
+    const submit: SubmitHandler<IUserLogin> = (formData: IUserLogin) => {
+        loginUser(formData);
+    };
+
     const [searchValue, setSearchValue] = useState("");
-    
+
+    const search = (event: { preventDefault: () => void }) => {
+        event.preventDefault();
+
+        setSearchValue("");
+    };
+
+
     return(
     <>
     <Header />
-    <StyledDash>
+    <StyledDash onSubmit={handleSubmit(submit)}>
         <div className="info_div">
-            <h1>Usúario:</h1>
-            <p>Email:</p>
+            <h1>Usuário: {user ? user.name : null}</h1>
+            <p>Email: {user ? user.email : null}</p>
+            <p>Cargo: {user ? user.office : null}</p>
+            <p>Turno de Trabalho: {user ? user.shift : null}</p>
+        </div>
+
+        <div>
+            <button type="submit" 
+                onClick={(event) => {
+                    event.preventDefault();
+                    navigate("/register");
+                }}
+            >
+                Registar Ponto
+            </button>
         </div>
 
         <div className="search_div">
             <div>
-                <p>Lista de usuários</p>
-                <span>Gerencie as atividades da equipe</span>
+                <p>Lista de tarefas</p>
+                <span>Acompanhe as próximas atividades a executar</span>
             </div>
 
             <div>
+                <p>Inluir um input para a busca</p>
+
                 <button type="submit" onClick={search}>
                     Pesquisar
                 </button>
             </div>
         </div>
+
+        <section className="taskList_section">
+          <div className="taskList_header">
+            <ul>
+                {tasks && tasks.length > 0 ? (
+                    tasks.map((task) => {
+                        return (
+                        <li key={crypto.randomUUID()}>
+                            <span>{task.task}</span>
+                            <button type="button" onClick={() => (task.status)}>
+                            "Concluído"
+                            </button>
+                        </li>
+                        );
+                    })
+                ) : (
+                <h1>Nenhuma tarefa cadastrada</h1>
+                )}
+            </ul>
+          </div>
+        </section>
     </StyledDash></>
     )
 };
+
+export default userDashboard;

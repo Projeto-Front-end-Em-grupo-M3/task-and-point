@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
+import { ITasks, IPoints } from "./AdminContext";
 
 export interface IDefaultProps {
   children: ReactNode;
@@ -11,7 +12,9 @@ interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
-  user: IUser | null
+  user: IUser | null;
+  pointsUser: IPoints[];
+  tasks: ITasks[];
 }
 
 export interface IUserRegister {
@@ -41,9 +44,9 @@ export interface IUser {
 export const UserContext = createContext({} as IUserContext);
 
 export const UserContextProvider = ({ children }: IDefaultProps) => {
-  
-  const [user, setUser] = useState < IUser | null > (null)
-  
+  const [user, setUser] = useState <IUser | null> (null);
+  const [tasks, setTasks] = useState<ITasks[]>([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -112,7 +115,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
   };
 
   return (
-    <UserContext.Provider value={{ registerUser, loginUser, logout, user, }}>
+    <UserContext.Provider value={{ registerUser, loginUser, logout, user }}>
       {children}
     </UserContext.Provider>
   );

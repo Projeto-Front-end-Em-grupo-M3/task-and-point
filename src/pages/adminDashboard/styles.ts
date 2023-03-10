@@ -4,7 +4,7 @@
 export const StyledDash = styled.div`
   font-family: var(--font-primary);
 
-  max-width: 100%;
+  max-width: 97%;
   width: 976px;
   margin: 0 auto;
 
@@ -14,6 +14,10 @@ export const StyledDash = styled.div`
     border-radius: 8px;
     height: 96px;
     margin: 39px 0px 20px 0px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
 
   .search_div {
@@ -23,6 +27,19 @@ export const StyledDash = styled.div`
     align-items: center;
     height: 51px;
     margin-bottom: 20px;
+  }
+
+  .info_login {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100px;
+  }
+
+  .search_input {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
   }
 
   .employeesList_section {
@@ -69,7 +86,26 @@ export const StyledDash = styled.div`
       align-items: flex-start;
     }
   }
-`;
 
-/* export const StyledLink = styled(Link)``;
- */
+  form {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  form > div > select {
+    padding: 10px;
+  }
+`;

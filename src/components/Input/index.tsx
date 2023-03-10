@@ -4,8 +4,8 @@ import { FieldError, UseFormRegisterReturn } from "react-hook-form/dist/types";
 import { StyledDiv } from "./style";
 
 interface IInput {
-  label: string;
-  register: UseFormRegisterReturn<string>;
+  label?: string;
+  register?: UseFormRegisterReturn<string>;
   error?: FieldError;
   type: "text" | "password" | "email";
   placeholder?: string;

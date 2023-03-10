@@ -7,13 +7,6 @@ import { StyledHeader } from "./styles";
 const Header = () => {
   const { logout } = useContext(AdminContext);
 
-  /*   const navigate = useNavigate(); */
-  /*   const logOut = () => {
-    localStorage.removeItem("@task-and-point-token");
-    setUsers(null);
-    navigate("/");
-  }; */
-
   return (
     <StyledHeader>
       <nav>

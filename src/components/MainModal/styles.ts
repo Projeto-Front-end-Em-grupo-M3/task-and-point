@@ -91,7 +91,7 @@ export const DivMainModal = styled.div`
     align-items: center;
     gap: 10px;
 
-    background-color: var(--color-toast-error);
+    background-color: var(--grey-1);
 
     padding: 10px;
   }

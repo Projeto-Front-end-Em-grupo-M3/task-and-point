@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AdminContext } from "../../contexts/AdminContext";
 import { DivMainModal, DivMainModalWrapper } from "./styles";
 
@@ -24,6 +24,8 @@ const MainModal = () => {
 
   const user = users?.find((user) => user.id == idButton);
 
+  const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
+
   return (
     <>
       {modal && (
@@ -37,56 +39,59 @@ const MainModal = () => {
                     <p>{user.office}</p>
                     <span>{user.shift}</span>
                   </div>
-                  <button onClick={() => setModal(false)}>fechar</button>
+                  <button onClick={() => setModal(false)}>Fechar</button>
                 </header>
               </>
             )}
 
             <div className="main_div">
-              <button
-                type="button"
-                onClick={() => setModalDelete(true) /* deleteUser(idButton) */}
-              >
+              <button type="button" onClick={() => setConfirmDeleteModal(true)}>
                 Demitir
               </button>
-              {modalDelete && (
+              {confirmDeleteModal ? (
                 <div className="dismiss_confirm">
                   <p>Tem certeza que deseja demitir essa pessoa?</p>
                   <div>
                     <button onClick={() => deleteUser(idButton)}>
                       Sim, desejo demitir
                     </button>
-                    <button onClick={() => setModalDelete(false)}>
+                    <button onClick={() => setConfirmDeleteModal(false)}>
                       Cancelar
                     </button>
                   </div>
                 </div>
-              )}
-              <button type="button" onClick={() => openModalPoints(idButton)}>
-                Ver folha ponto
-              </button>
-              {modalPoints && pointsUser.length > 0 ? (
-                <div className="modal_points">
-                  <ul className="list_points">
-                    {pointsUser.map(
-                      (point) =>
-                        point.userId == idButton && (
-                          <li key={crypto.randomUUID()}>
-                            <p>{point.name}</p>
-                            <span>{point.point}</span>
-                          </li>
-                        )
-                    )}
-                  </ul>
-                  <button onClick={() => setModalPoints(false)}>X</button>
-                </div>
               ) : (
-                modalPoints && (
-                  <div>
-                    <p>Sem pontos registrados ainda</p>
-                    <button onClick={() => setModalPoints(false)}>X</button>
-                  </div>
-                )
+                <>
+                  <button
+                    type="button"
+                    onClick={() => openModalPoints(idButton)}
+                  >
+                    Ver folha ponto
+                  </button>
+                  {modalPoints && pointsUser.length > 0 ? (
+                    <div className="modal_points">
+                      <ul className="list_points">
+                        {pointsUser.map(
+                          (point) =>
+                            point.userId == idButton && (
+                              <li key={crypto.randomUUID()}>
+                                <p>{point.name}</p>
+                                <span>{point.point}</span>
+                              </li>
+                            )
+                        )}
+                      </ul>
+                      <button onClick={() => setModalPoints(false)}>X</button>
+                    </div>
+                  ) : (
+                    modalPoints && (
+                      <div>
+                        <p>Sem pontos registrados ainda</p>
+                        <button onClick={() => setModalPoints(false)}>X</button>
+                      </div>
+                    )
+                  )}
+                </>
               )}
             </div>
           </DivMainModal>

@@ -93,6 +93,8 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
     localStorage.removeItem("@TaskandPoint:isAdmin");
+
+    navigate("/");
   };
 
   return (

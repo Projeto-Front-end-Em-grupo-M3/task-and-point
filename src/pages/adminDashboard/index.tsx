@@ -104,14 +104,16 @@ const AdminDashboard = () => {
       <Header content={"Sair"} />
       <StyledDash>
         <div className="info_div">
-          <h1>Usúario: {adm ? adm.name : null}</h1>
-          <p>Email: {adm ? adm.email : null}</p>
+          <div className="sub_info_div">
+            <h1>{adm ? adm.name : null}</h1>
+            <p>{adm ? adm.email : null}</p>
+          </div>
         </div>
 
         <div className="search_div">
           <div className="info_login">
             <p>Lista de usuários</p>
-            <span>Gerencie as atividades da equipe</span>
+            <span id="opacity">Gerencie as atividades da equipe</span>
           </div>
           <div className="search_input">
             <Input

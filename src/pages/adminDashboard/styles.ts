@@ -15,8 +15,20 @@ export const StyledDash = styled.div`
     margin: 39px 0px 20px 0px;
 
     display: flex;
+    align-items: center;
+  }
+
+  .sub_info_div {
+    height: 73px;
+    width: fit-content;
+    margin-left: 30px;
+    display: flex;
     flex-direction: column;
     justify-content: space-around;
+  }
+
+  #opacity {
+    color: #6a6a6a;
   }
 
   .search_div {

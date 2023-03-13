@@ -22,7 +22,7 @@ const MainModal = () => {
   };
 
   const user = users?.find((user) => user.id == idButton);
-  const userName = user?.name;
+  const userName = user?.name as string;
 
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
 
@@ -53,7 +53,7 @@ const MainModal = () => {
                   <p>Tem certeza que deseja demitir essa pessoa?</p>
                   <div>
                     <Button
-                      clickFunction={() => deleteUser(idButton, `${userName}`)}
+                      clickFunction={() => deleteUser(idButton, userName)}
                       buttonText="Sim, desejo demitir"
                       type={"submit"}
                     />

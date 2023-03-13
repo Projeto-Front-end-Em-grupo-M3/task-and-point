@@ -10,6 +10,9 @@ import * as yup from "yup";
 import Input from "../../components/Input";
 import { UserContext } from "../../contexts/userContext";
 import Button from "../../components/Button";
+import more from "../../assets/more.svg";
+import admIcon from "../../assets/admIcon.svg";
+import trashCan from "../../assets/trashCan.svg";
 
 const schema = yup
   .object({
@@ -110,6 +113,7 @@ const AdminDashboard = () => {
       <Header content={"Sair"} />
       <StyledDash>
         <div className="info_div">
+          <img src={admIcon} id="icon" />
           <div className="sub_info_div">
             <h1>{adm ? adm.name : null}</h1>
             <p>{adm ? adm.email : null}</p>
@@ -118,7 +122,7 @@ const AdminDashboard = () => {
 
         <div className="search_div">
           <div className="info_login">
-            <p>Lista de usuários</p>
+            <p id="bold">Lista de usuários</p>
             <span id="opacity">Gerencie as atividades da equipe</span>
           </div>
           <div className="search_input">
@@ -138,7 +142,7 @@ const AdminDashboard = () => {
 
         <section className="employeesList_section">
           <div className="employeesList_header">
-            <div>
+            <div className="sub_employeesList_header">
               <p>Nome</p>
               <p>Email</p>
               <p>Cargo</p>
@@ -150,14 +154,16 @@ const AdminDashboard = () => {
               users.map((user) => {
                 return (
                   <li key={crypto.randomUUID()}>
-                    <h2>{user.name}</h2>
-                    <p>{user.email}</p>
-                    <p>{user.office}</p>
-                    <span>{user.shift}</span>
-                    <Button
-                      clickFunction={() => openModal(user.id)}
-                      buttonText="Ver mais"
-                      type={"submit"}
+                    <div className="sub_employeesList_header">
+                      <h2>{user.name}</h2>
+                      <p>{user.email}</p>
+                      <p>{user.office}</p>
+                      <span>{user.shift}</span>
+                    </div>
+                    <img
+                      src={more}
+                      id="more"
+                      onClick={() => openModal(user.id)}
                     />
                   </li>
                 );
@@ -189,14 +195,14 @@ const AdminDashboard = () => {
               register={register("task")}
               error={errors.task}
             />
-            <Button buttonText="Criar" type={"submit"} />
+            <Button buttonText="+ Criar" type={"submit"} />
           </div>
         </form>
 
-        <section className="employeesList_section">
+        <section id="tasks_section" className="employeesList_section">
           <div className="employeesList_header">
             <div>
-              <p>Tarefas atribuidas</p>
+              <p>Tarefas atribuídas</p>
             </div>
           </div>
           <ul>
@@ -207,10 +213,10 @@ const AdminDashboard = () => {
                     <h2>{task.name}</h2>
                     <p>{task.task}</p>
                     <p>{task.status}</p>
-                    <Button
-                      clickFunction={() => deleteTask(task.id)}
-                      buttonText="Excluir"
-                      type={"submit"}
+                    <img
+                      id="trashCan"
+                      src={trashCan}
+                      onClick={() => deleteTask(task.id)}
                     />
                   </li>
                 );

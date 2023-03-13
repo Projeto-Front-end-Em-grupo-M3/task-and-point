@@ -40,10 +40,11 @@ export const StyledDash = styled.div`
     flex-direction: row;
     gap: 8px;
     align-items: center;
-    height: 55px;
+    height: 37px;
     width: 360px;
-    border-radius: 3px;
-    border: 1px solid rgba(224, 224, 224, 1);
+    /* border-radius: 3px; */
+    /* border: 1px solid rgba(224, 224, 224, 1); */
+    padding: 10px;
   }
 
   .employeesList_section {

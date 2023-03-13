@@ -22,6 +22,7 @@ const userDashboard = () => {
     const {
         user,
         registerUser,
+        registData,
         loginUser,
         logout,
         pointsUser,
@@ -49,7 +50,7 @@ const userDashboard = () => {
     const search = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
-        const date = new Date().getHours; 
+        //const date = new Date().getHours; 
 
         if (searchValue !== "") {
             const searchTasks = tasksSearch.filter((task) =>
@@ -90,7 +91,8 @@ const userDashboard = () => {
                 <button type="submit" 
                     onClick={(event) => {
                         event.preventDefault();
-                        navigate("/register");
+                        registData();
+                        //navigate("/register");
                     }}
                 >
                     Registar ponto

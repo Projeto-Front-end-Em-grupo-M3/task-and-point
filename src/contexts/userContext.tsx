@@ -10,6 +10,7 @@ export interface IDefaultProps {
 
 interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
+  registData: () => void
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
   user: IUser | null;
@@ -114,8 +115,15 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     localStorage.removeItem("@TaskandPoint:isAdmin");
   };
 
+  const registData = () => {
+    const date = new Date();
+    const idUser = user?.id
+    console.log(idUser)
+    console.log(date)
+  }
+
   return (
-    <UserContext.Provider value={{ registerUser, loginUser, logout, user }}>
+    <UserContext.Provider value={{ registerUser, loginUser, logout, user, registData }}>
       {children}
     </UserContext.Provider>
   );

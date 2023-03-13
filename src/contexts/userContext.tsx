@@ -10,12 +10,13 @@ export interface IDefaultProps {
 
 interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
-  registData: () => void
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
   user: IUser | null;
   pointsUser: IPoints[];
   tasks: ITasks[];
+  registerPointUser: () => void;
+  getTasks: () => void;
 }
 
 export interface IUserRegister {
@@ -115,15 +116,28 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     localStorage.removeItem("@TaskandPoint:isAdmin");
   };
 
-  const registData = () => {
+  const registerPointUser = () => {
     const date = new Date();
     const idUser = user?.id
     console.log(idUser)
     console.log(date)
   }
 
+  const getTasks = async (token:string) => {
+    try {
+      const response = await api.get("/tasks", {headers:{Authorization:`
+        Bearer ${token}
+      `}});
+
+      setTasks(response.data)
+
+    } catch (error:any) {
+      toast.error(error);
+    }
+  }
+
   return (
-    <UserContext.Provider value={{ registerUser, loginUser, logout, user, registData }}>
+    <UserContext.Provider value={{ registerUser, loginUser, logout, user, registerPointUser, getTasks }}>
       {children}
     </UserContext.Provider>
   );

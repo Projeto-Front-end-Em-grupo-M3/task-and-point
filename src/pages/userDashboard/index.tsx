@@ -22,11 +22,12 @@ const userDashboard = () => {
     const {
         user,
         registerUser,
-        registData,
+        registerPointUser,
         loginUser,
         logout,
         pointsUser,
         tasks,
+        getTasks,
     } = useContext(UserContext);
 
     const {
@@ -34,7 +35,12 @@ const userDashboard = () => {
         handleSubmit,
         formState: { errors },
         reset,
-    } = useForm<ITasks>({ resolver: yupResolver(schema) });    
+    } = useForm<ITasks>({ resolver: yupResolver(schema) });
+    
+
+    useEffect (() => {async function requetionTasks(params:type) {
+    }}, [])
+    
     
     const submit: SubmitHandler<IUserLogin> = (formData: IUserLogin) => {
         loginUser(formData);
@@ -91,7 +97,7 @@ const userDashboard = () => {
                 <button type="submit" 
                     onClick={(event) => {
                         event.preventDefault();
-                        registData();
+                        registerPointUser();
                         //navigate("/register");
                     }}
                 >

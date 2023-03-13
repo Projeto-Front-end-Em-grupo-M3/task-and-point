@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Input from "../../components/Input";
+import { UserContext } from "../../contexts/userContext";
 
 const schema = yup
   .object({

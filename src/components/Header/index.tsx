@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { AdminContext } from "../../contexts/AdminContext";
-import { StyledHeader } from "./styles";
-/* import { logo } from "../../assets/logo.png";
- */
+import { StyledHeader, StyledLink } from "./styles";
+import logo from "../../assets/logo.svg";
+
 interface IContentProps {
   content: string;
 }
@@ -13,16 +13,13 @@ const Header = ({ content }: IContentProps) => {
   return (
     <StyledHeader>
       <nav>
-        {/*         <img src={logo} alt="logo" />
-         */}{" "}
-        {content == "Sair" && (
-          <button onClick={() => logout()}>{content}</button>
-        )}
+        <img src={logo} alt="logo" />
+        {content == "Sair" && <button onClick={logout}>{content}</button>}
         {content == "Inscreva-se" && (
-          <button onClick={() => logout()}>{content}</button>
+          <StyledLink to="/register">{content}</StyledLink>
         )}
         {content == "Conecte-se" && (
-          <button onClick={() => logout()}>{content}</button>
+          <StyledLink to="/login">{content}</StyledLink>
         )}
       </nav>
     </StyledHeader>

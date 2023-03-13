@@ -22,7 +22,7 @@ interface IAdminContext {
   createTask: (data: ITasks) => Promise<void>;
   deleteTask: (id: any) => Promise<void>;
   tasksSearch: ITasks[];
-  deleteUser: (id: number) => Promise<void>;
+  deleteUser: (id: number, name: string) => Promise<void>;
   getPointsUser: (id: number) => void;
   pointsUser: IPoints[];
   logout: () => void;
@@ -33,6 +33,7 @@ interface IAdminContext {
   getAllUsers: () => Promise<void>;
   getAllTasks: () => Promise<void>;
   token: string | null;
+  getAllPoints: () => Promise<void>;
 }
 
 export interface IUser {
@@ -76,11 +77,11 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  /*  useEffect(() => {
     getAllUsers();
     getAdminInfo(1);
-    getAllTasks();
-  }, []);
+      getAllTasks();
+  }, []); */
 
   const getAllUsers = async () => {
     if (token) {
@@ -174,7 +175,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     }
   };
 
-  const deleteUser = async (id: number) => {
+  const deleteUser = async (id: number, name: any) => {
     if (token) {
       try {
         api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
@@ -183,6 +184,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         await api.delete(`/users/${id}`);
         const newUsers = users.filter((user) => user.id !== id);
         setUsers(newUsers);
+        const newTasks = tasks.filter((task) => task.name !== name);
+        console.log(newTasks);
         setModal(false);
         toast.warning("usuário excluído");
       } catch (error) {
@@ -207,9 +210,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
 
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
-    localStorage.removeItem("@TaskandPoint:isAdmin");
     toast.warning("Você saiu");
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -252,6 +254,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         getAllTasks,
         getAllUsers,
         token,
+        getAllPoints,
       }}
     >
       {children}

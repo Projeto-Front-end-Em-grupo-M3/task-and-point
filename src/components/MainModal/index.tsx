@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AdminContext } from "../../contexts/AdminContext";
+import { AdminContext, IUser } from "../../contexts/AdminContext";
 import { DivMainModal, DivMainModalWrapper } from "./styles";
 
 const MainModal = () => {
@@ -13,8 +13,6 @@ const MainModal = () => {
     pointsUser,
     modalPoints,
     setModalPoints,
-    modalDelete,
-    setModalDelete,
   } = useContext(AdminContext);
 
   const openModalPoints = (idButton: number) => {
@@ -23,6 +21,7 @@ const MainModal = () => {
   };
 
   const user = users?.find((user) => user.id == idButton);
+  const userName = user?.name;
 
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
 
@@ -52,7 +51,7 @@ const MainModal = () => {
                 <div className="dismiss_confirm">
                   <p>Tem certeza que deseja demitir essa pessoa?</p>
                   <div>
-                    <button onClick={() => deleteUser(idButton)}>
+                    <button onClick={() => deleteUser(idButton, `${userName}`)}>
                       Sim, desejo demitir
                     </button>
                     <button onClick={() => setConfirmDeleteModal(false)}>

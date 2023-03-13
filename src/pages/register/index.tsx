@@ -2,13 +2,35 @@ import Input from "../../components/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { IUserRegister, UserContext } from "../../contexts/UserContext";
 import { StyledForm } from "./style";
 import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4NzE4MDI2LCJleHAiOjE2Nzg3MjE2MjYsInN1YiI6IjEifQ.qLeDYmfXVt2O3xjBYGwMBqEhlK9CUnoS_ZNcn8fmQ4I";
+    console.log(parseJwt(token));
+  }, []);
+
+  function parseJwt(token: string) {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+
+    return JSON.parse(jsonPayload);
+  }
 
   const schema = yup
     .object({

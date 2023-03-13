@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 const schema = yup
   .object({
@@ -33,6 +34,7 @@ const AdminDashboard = () => {
     getAllTasks,
     getAllUsers,
     getAdminInfo,
+    getAllPoints,
   } = useContext(AdminContext);
 
   const {
@@ -48,6 +50,7 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
+    getAllPoints();
     getAllUsers();
     getAllTasks();
     getAdminInfo(1);
@@ -124,10 +127,11 @@ const AdminDashboard = () => {
               value={searchValue}
               onChange={(event) => setSearchValue(event.target.value)}
             />
-
-            <button type="submit" onClick={search}>
-              Pesquisar
-            </button>
+            <Button
+              clickFunction={search}
+              buttonText="Pesquisar"
+              type={"submit"}
+            />
           </div>
         </div>
 

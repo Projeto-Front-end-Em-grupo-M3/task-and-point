@@ -32,6 +32,7 @@ interface IAdminContext {
   setModalDelete: React.Dispatch<SetStateAction<boolean>>;
   getAllUsers: () => Promise<void>;
   getAllTasks: () => Promise<void>;
+  getAllPoints: () => Promise<void>;
 }
 
 export interface IUser {
@@ -249,6 +250,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setModalDelete,
         getAllTasks,
         getAllUsers,
+        getAllPoints,
       }}
     >
       {children}

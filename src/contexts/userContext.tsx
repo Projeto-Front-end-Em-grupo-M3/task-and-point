@@ -13,10 +13,11 @@ interface IUserContext {
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
   user: IUser | null;
-  pointsUser: IPoints[];
+  /* pointsUser: IPoints[]; */
   tasks: ITasks[];
   registerPointUser: () => void;
-  getTasks: () => void;
+  setTasks: React.Dispatch<React.SetStateAction<ITasks[]>>;
+  getTasks: (token:string) => void;
 }
 
 export interface IUserRegister {
@@ -137,7 +138,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
   }
 
   return (
-    <UserContext.Provider value={{ registerUser, loginUser, logout, user, registerPointUser, getTasks }}>
+    <UserContext.Provider value={{ registerUser, loginUser, logout, user, tasks, registerPointUser, setTasks, getTasks }}>
       {children}
     </UserContext.Provider>
   );

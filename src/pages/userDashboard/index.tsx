@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { ITasks, IPoints } from "../../contexts/AdminContext";
+import { string } from "prop-types";
 
 const schema = yup
   .object({
@@ -27,6 +28,7 @@ const userDashboard = () => {
         logout,
         pointsUser,
         tasks,
+        setTasks,
         getTasks,
     } = useContext(UserContext);
 
@@ -38,8 +40,12 @@ const userDashboard = () => {
     } = useForm<ITasks>({ resolver: yupResolver(schema) });
     
 
-    useEffect (() => {async function requetionTasks(params:type) {
-    }}, [])
+    useEffect (() => {
+        const token = localStorage.getItem("@TaskandPoint:token") as string
+        const requestTasks = async () => {
+            await getTasks(token) 
+        }
+    }, [])
     
     
     const submit: SubmitHandler<IUserLogin> = (formData: IUserLogin) => {
@@ -53,7 +59,7 @@ const userDashboard = () => {
 
     const [searchValue, setSearchValue] = useState("");
 
-    const search = (event: { preventDefault: () => void }) => {
+    /* const search = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
         //const date = new Date().getHours; 
@@ -74,7 +80,7 @@ const userDashboard = () => {
         }
 
         setSearchValue("");
-    };
+    }; */
 
 
     return(
@@ -120,7 +126,7 @@ const userDashboard = () => {
                         className="search_input"
                     />
 
-                    <button type="submit" onClick={search} className="button_search">
+                    <button type="submit" /* onClick={search} */ className="button_search">
                         Pesquisar
                     </button>
                 </div>

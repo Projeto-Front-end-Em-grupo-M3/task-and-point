@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const StyledHeader = styled.header`
   max-width: 100%;
@@ -20,13 +21,39 @@ export const StyledHeader = styled.header`
 
   button {
     margin-right: 20px;
+    font-family: var(--font-primary);
+    width: fit-content;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
   }
 
-  img {
-    margin-left: 20px;
+  button:hover {
+    background-color: var(--hover);
+    color: var(--grey-2);
+  }
 
+  /*   img {
+    margin-left: 20px;
     width: 211px;
     height: 45px;
     background-color: antiquewhite;
-  }
+  } */
+`;
+
+export const StyledLink = styled(Link)`
+  margin-right: 20px;
+  font-family: var(--font-primary);
+  width: fit-content;
+  height: 40px;
+  padding: 5px 15px;
+
+  border: none;
+  border-radius: 8px;
+  background-color: var(--grey-2);
+  text-decoration: none;
+  color: var(--hover);
+  text-align: center;
+  display: flex;
+  align-items: center;
 `;

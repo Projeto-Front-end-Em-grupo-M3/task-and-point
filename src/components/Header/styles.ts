@@ -22,6 +22,7 @@ export const StyledHeader = styled.header`
   button {
     margin-right: 20px;
     font-family: var(--font-primary);
+    font-size: 14px;
     width: fit-content;
     padding: 10px 20px;
     border: none;
@@ -33,12 +34,11 @@ export const StyledHeader = styled.header`
     color: var(--grey-2);
   }
 
-  /*   img {
+  img {
     margin-left: 20px;
     width: 211px;
     height: 45px;
-    background-color: antiquewhite;
-  } */
+  }
 `;
 
 export const StyledLink = styled(Link)`
@@ -47,8 +47,7 @@ export const StyledLink = styled(Link)`
   width: fit-content;
   height: 40px;
   padding: 5px 15px;
-
-  border: none;
+  font-size: 14px;
   border-radius: 8px;
   background-color: var(--grey-2);
   text-decoration: none;
@@ -56,4 +55,9 @@ export const StyledLink = styled(Link)`
   text-align: center;
   display: flex;
   align-items: center;
+
+  :hover {
+    background-color: var(--hover);
+    color: var(--grey-2);
+  }
 `;

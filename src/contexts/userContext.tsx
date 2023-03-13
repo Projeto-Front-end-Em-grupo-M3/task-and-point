@@ -30,16 +30,15 @@ export interface IUserLogin {
 export const UserContext = createContext({} as IUserContext);
 
 export const UserContextProvider = ({ children }: IDefaultProps) => {
-  const [isAdmin, setIsAdmin] = useState<boolean | null>();
   const token = localStorage.getItem("@TaskandPoint:token");
   const navigate = useNavigate();
 
   useEffect(() => {
     const Id = () => {
       if (token) {
-        var base64Url = token.split(".")[1];
-        var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        var jsonPayload = decodeURIComponent(
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
           window
             .atob(base64)
             .split("")
@@ -96,8 +95,6 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
         "@TaskandPoint:token",
         JSON.stringify(response.data.accessToken)
       );
-
-      setIsAdmin(response.data.user.isAdm);
 
       toast.success("Login realizado com sucesso");
 

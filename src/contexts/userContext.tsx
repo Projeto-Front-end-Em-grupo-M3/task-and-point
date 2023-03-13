@@ -1,7 +1,8 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
+import { ITasks, IPoints } from "./AdminContext";
 
 export interface IDefaultProps {
   children: ReactNode;
@@ -9,6 +10,11 @@ export interface IDefaultProps {
 
 interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
+  loginUser: (formData: IUserLogin) => Promise<void>;
+  logout: () => void;
+  user: IUser | null;
+  pointsUser: IPoints[];
+  tasks: ITasks[];
 }
 
 export interface IUserRegister {
@@ -17,12 +23,43 @@ export interface IUserRegister {
   password: string;
   office: string;
   shift: string;
+  isAdmin: boolean;
+}
+
+export interface IUserLogin {
+  email: string;
+  password: string;
+}
+
+export interface IUser {
+  id: number;
+  name: string;
+  email: string;
+  isAdm: boolean;
+  password: string;
+  office?: string;
+  shift?: string;
 }
 
 export const UserContext = createContext({} as IUserContext);
 
 export const UserContextProvider = ({ children }: IDefaultProps) => {
+  const [user, setUser] = useState <IUser | null> (null);
+  const [tasks, setTasks] = useState<ITasks[]>([]);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const isAdmin = localStorage.getItem("@TaskandPoint:isAdmin");
+
+    if (isAdmin === "true") {
+      navigate("/adminDashboard");
+    }
+
+    if (isAdmin === "false") {
+      navigate("/userDashboard");
+    }
+  }, []);
 
   const registerUser = async (formData: IUserRegister) => {
     try {
@@ -38,8 +75,47 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     }
   };
 
+  const loginUser = async (formData: IUserLogin) => {
+    try {
+      const response = await api.post("/login", formData);
+
+      setUser(response.data.user)
+
+      localStorage.setItem(
+        "@TaskandPoint:token",
+        JSON.stringify(response.data.accessToken)
+      );
+
+      localStorage.setItem(
+        "@TaskandPoint:isAdmin",
+        JSON.stringify(response.data.user.isAdmin)
+      );
+
+      toast.success("Login realizado com sucesso");
+
+      if (response.data.user.isAdmin === false) {
+        navigate("/userDashboard");
+      } else {
+        navigate("/adminDashboard");
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error.response.data === "Cannot find user") {
+        toast.error("Esse email não existe");
+      }
+      if (error.response.data === "Incorrect password") {
+        toast.error("Email ou Senha incorreto");
+      }
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("@TaskandPoint:token");
+    localStorage.removeItem("@TaskandPoint:isAdmin");
+  };
+
   return (
-    <UserContext.Provider value={{ registerUser }}>
+    <UserContext.Provider value={{ registerUser, loginUser, logout, user }}>
       {children}
     </UserContext.Provider>
   );

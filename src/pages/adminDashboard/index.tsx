@@ -32,6 +32,7 @@ const AdminDashboard = () => {
     tasksSearch,
     getAllTasks,
     getAllUsers,
+    getAdminInfo,
   } = useContext(AdminContext);
 
   const {
@@ -49,6 +50,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     getAllUsers();
     getAllTasks();
+    getAdminInfo(1);
   }, []);
 
   const [searchValue, setSearchValue] = useState("");

@@ -206,9 +206,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
 
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
-    localStorage.removeItem("@TaskandPoint:isAdmin");
     toast.warning("Você saiu");
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {

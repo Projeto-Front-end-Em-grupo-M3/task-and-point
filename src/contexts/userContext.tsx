@@ -49,8 +49,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
       const response = await api.post("/users", formData);
 
       toast.success("Cadastro realizado com sucesso");
-
-      navigate("/");
+      navigate("/login");
     } catch (error: any) {
       if (error.response.data === "Email already exists") {
         toast.error("Esse email já existe");

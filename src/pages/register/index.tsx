@@ -38,6 +38,7 @@ const RegisterForm = () => {
   return (
     <>
       <Header content={"Conecte-se"} />
+
       <StyledForm onSubmit={handleSubmit(submit)}>
         <h2>Crie sua conta</h2>
         <Input
@@ -76,7 +77,8 @@ const RegisterForm = () => {
           <button
             onClick={(event) => {
               event.preventDefault();
-              navigate("/");
+
+              navigate("/login");
             }}
           >
             Conecte-se

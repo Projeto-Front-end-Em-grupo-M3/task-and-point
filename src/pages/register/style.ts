@@ -10,7 +10,6 @@ const StyledForm = styled.form`
   align-items: center;
   padding: 32px 40px;
   gap: 16px;
-
   width: 400px;
   min-height: 511px;
   left: calc(50% - 400px / 2);

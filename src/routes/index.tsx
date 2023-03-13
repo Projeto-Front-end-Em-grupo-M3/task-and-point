@@ -10,10 +10,7 @@ export const AppRoutes = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterForm />} />
-      <Route
-        path="/userDashboard"
-        element={"Colocar a pagina dashboard de usuario"}
-      />
+      <Route path="/userDashboard" element={"<UserDashboard />"} />
       <Route path="/adminDashboard" element={<AdminDashboard />} />
     </Routes>
   );

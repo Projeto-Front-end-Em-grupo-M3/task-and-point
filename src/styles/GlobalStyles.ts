@@ -54,9 +54,9 @@ table {
 button {
   cursor: pointer;
 }
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital@1&display=swap');
 
 :root {
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:ital@1&display=swap');
 
   --Color-primary: #2380FB;
   --Color-primary-2: #0747A6;
@@ -67,41 +67,33 @@ button {
   --grey-3:#868E96;
   --grey-4: #121214;
   --grey-0: #212529;
-
+  --hover: #343A40;
   --color-toast-sucess: #14AE5C;
   --color-toast-error: #BD1A1A;
   --color-toast-alert: #FBBC05;
   --color-toast-info: #8900FF;
-  
-
   --font-primary: 'Nunito', sans-serif;
-
+  --radius: 8px;
+  
   h1{
     font-size: 38px;
     font-weight: bold;
   }
-
   h2{
     font-size: 22px;
     font-weight: bold;
   }
-
   h3{
     font-size: 16px;
     font-weight: bold;
   }
-
   h4{
     font-size: 12px;
     font-weight: bold;
   }
-
 body{
-  font-size: 12px;
-}
-  
+  font-size: 16px;
+  font-family: var(--font-primary);
 
 }
-
-
 `;

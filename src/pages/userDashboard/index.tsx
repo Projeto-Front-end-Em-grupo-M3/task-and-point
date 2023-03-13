@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { ITasks, IPoints } from "../../contexts/AdminContext";
 import { string } from "prop-types";
+import TaskCard from "../../components/TaskCard";
 
 const schema = yup
   .object({
@@ -41,10 +42,12 @@ const userDashboard = () => {
     
 
     useEffect (() => {
-        const token = localStorage.getItem("@TaskandPoint:token") as string
+        const token = localStorage.getItem("@TaskandPoint:token")
+        
         const requestTasks = async () => {
-            await getTasks(token) 
-        }
+            getTasks(token)
+        } 
+        requestTasks()
     }, [])
     
     
@@ -100,11 +103,10 @@ const userDashboard = () => {
             </div>
 
             <div className="buttonPont_div">
-                <button type="submit" 
+                <button 
                     onClick={(event) => {
                         event.preventDefault();
                         registerPointUser();
-                        //navigate("/register");
                     }}
                 >
                     Registar ponto
@@ -140,12 +142,7 @@ const userDashboard = () => {
                 {tasks && tasks.length > 0 ? (
                     tasks.map((task) => {
                         return (
-                        <li key={crypto.randomUUID()}>
-                            <span>{task.task}</span>
-                            <button type="button" onClick={() => (task.status)}>
-                            "Concluído"
-                            </button>
-                        </li>
+                        TaskCard(task)
                         );
                     })
                 ) : (

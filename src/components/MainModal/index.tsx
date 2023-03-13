@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { AdminContext, IUser } from "../../contexts/AdminContext";
+import Button from "../Button";
 import { DivMainModal, DivMainModalWrapper } from "./styles";
 
 const MainModal = () => {
@@ -51,12 +52,16 @@ const MainModal = () => {
                 <div className="dismiss_confirm">
                   <p>Tem certeza que deseja demitir essa pessoa?</p>
                   <div>
-                    <button onClick={() => deleteUser(idButton, `${userName}`)}>
-                      Sim, desejo demitir
-                    </button>
-                    <button onClick={() => setConfirmDeleteModal(false)}>
-                      Cancelar
-                    </button>
+                    <Button
+                      clickFunction={() => deleteUser(idButton, `${userName}`)}
+                      buttonText="Sim, desejo demitir"
+                      type={"submit"}
+                    />
+                    <Button
+                      clickFunction={() => setConfirmDeleteModal(false)}
+                      buttonText="Cancelar"
+                      type={"submit"}
+                    />
                   </div>
                 </div>
               ) : (
@@ -86,7 +91,11 @@ const MainModal = () => {
                     modalPoints && (
                       <div>
                         <p>Sem pontos registrados ainda</p>
-                        <button onClick={() => setModalPoints(false)}>X</button>
+                        <Button
+                          clickFunction={() => setModalPoints(false)}
+                          buttonText="X"
+                          type={"button"}
+                        />
                       </div>
                     )
                   )}

@@ -1,9 +1,9 @@
 import { StyledButton } from "./style";
 
 interface IButton {
-  clickFunction: any;
-  buttonText: string;
-  type: "reset" | "button" | "submit" | undefined;
+  clickFunction?: any;
+  buttonText?: string;
+  type?: "reset" | "button" | "submit" | undefined;
 }
 
 const Button = ({ clickFunction, buttonText, type }: IButton) => {

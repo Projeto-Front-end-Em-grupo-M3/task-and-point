@@ -154,9 +154,11 @@ const AdminDashboard = () => {
                     <p>{user.email}</p>
                     <p>{user.office}</p>
                     <span>{user.shift}</span>
-                    <button type="button" onClick={() => openModal(user.id)}>
-                      Ver mais
-                    </button>
+                    <Button
+                      clickFunction={() => openModal(user.id)}
+                      buttonText="Ver mais"
+                      type={"submit"}
+                    />
                   </li>
                 );
               })
@@ -187,7 +189,7 @@ const AdminDashboard = () => {
               register={register("task")}
               error={errors.task}
             />
-            <button type="submit">Criar</button>
+            <Button buttonText="Criar" type={"submit"} />
           </div>
         </form>
 
@@ -205,7 +207,11 @@ const AdminDashboard = () => {
                     <h2>{task.name}</h2>
                     <p>{task.task}</p>
                     <p>{task.status}</p>
-                    <button onClick={() => deleteTask(task.id)}>Excluir</button>
+                    <Button
+                      clickFunction={() => deleteTask(task.id)}
+                      buttonText="Excluir"
+                      type={"submit"}
+                    />
                   </li>
                 );
               })

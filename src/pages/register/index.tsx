@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IUserRegister, UserContext } from "../../contexts/userContext";
 import StyledForm from "./style";
+import Header from "../../components/Header";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -37,6 +38,8 @@ const RegisterForm = () => {
 
   return (
     <>
+      <Header content={"Conecte-se"} />
+
       <StyledForm onSubmit={handleSubmit(submit)}>
         <h2>Crie sua conta</h2>
         <Input
@@ -75,6 +78,7 @@ const RegisterForm = () => {
           <button
             onClick={(event) => {
               event.preventDefault();
+
               navigate("/login");
             }}
           >

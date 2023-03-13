@@ -31,7 +31,8 @@ const RegisterForm = () => {
   const { registerUser } = useContext(UserContext);
 
   const submit: SubmitHandler<IUserRegister> = (formData: IUserRegister) => {
-    registerUser({ ...formData, isAdm: false });
+    // registerUser({ ...formData, isAdm: false });
+    console.log(formData);
   };
 
   return (

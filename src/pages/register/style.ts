@@ -1,14 +1,15 @@
 import styled from "styled-components";
 
 const StyledForm = styled.form`
+  margin: 0 auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 32px 40px;
   gap: 16px;
-
-  position: absolute;
   width: 400px;
   min-height: 511px;
   left: calc(50% - 400px / 2);

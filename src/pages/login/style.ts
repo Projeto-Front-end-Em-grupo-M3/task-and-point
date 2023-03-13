@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const StyledForm = styled.form`
+  margin: 0 auto;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,7 +10,8 @@ const StyledForm = styled.form`
   padding: 32px 40px;
   gap: 32px;
 
-  position: absolute;
+  /*   position: absolute;
+ */
   width: 400px;
   height: 343px;
   left: calc(50% - 400px / 2);
@@ -17,6 +20,7 @@ const StyledForm = styled.form`
   background: #ffffff;
   box-shadow: 5px 6px 60px rgba(128, 128, 128, 0.5);
   border-radius: 16px;
+  font-family: "Nunito";
 
   > h2 {
     font-family: "Nunito";

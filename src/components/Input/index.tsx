@@ -2,13 +2,11 @@ import { TextField } from "@mui/material";
 import { SetStateAction } from "react";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form/dist/types";
 import { StyledFieldset } from "./style";
-
 interface IInput {
   label?: string;
   register?: UseFormRegisterReturn<string>;
   error?: FieldError;
   type: "text" | "password" | "email" | "checkbox";
-  placeholder?: string;
   value?: string;
   onChange?: (event: {
     target: {
@@ -16,21 +14,11 @@ interface IInput {
     };
   }) => void;
 }
-
-const Input = ({
-  label,
-  register,
-  error,
-  placeholder,
-  value,
-  type,
-  onChange,
-}: IInput) => (
+const Input = ({ label, register, error, value, type, onChange }: IInput) => (
   <StyledFieldset>
     <TextField
       value={value}
       label={label}
-      placeholder={placeholder}
       type={type}
       {...register}
       onChange={onChange}
@@ -38,5 +26,4 @@ const Input = ({
     <p> {error?.message} </p>
   </StyledFieldset>
 );
-
 export default Input;

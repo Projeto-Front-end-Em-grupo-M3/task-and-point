@@ -128,6 +128,7 @@ const AdminDashboard = () => {
           <div className="search_input">
             <Input
               type="text"
+              label="Digitar pesquisa"
               value={searchValue}
               onChange={(event) => setSearchValue(event.target.value)}
             />
@@ -176,7 +177,6 @@ const AdminDashboard = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3>Criar e atribuir tarefas</h3>
           <div>
-            <label htmlFor="users">Escolha o funcionário</label>
             <select id="users" {...register("name")}>
               <option value="">Escolha o funcionário</option>
               {users?.map((user) => {
@@ -188,12 +188,14 @@ const AdminDashboard = () => {
               })}
             </select>
 
-            <Input
-              type="text"
-              label="Escreva a tarefa"
-              register={register("task")}
-              error={errors.task}
-            />
+            <div id="test">
+              <Input
+                type="text"
+                label="Escreva a tarefa"
+                register={register("task")}
+                error={errors.task}
+              />
+            </div>
             <Button buttonText="+ Criar" type={"submit"} />
           </div>
         </form>
@@ -211,7 +213,7 @@ const AdminDashboard = () => {
                   <li key={crypto.randomUUID()}>
                     <h2>{task.name}</h2>
                     <p>{task.task}</p>
-                    <p>{task.status}</p>
+                    <p id="status_task">{task.status}</p>
                     <img
                       id="trashCan"
                       src={trashCan}

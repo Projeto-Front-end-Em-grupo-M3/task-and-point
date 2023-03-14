@@ -14,6 +14,7 @@ interface IInput {
     };
   }) => void;
 }
+
 const Input = ({ label, register, error, value, type, onChange }: IInput) => (
   <StyledFieldset>
     <TextField

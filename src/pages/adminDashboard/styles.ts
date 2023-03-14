@@ -28,6 +28,21 @@ export const StyledDash = styled.div`
   #more {
     position: absolute;
     right: 16px;
+    @media (max-width: 600px) {
+      top: 20px;
+    }
+  }
+
+  #trashCan {
+    @media (max-width: 600px) {
+      position: absolute;
+      right: 10px;
+      top: 15px;
+    }
+  }
+
+  #status_task {
+    color: var(--Color-primary);
   }
 
   #icon {
@@ -55,6 +70,11 @@ export const StyledDash = styled.div`
     align-items: center;
     height: 51px;
     margin-bottom: 20px;
+    @media (max-width: 660px) {
+      flex-direction: column;
+      height: 120px;
+      align-items: flex-start;
+    }
   }
 
   .info_login {
@@ -68,6 +88,7 @@ export const StyledDash = styled.div`
     display: flex;
     flex-direction: row;
     gap: 8px;
+    align-items: center;
   }
 
   li {
@@ -90,6 +111,9 @@ export const StyledDash = styled.div`
     background-color: rgba(245, 245, 245, 1);
     border-radius: 8px 8px 0px 0px;
     padding: 0px 16px;
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
   .sub_employeesList_header {
     max-width: 100%;
@@ -97,7 +121,8 @@ export const StyledDash = styled.div`
     width: 85%;
     justify-content: space-between;
     @media (max-width: 600px) {
-      display: none;
+      flex-direction: column;
+      height: 95px;
     }
   }
 
@@ -107,6 +132,7 @@ export const StyledDash = styled.div`
 
   .employeesList_section > ul {
     max-width: 100%;
+    height: fit-content;
   }
 
   .employeesList_section > ul > li {
@@ -114,12 +140,13 @@ export const StyledDash = styled.div`
     justify-content: space-between;
     align-items: center;
     max-width: 100%;
-    height: 83px;
+    height: 90px;
     margin: 0px 16px 0px 16px;
     border-bottom: 1px solid rgba(224, 224, 224, 1);
     @media (max-width: 600px) {
       flex-direction: column;
       align-items: flex-start;
+      padding: 10px 16px 10px 16px;
     }
   }
 
@@ -128,27 +155,37 @@ export const StyledDash = styled.div`
     /*     align-items: flex-start;
     justify-content: center; */
     flex-direction: column;
-
+    max-width: 100%;
     padding: 25px 0px;
   }
 
   form > div {
+    max-width: 100%;
+
+    margin-top: 20px;
+    width: 550px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 610px) {
+      flex-direction: column;
+      align-items: flex-start;
+      height: 200px;
+    }
   }
 
   form > div > select {
     padding: 15px;
-    width: 200px;
-    border-radius: var(--radius);
+    width: 210px;
+    color: #6a6a6a;
+    border-radius: 4px;
     border: 1px solid rgba(224, 224, 224, 1);
     font-family: var(--font-primary);
-    font-size: 14px;
+    font-size: 16px;
 
     :focus {
-      border: 2px solid var(--Color-secondary);
+      border: 2px solid #2380fb;
     }
   }
 `;

@@ -82,6 +82,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     getAllUsers();
     getAdminInfo(1);
     getAllTasks();
+    getAllPoints();
   }, []);
 
   const getAllUsers = async () => {

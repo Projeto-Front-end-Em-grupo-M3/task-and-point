@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { IUserRegister, UserContext } from "../../contexts/userContext";
 import StyledForm from "./style";
 import Header from "../../components/Header";
+import { useContext, useEffect } from "react";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -13,7 +14,6 @@ const RegisterForm = () => {
   useEffect(() => {
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4NzE4MDI2LCJleHAiOjE2Nzg3MjE2MjYsInN1YiI6IjEifQ.qLeDYmfXVt2O3xjBYGwMBqEhlK9CUnoS_ZNcn8fmQ4I";
-    console.log(parseJwt(token));
   }, []);
 
   function parseJwt(token: string) {

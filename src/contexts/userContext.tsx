@@ -88,7 +88,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
             ? navigate("/adminDashboard")
             : navigate("/userDashboard");
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
     };
@@ -103,9 +103,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
       toast.success("Cadastro realizado com sucesso");
       navigate("/login");
     } catch (error: any) {
-      if (error.response.data === "Email already exists") {
-        toast.error("Esse email já existe");
-      }
+      toast.error("Esse email já existe");
     }
   };
 
@@ -121,20 +119,18 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
       );
 
       toast.success("Login realizado com sucesso");
-      console.log(response.data.user);
-      if (response.data.user.isAdm === false) {
+      if (response.data.user.isAdm === true) {
+        navigate("/adminDashboard");
+      } else if (response.data.user.isAdm == "false") {
         navigate("/userDashboard");
       } else {
-        navigate("/adminDashboard");
+        navigate("/userDashboard");
       }
     } catch (error: any) {
-      console.log(error);
-      /* if (error.response.data === "Cannot find user") {
-        toast.error("Esse email não existe");
-      }
-      if (error.response.data === "Incorrect password") {
-        toast.error("Email ou Senha incorreto");
-      } */
+      console.error(error);
+      toast.error(
+        "Problema de conexão (API), tente novamente em alguns minutos"
+      );
     }
   };
 
@@ -147,8 +143,6 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
   const registerPointUser = () => {
     const date = new Date();
     const idUser = user?.id;
-    console.log(idUser);
-    console.log(date);
   };
 
   const getTasks = async (token: string | null) => {

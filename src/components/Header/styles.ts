@@ -27,6 +27,9 @@ export const StyledHeader = styled.header`
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
+    @media (max-width: 500px) {
+      padding: 0px 0px;
+    }
   }
 
   button:hover {
@@ -38,6 +41,10 @@ export const StyledHeader = styled.header`
     margin-left: 20px;
     width: 186px;
     height: 39px;
+    @media (max-width: 500px) {
+      width: 166px;
+      height: 34px;
+    }
   }
 `;
 
@@ -55,6 +62,9 @@ export const StyledLink = styled(Link)`
   text-align: center;
   display: flex;
   align-items: center;
+  @media (max-width: 500px) {
+    padding: 0px 8px;
+  }
 
   :hover {
     background-color: var(--hover);

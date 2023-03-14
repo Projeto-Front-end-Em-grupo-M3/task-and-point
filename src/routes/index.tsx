@@ -3,6 +3,7 @@ import AdminDashboard from "../pages/adminDashboard";
 import LandingPage from "../pages/landingPage";
 import LoginPage from "../pages/login";
 import RegisterForm from "../pages/register";
+import UserDashboard from "../pages/userDashboard";
 
 export const AppRoutes = () => {
   return (
@@ -10,7 +11,7 @@ export const AppRoutes = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterForm />} />
-      <Route path="/userDashboard" element={"<UserDashboard />"} />
+      <Route path="/userDashboard" element={<UserDashboard />} />
       <Route path="/adminDashboard" element={<AdminDashboard />} />
     </Routes>
   );

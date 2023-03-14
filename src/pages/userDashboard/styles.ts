@@ -42,8 +42,6 @@ export const StyledDash = styled.div`
     align-items: center;
     height: 37px;
     width: 360px;
-    /* border-radius: 3px; */
-    /* border: 1px solid rgba(224, 224, 224, 1); */
     padding: 10px;
   }
 
@@ -92,7 +90,7 @@ export const StyledDash = styled.div`
     }
   }
 
-  .ident_user{
+  .ident_user {
     max-width: 1200px;
     width: 100%;
     height: 70px;
@@ -102,7 +100,7 @@ export const StyledDash = styled.div`
     align-items: center;
   }
 
-  .info_user_div{
+  .info_user_div {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -112,7 +110,7 @@ export const StyledDash = styled.div`
     margin-left: 90px;
   }
 
-  .img_avatar{
+  .img_avatar {
     max-height: 96%;
     padding: 10px;
   }
@@ -171,7 +169,7 @@ export const StyledDash = styled.div`
     align-items: center;
   }
 
-  .buttonPont_div{
+  .buttonPont_div {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -16,7 +16,8 @@ const schema = yup
     task: yup.string().required("Digite a atividade"),
   })
   .required();
-const userDashboard = () => {
+
+const UserDashboard = () => {
   const navigate = useNavigate();
   const { user, registerPointUser, loginUser, tasks, getTasks } =
     useContext(UserContext);
@@ -46,11 +47,6 @@ const userDashboard = () => {
       <StyledDash>
         <div className="info_div">
           <div className="ident_user">
-            <img
-              src="./src/assets/img/user1.svg"
-              className="img_avatar"
-              alt="avatar"
-            ></img>
             <h1>Usuário: {user ? user.name : null}</h1>
           </div>
           <div className="info_user_div">
@@ -82,10 +78,7 @@ const userDashboard = () => {
               onChange={(event) => setSearchValue(event.target.value)}
               className="search_input"
             />
-            <button
-              type="submit"
-              /* onClick={search} */ className="button_search"
-            >
+            <button type="submit" className="button_search">
               Pesquisar
             </button>
           </div>
@@ -110,4 +103,4 @@ const userDashboard = () => {
     </>
   );
 };
-export default userDashboard;
+export default UserDashboard;

@@ -1,5 +1,4 @@
-/* import { Link } from "react-router-dom";
- */ import styled from "styled-components";
+import styled from "styled-components";
 
 export const StyledDash = styled.div`
   font-family: var(--font-primary);
@@ -152,8 +151,6 @@ export const StyledDash = styled.div`
 
   form {
     display: flex;
-    /*     align-items: flex-start;
-    justify-content: center; */
     flex-direction: column;
     max-width: 100%;
     padding: 25px 0px;

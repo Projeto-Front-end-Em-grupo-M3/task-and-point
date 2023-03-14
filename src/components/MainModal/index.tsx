@@ -39,15 +39,22 @@ const MainModal = () => {
                     <p>{user.office}</p>
                     <span>{user.shift}</span>
                   </div>
-                  <button onClick={() => setModal(false)}>Fechar</button>
+                  <Button
+                    buttonText="Fechar"
+                    type={"submit"}
+                    clickFunction={() => setModal(false)}
+                  />
                 </header>
               </>
             )}
 
             <div className="main_div">
-              <button type="button" onClick={() => setConfirmDeleteModal(true)}>
-                Demitir
-              </button>
+              <Button
+                type="button"
+                buttonText="Demitir"
+                clickFunction={() => setConfirmDeleteModal(true)}
+              />
+
               {confirmDeleteModal ? (
                 <div className="dismiss_confirm">
                   <p>Tem certeza que deseja demitir essa pessoa?</p>
@@ -66,12 +73,12 @@ const MainModal = () => {
                 </div>
               ) : (
                 <>
-                  <button
+                  <Button
                     type="button"
-                    onClick={() => openModalPoints(idButton)}
-                  >
-                    Ver folha ponto
-                  </button>
+                    buttonText="Ver folha ponto"
+                    clickFunction={() => openModalPoints(idButton)}
+                  />
+
                   {modalPoints && pointsUser.length > 0 ? (
                     <div className="modal_points">
                       <ul className="list_points">
@@ -85,12 +92,16 @@ const MainModal = () => {
                             )
                         )}
                       </ul>
-                      <button onClick={() => setModalPoints(false)}>X</button>
+                      <Button
+                        clickFunction={() => setModalPoints(false)}
+                        buttonText="X"
+                        type={"button"}
+                      />
                     </div>
                   ) : (
                     modalPoints && (
-                      <div>
-                        <p>Sem pontos registrados ainda</p>
+                      <div className="no-points">
+                        <h3>Sem pontos registrados ainda</h3>
                         <Button
                           clickFunction={() => setModalPoints(false)}
                           buttonText="X"

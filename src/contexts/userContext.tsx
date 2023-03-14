@@ -10,11 +10,11 @@ export interface IDefaultProps {
 
 interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
-  registData: () => void;
+  // registData: () => void;
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
   user: IUser | null;
-  pointsUser: IPoints[];
+  // pointsUser: IPoints[];
   tasks: ITasks[];
   registerPointUser: () => void;
   setTasks: React.Dispatch<React.SetStateAction<ITasks[]>>;
@@ -48,10 +48,8 @@ export interface IUser {
 export const UserContext = createContext({} as IUserContext);
 
 export const UserContextProvider = ({ children }: IDefaultProps) => {
-
   const [user, setUser] = useState<IUser | null>(null);
   const [tasks, setTasks] = useState<ITasks[]>([]);
-
 
   const token = localStorage.getItem("@TaskandPoint:token");
 
@@ -81,7 +79,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
         try {
           const response = await api.get(`/users/${id}`, {
             headers: {
-              Authorization: `Bearer ${JSON.parse(token)}`,
+              Authorization: `Bearer ${token}`,
             },
           });
 
@@ -95,18 +93,6 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     };
 
     isAdm(Id());
-  }, []);
-
-  useEffect(() => {
-    const isAdmin = localStorage.getItem("@TaskandPoint:isAdmin");
-
-    if (isAdmin === "true") {
-      navigate("/adminDashboard");
-    }
-
-    if (isAdmin === "false") {
-      navigate("/userDashboard");
-    }
   }, []);
 
   const registerUser = async (formData: IUserRegister) => {
@@ -125,8 +111,6 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
   const loginUser = async (formData: IUserLogin) => {
     try {
       const response = await api.post("/login", formData);
-
-
 
       setUser(response.data.user);
 

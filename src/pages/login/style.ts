@@ -10,11 +10,8 @@ const StyledForm = styled.form`
   padding: 32px 40px;
   gap: 32px;
 
-<<<<<<< HEAD
-=======
   /*   position: absolute;
  */
->>>>>>> develop
   width: 400px;
   height: 343px;
 

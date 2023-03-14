@@ -8,7 +8,6 @@ interface IInput {
   register?: UseFormRegisterReturn<string>;
   error?: FieldError;
   type: "text" | "password" | "email" | "checkbox";
-  placeholder?: string;
   value?: string;
   onChange?: (event: {
     target: {
@@ -17,20 +16,11 @@ interface IInput {
   }) => void;
 }
 
-const Input = ({
-  label,
-  register,
-  error,
-  placeholder,
-  value,
-  type,
-  onChange,
-}: IInput) => (
+const Input = ({ label, register, error, value, type, onChange }: IInput) => (
   <StyledFieldset>
     <TextField
       value={value}
       label={label}
-      placeholder={placeholder}
       type={type}
       {...register}
       onChange={onChange}

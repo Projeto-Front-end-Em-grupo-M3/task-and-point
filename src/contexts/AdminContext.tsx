@@ -97,7 +97,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setUsers(employes);
         setEmployeSearch(employes);
       } catch (error) {
-        toast.error("Algo deu errado, tente novamente mais tarde");
+        console.error("Algo deu errado, tente novamente mais tarde");
       }
     }
   };
@@ -111,7 +111,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/users/${id}`);
         setAdm(response.data);
       } catch (error) {
-        toast.error("Algo deu errado, tente novamente mais tarde");
+        console.error("Algo deu errado, tente novamente mais tarde");
       }
     }
   };
@@ -125,7 +125,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/tasks/${id}`);
         setTasks(response.data.taskList);
       } catch (error) {
-        toast.error("Algo deu errado, tente novamente mais tarde");
+        console.error("Algo deu errado, tente novamente mais tarde");
       }
     }
   };
@@ -140,7 +140,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks(response.data);
         setTasksSearch(response.data);
       } catch (error) {
-        toast.error("Tente novamente");
+        console.error("Tente novamente");
       }
     }
   };
@@ -155,7 +155,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks([...tasks, response.data]);
         toast.success("Atividade cadastrada");
       } catch (error) {
-        toast.error("Tente novamente");
+        console.error("Tente novamente");
       }
     }
   };
@@ -175,7 +175,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
 
         toast.success("Atividade excluída");
       } catch (error) {
-        toast.error("Tente novamente");
+        console.error("Tente novamente");
       }
     }
   };
@@ -198,7 +198,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setModal(false);
         toast.warning("usuário excluído");
       } catch (error) {
-        toast.error("Tente novamente");
+        console.error("Tente novamente");
       }
     }
   };
@@ -212,7 +212,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/points/`);
         setAllPoints(response.data);
       } catch (error) {
-        toast.error("Tente novamente");
+        console.error("Tente novamente");
       }
     }
   };

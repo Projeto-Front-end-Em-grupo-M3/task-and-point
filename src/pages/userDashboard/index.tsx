@@ -9,6 +9,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { ITasks, IPoints } from "../../contexts/AdminContext";
+import { string } from "prop-types";
+import TaskCard from "../../components/TaskCard";
 
 const schema = yup
   .object({
@@ -22,11 +24,13 @@ const userDashboard = () => {
     const {
         user,
         registerUser,
-        registData,
+        registerPointUser,
         loginUser,
         logout,
         pointsUser,
         tasks,
+        setTasks,
+        getTasks,
     } = useContext(UserContext);
 
     const {
@@ -34,7 +38,18 @@ const userDashboard = () => {
         handleSubmit,
         formState: { errors },
         reset,
-    } = useForm<ITasks>({ resolver: yupResolver(schema) });    
+    } = useForm<ITasks>({ resolver: yupResolver(schema) });
+    
+
+    useEffect (() => {
+        const token = localStorage.getItem("@TaskandPoint:token")
+        
+        const requestTasks = async () => {
+            getTasks(token)
+        } 
+        requestTasks()
+    }, [])
+    
     
     const submit: SubmitHandler<IUserLogin> = (formData: IUserLogin) => {
         loginUser(formData);
@@ -47,7 +62,7 @@ const userDashboard = () => {
 
     const [searchValue, setSearchValue] = useState("");
 
-    const search = (event: { preventDefault: () => void }) => {
+    /* const search = (event: { preventDefault: () => void }) => {
         event.preventDefault();
 
         //const date = new Date().getHours; 
@@ -68,7 +83,7 @@ const userDashboard = () => {
         }
 
         setSearchValue("");
-    };
+    }; */
 
 
     return(
@@ -88,11 +103,10 @@ const userDashboard = () => {
             </div>
 
             <div className="buttonPont_div">
-                <button type="submit" 
+                <button 
                     onClick={(event) => {
                         event.preventDefault();
-                        registData();
-                        //navigate("/register");
+                        registerPointUser();
                     }}
                 >
                     Registar ponto
@@ -114,7 +128,7 @@ const userDashboard = () => {
                         className="search_input"
                     />
 
-                    <button type="submit" onClick={search} className="button_search">
+                    <button type="submit" /* onClick={search} */ className="button_search">
                         Pesquisar
                     </button>
                 </div>
@@ -128,12 +142,7 @@ const userDashboard = () => {
                 {tasks && tasks.length > 0 ? (
                     tasks.map((task) => {
                         return (
-                        <li key={crypto.randomUUID()}>
-                            <span>{task.task}</span>
-                            <button type="button" onClick={() => (task.status)}>
-                            "Concluído"
-                            </button>
-                        </li>
+                        TaskCard(task)
                         );
                     })
                 ) : (

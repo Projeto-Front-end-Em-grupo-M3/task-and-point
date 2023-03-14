@@ -16,6 +16,9 @@ interface IUserContext {
   user: IUser | null;
   pointsUser: IPoints[];
   tasks: ITasks[];
+  registerPointUser: () => void;
+  setTasks: React.Dispatch<React.SetStateAction<ITasks[]>>;
+  getTasks: (token: string | null) => void;
 }
 
 export interface IUserRegister {
@@ -93,10 +96,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
 
       setUser(response.data.user);
 
-      localStorage.setItem(
-        "@TaskandPoint:token",
-        JSON.stringify(response.data.accessToken)
-      );
+      localStorage.setItem("@TaskandPoint:token", response.data.accessToken);
 
       localStorage.setItem(
         "@TaskandPoint:isAdmin",
@@ -126,16 +126,39 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     localStorage.removeItem("@TaskandPoint:isAdmin");
   };
 
-  const registData = () => {
+  const registerPointUser = () => {
     const date = new Date();
     const idUser = user?.id;
     console.log(idUser);
     console.log(date);
   };
 
+  const getTasks = async (token: string | null) => {
+    try {
+      const response = await api.get("/tasks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setTasks(response.data);
+    } catch (error: any) {
+      toast.error(error);
+    }
+  };
+
   return (
     <UserContext.Provider
-      value={{ registerUser, loginUser, logout, user, registData }}
+      value={{
+        registerUser,
+        loginUser,
+        logout,
+        user,
+        tasks,
+        registerPointUser,
+        setTasks,
+        getTasks,
+      }}
     >
       {children}
     </UserContext.Provider>

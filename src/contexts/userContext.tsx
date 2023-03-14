@@ -126,6 +126,8 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     try {
       const response = await api.post("/login", formData);
 
+
+
       setUser(response.data.user);
 
       localStorage.setItem("@TaskandPoint:token", response.data.accessToken);

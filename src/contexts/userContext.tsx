@@ -10,10 +10,11 @@ export interface IDefaultProps {
 
 interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
-
+  // registData: () => void;
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
   user: IUser | null;
+  // pointsUser: IPoints[];
 
   tasks: ITasks[];
   registerPointUser: () => void;
@@ -55,6 +56,46 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const Id = () => {
+      if (token) {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+          window
+            .atob(base64)
+            .split("")
+            .map(function (c) {
+              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+        );
+
+        return JSON.parse(jsonPayload).sub;
+      }
+    };
+
+    const isAdm = async (id: string) => {
+      if (token) {
+        try {
+          const response = await api.get(`/users/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          response.data.isAdm
+            ? navigate("/adminDashboard")
+            : navigate("/userDashboard");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    isAdm(Id());
+  }, []);
+
   const registerUser = async (formData: IUserRegister) => {
     try {
       const response = await api.post("/users", formData);
@@ -71,8 +112,6 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
   const loginUser = async (formData: IUserLogin) => {
     try {
       const response = await api.post("/login", formData);
-
-
 
       setUser(response.data.user);
 

@@ -128,7 +128,6 @@ const AdminDashboard = () => {
           <div className="search_input">
             <Input
               type="text"
-              placeholder="Digitar pesquisa"
               value={searchValue}
               onChange={(event) => setSearchValue(event.target.value)}
             />

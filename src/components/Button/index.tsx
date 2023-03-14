@@ -1,3 +1,4 @@
+
 import { StyledButton } from "./style";
 
 interface IButton {
@@ -12,5 +13,6 @@ const Button = ({ clickFunction, buttonText, type }: IButton) => {
       {buttonText}
     </StyledButton>
   );
+
 };
 export default Button;

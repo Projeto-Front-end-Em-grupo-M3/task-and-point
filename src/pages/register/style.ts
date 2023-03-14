@@ -10,10 +10,6 @@ const StyledForm = styled.form`
   align-items: center;
   padding: 22px 40px;
   gap: 16px;
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
   width: 400px;
   min-height: 511px;
 

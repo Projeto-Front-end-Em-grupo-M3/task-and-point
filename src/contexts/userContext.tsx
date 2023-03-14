@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
+import { ITasks, IPoints } from "./AdminContext";
 
 export interface IDefaultProps {
   children: ReactNode;
@@ -9,8 +10,16 @@ export interface IDefaultProps {
 
 interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
+  // registData: () => void;
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
+  user: IUser | null;
+  // pointsUser: IPoints[];
+
+  tasks: ITasks[];
+  registerPointUser: () => void;
+  setTasks: React.Dispatch<React.SetStateAction<ITasks[]>>;
+  getTasks: (token: string | null) => void;
 }
 
 export interface IUserRegister {
@@ -27,10 +36,24 @@ export interface IUserLogin {
   password: string;
 }
 
+export interface IUser {
+  id: number;
+  name: string;
+  email: string;
+  isAdm: boolean;
+  password: string;
+  office?: string;
+  shift?: string;
+}
+
 export const UserContext = createContext({} as IUserContext);
 
 export const UserContextProvider = ({ children }: IDefaultProps) => {
+  const [user, setUser] = useState<IUser | null>(null);
+  const [tasks, setTasks] = useState<ITasks[]>([]);
+
   const token = localStorage.getItem("@TaskandPoint:token");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,7 +80,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
         try {
           const response = await api.get(`/users/${id}`, {
             headers: {
-              Authorization: `Bearer ${JSON.parse(token)}`,
+              Authorization: `Bearer ${token}`,
             },
           });
 
@@ -90,13 +113,15 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     try {
       const response = await api.post("/login", formData);
 
+      setUser(response.data.user);
+
       localStorage.setItem(
         "@TaskandPoint:token",
         JSON.stringify(response.data.accessToken)
       );
 
       toast.success("Login realizado com sucesso");
-
+      console.log(response.data.user);
       if (response.data.user.isAdm === false) {
         navigate("/userDashboard");
       } else {
@@ -104,12 +129,12 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
       }
     } catch (error: any) {
       console.log(error);
-      if (error.response.data === "Cannot find user") {
+      /* if (error.response.data === "Cannot find user") {
         toast.error("Esse email não existe");
       }
       if (error.response.data === "Incorrect password") {
         toast.error("Email ou Senha incorreto");
-      }
+      } */
     }
   };
 
@@ -119,8 +144,41 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     navigate("/");
   };
 
+  const registerPointUser = () => {
+    const date = new Date();
+    const idUser = user?.id;
+    console.log(idUser);
+    console.log(date);
+  };
+
+  const getTasks = async (token: string | null) => {
+    try {
+      const response = await api.get("/tasks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setTasks(response.data);
+    } catch (error: any) {
+      toast.error(error);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ registerUser, loginUser, logout }}>
+    <UserContext.Provider
+      value={{
+        registerUser,
+
+        loginUser,
+        logout,
+        user,
+        tasks,
+        registerPointUser,
+        setTasks,
+        getTasks,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

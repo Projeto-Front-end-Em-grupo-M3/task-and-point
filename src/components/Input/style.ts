@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledFieldset = styled.fieldset`
+
   > div > label {
     font-family: "Nunito";
     font-style: normal;
@@ -12,4 +13,5 @@ export const StyledFieldset = styled.fieldset`
   > div {
     border-radius: 8px;
   }
+
 `;

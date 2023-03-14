@@ -10,7 +10,7 @@ export interface IDefaultProps {
 
 interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
-  registData: () => void
+  registData: () => void;
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
   user: IUser | null;
@@ -45,10 +45,22 @@ export interface IUser {
 export const UserContext = createContext({} as IUserContext);
 
 export const UserContextProvider = ({ children }: IDefaultProps) => {
-  const [user, setUser] = useState <IUser | null> (null);
+  const [user, setUser] = useState<IUser | null>(null);
   const [tasks, setTasks] = useState<ITasks[]>([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const isAdmin = localStorage.getItem("@TaskandPoint:isAdmin");
+
+    if (isAdmin === "true") {
+      navigate("/adminDashboard");
+    }
+
+    if (isAdmin === "false") {
+      navigate("/userDashboard");
+    }
+  }, []);
 
   useEffect(() => {
     const isAdmin = localStorage.getItem("@TaskandPoint:isAdmin");
@@ -67,7 +79,6 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
       const response = await api.post("/users", formData);
 
       toast.success("Cadastro realizado com sucesso");
-
       navigate("/login");
     } catch (error: any) {
       if (error.response.data === "Email already exists") {
@@ -80,7 +91,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     try {
       const response = await api.post("/login", formData);
 
-      setUser(response.data.user)
+      setUser(response.data.user);
 
       localStorage.setItem(
         "@TaskandPoint:token",
@@ -117,13 +128,15 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
 
   const registData = () => {
     const date = new Date();
-    const idUser = user?.id
-    console.log(idUser)
-    console.log(date)
-  }
+    const idUser = user?.id;
+    console.log(idUser);
+    console.log(date);
+  };
 
   return (
-    <UserContext.Provider value={{ registerUser, loginUser, logout, user, registData }}>
+    <UserContext.Provider
+      value={{ registerUser, loginUser, logout, user, registData }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import StyledForm from "./style";
+import Header from "../../components/Header";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -32,34 +33,37 @@ const LoginPage = () => {
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit(submit)}>
-      <h2>Conectar</h2>
-      <Input
-        label="Email"
-        register={register("email")}
-        error={errors.email}
-        type="email"
-      />
+    <>
+      <Header content={"Inscreva-se"} />
+      <StyledForm onSubmit={handleSubmit(submit)}>
+        <h2>Conectar</h2>
+        <Input
+          label="Email"
+          register={register("email")}
+          error={errors.email}
+          type="email"
+        />
 
-      <Input
-        label="Senha"
-        register={register("password")}
-        error={errors.password}
-        type="password"
-      />
-      <button type="submit">Conecte-se</button>
-      <div>
-        <h3>Não possui uma conta ?</h3>
-        <button
-          onClick={(event) => {
-            event.preventDefault();
-            navigate("/register");
-          }}
-        >
-          Inscreva-se
-        </button>
-      </div>
-    </StyledForm>
+        <Input
+          label="Senha"
+          register={register("password")}
+          error={errors.password}
+          type="password"
+        />
+        <button type="submit">Conecte-se</button>
+        <div>
+          <h3>Não possui uma conta ?</h3>
+          <button
+            onClick={(event) => {
+              event.preventDefault();
+              navigate("/register");
+            }}
+          >
+            Inscreva-se
+          </button>
+        </div>
+      </StyledForm>
+    </>
   );
 };
 

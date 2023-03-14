@@ -30,6 +30,8 @@ interface IAdminContext {
   setModalPoints: React.Dispatch<SetStateAction<boolean>>;
   modalDelete: boolean;
   setModalDelete: React.Dispatch<SetStateAction<boolean>>;
+  getAllUsers: () => Promise<void>;
+  getAllTasks: () => Promise<void>;
 }
 
 export interface IUser {
@@ -204,9 +206,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
 
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
-    localStorage.removeItem("@TaskandPoint:isAdmin");
     toast.warning("Você saiu");
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -246,6 +247,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setModalPoints,
         modalDelete,
         setModalDelete,
+        getAllTasks,
+        getAllUsers,
       }}
     >
       {children}

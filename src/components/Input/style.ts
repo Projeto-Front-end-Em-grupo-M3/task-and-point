@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
 export const StyledFieldset = styled.fieldset`
-  font-family: "Nunito";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 102px;
-  line-height: 16px;
+  > div {
+    border-radius: var(--radius);
+  }
 
-  color: #808080;
+  > div > label {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+
+    color: #808080;
+  }
 `;

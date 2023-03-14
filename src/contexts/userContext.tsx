@@ -90,10 +90,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     try {
       const response = await api.post("/login", formData);
 
-      localStorage.setItem(
-        "@TaskandPoint:token",
-        JSON.stringify(response.data.accessToken)
-      );
+      localStorage.setItem("@TaskandPoint:token", response.data.accessToken);
 
       toast.success("Login realizado com sucesso");
 

@@ -1,6 +1,7 @@
 import { createContext, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { boolean } from "yup";
 import { api } from "../services/api";
 import { IDefaultProps } from "./userContext";
 
@@ -22,7 +23,7 @@ interface IAdminContext {
   createTask: (data: ITasks) => Promise<void>;
   deleteTask: (id: any) => Promise<void>;
   tasksSearch: ITasks[];
-  deleteUser: (id: number) => Promise<void>;
+  deleteUser: (id: number, name: string) => Promise<void>;
   getPointsUser: (id: number) => void;
   pointsUser: IPoints[];
   logout: () => void;
@@ -30,6 +31,10 @@ interface IAdminContext {
   setModalPoints: React.Dispatch<SetStateAction<boolean>>;
   modalDelete: boolean;
   setModalDelete: React.Dispatch<SetStateAction<boolean>>;
+  getAllUsers: () => Promise<void>;
+  getAllTasks: () => Promise<void>;
+  token: string | null;
+  getAllPoints: () => Promise<void>;
 }
 
 export interface IUser {
@@ -155,15 +160,19 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     }
   };
 
-  const deleteTask = async (id: number) => {
+  const deleteTask = async (id: number, isDeleteUser: boolean = false) => {
     if (token) {
       try {
         api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
           token
         )}`;
         await api.delete(`/tasks/${id}`);
+
         const newTasks = tasks.filter((task) => task.id !== id);
-        setTasks(newTasks);
+        if (!isDeleteUser) {
+          setTasks(newTasks);
+        }
+
         toast.success("Atividade excluída");
       } catch (error) {
         toast.error("Tente novamente");
@@ -171,7 +180,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     }
   };
 
-  const deleteUser = async (id: number) => {
+  const deleteUser = async (id: number, name: string) => {
     if (token) {
       try {
         api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
@@ -180,6 +189,12 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         await api.delete(`/users/${id}`);
         const newUsers = users.filter((user) => user.id !== id);
         setUsers(newUsers);
+        const filteredTasks = tasks.filter((task) => task.name == name);
+        filteredTasks.forEach((task) => {
+          deleteTask(task.id, true);
+        });
+        const remainTasks = tasks.filter((task) => task.name !== name);
+        setTasks(remainTasks);
         setModal(false);
         toast.warning("usuário excluído");
       } catch (error) {
@@ -204,9 +219,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
 
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
-    localStorage.removeItem("@TaskandPoint:isAdmin");
     toast.warning("Você saiu");
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -246,6 +260,10 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setModalPoints,
         modalDelete,
         setModalDelete,
+        getAllTasks,
+        getAllUsers,
+        token,
+        getAllPoints,
       }}
     >
       {children}

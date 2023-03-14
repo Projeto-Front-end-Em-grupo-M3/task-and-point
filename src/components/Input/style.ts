@@ -1,3 +1,17 @@
 import styled from "styled-components";
 
-export const StyledDiv = styled.div``;
+export const StyledFieldset = styled.fieldset`
+
+
+
+  > div > label {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+
+    color: #808080;
+  }
+
+
+`;

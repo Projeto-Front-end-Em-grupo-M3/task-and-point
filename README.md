@@ -1,3 +1,4 @@
+
 # Projeto Task&Point
 
 Este é o projeto Front-End, projeto final, do terceiro módulo da Kenzie Academy Brasil. Sendo o último módulo de Front-End, o projeto tem como objetivo colocar em prática tudo que aprendemos ao decorrer dos três primeiros módulos (6 meses) do curso. O tema é livre, e o tema escolhido neste projeto foi resolver organizzação de tarefas e marcar pontos.
@@ -13,3 +14,5 @@ Uma aplicação com acesso _admin_ e acesso _user_, em que a pessoa _admin_ faz 
 Já a pessoa funcionária (_user_) consegue fazer seu registro, login e na sua dashboard pode bater o ponto, visualizar quais são suas tarefas do dia, bem como marca-las como concluídas.
 
 Sendo assim a aplicação formaliza a folha ponto e a distribuição de tarefas, reduzindo as possíveis falhas de comunicação.
+
+

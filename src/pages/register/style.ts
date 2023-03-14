@@ -1,18 +1,17 @@
 import styled from "styled-components";
 
 const StyledForm = styled.form`
+  margin: 0 auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 32px 40px;
+  padding: 22px 40px;
   gap: 16px;
-
-  position: absolute;
   width: 400px;
   min-height: 511px;
-  left: calc(50% - 400px / 2);
-  top: calc(50% - 511px / 2 + 22px);
 
   background: #ffffff;
   box-shadow: 5px 6px 60px rgba(128, 128, 128, 0.5);
@@ -34,6 +33,15 @@ const StyledForm = styled.form`
     background: #f8f9fa;
     border: 3px solid #f8f9fa;
     border-radius: 8px;
+  }
+
+  > fieldset > div > label {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+
+    color: #808080;
   }
 
   > fieldset > p {
@@ -100,6 +108,24 @@ const StyledForm = styled.form`
     text-align: center;
 
     color: #262626;
+  }
+
+  @media (max-width: 520px) {
+    width: 85%;
+    padding: 32px 20px;
+
+    > h2,
+    > fieldset,
+    > fieldset > div,
+    > button {
+      width: 100%;
+    }
+
+    > h2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 `;
 

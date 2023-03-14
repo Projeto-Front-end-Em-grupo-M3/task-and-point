@@ -10,11 +10,16 @@ export interface IDefaultProps {
 
 interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
+  // registData: () => void;
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
   user: IUser | null;
-  pointsUser: IPoints[];
+  // pointsUser: IPoints[];
+
   tasks: ITasks[];
+  registerPointUser: () => void;
+  setTasks: React.Dispatch<React.SetStateAction<ITasks[]>>;
+  getTasks: (token: string | null) => void;
 }
 
 export interface IUserRegister {
@@ -23,7 +28,7 @@ export interface IUserRegister {
   password: string;
   office: string;
   shift: string;
-  isAdmin: boolean;
+  isAdm: boolean;
 }
 
 export interface IUserLogin {
@@ -44,21 +49,51 @@ export interface IUser {
 export const UserContext = createContext({} as IUserContext);
 
 export const UserContextProvider = ({ children }: IDefaultProps) => {
-  const [user, setUser] = useState <IUser | null> (null);
+  const [user, setUser] = useState<IUser | null>(null);
   const [tasks, setTasks] = useState<ITasks[]>([]);
+
+  const token = localStorage.getItem("@TaskandPoint:token");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isAdmin = localStorage.getItem("@TaskandPoint:isAdmin");
+    const Id = () => {
+      if (token) {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+          window
+            .atob(base64)
+            .split("")
+            .map(function (c) {
+              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+        );
 
-    if (isAdmin === "true") {
-      navigate("/adminDashboard");
-    }
+        return JSON.parse(jsonPayload).sub;
+      }
+    };
 
-    if (isAdmin === "false") {
-      navigate("/userDashboard");
-    }
+    const isAdm = async (id: string) => {
+      if (token) {
+        try {
+          const response = await api.get(`/users/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          response.data.isAdm
+            ? navigate("/adminDashboard")
+            : navigate("/userDashboard");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    isAdm(Id());
   }, []);
 
   const registerUser = async (formData: IUserRegister) => {
@@ -66,7 +101,6 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
       const response = await api.post("/users", formData);
 
       toast.success("Cadastro realizado com sucesso");
-
       navigate("/login");
     } catch (error: any) {
       if (error.response.data === "Email already exists") {
@@ -79,43 +113,72 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     try {
       const response = await api.post("/login", formData);
 
-      setUser(response.data.user)
+      setUser(response.data.user);
 
       localStorage.setItem(
         "@TaskandPoint:token",
         JSON.stringify(response.data.accessToken)
       );
 
-      localStorage.setItem(
-        "@TaskandPoint:isAdmin",
-        JSON.stringify(response.data.user.isAdmin)
-      );
-
       toast.success("Login realizado com sucesso");
-
-      if (response.data.user.isAdmin === false) {
+      console.log(response.data.user);
+      if (response.data.user.isAdm === false) {
         navigate("/userDashboard");
       } else {
         navigate("/adminDashboard");
       }
     } catch (error: any) {
       console.log(error);
-      if (error.response.data === "Cannot find user") {
+      /* if (error.response.data === "Cannot find user") {
         toast.error("Esse email não existe");
       }
       if (error.response.data === "Incorrect password") {
         toast.error("Email ou Senha incorreto");
-      }
+      } */
     }
   };
 
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
-    localStorage.removeItem("@TaskandPoint:isAdmin");
+
+    navigate("/");
+  };
+
+  const registerPointUser = () => {
+    const date = new Date();
+    const idUser = user?.id;
+    console.log(idUser);
+    console.log(date);
+  };
+
+  const getTasks = async (token: string | null) => {
+    try {
+      const response = await api.get("/tasks", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setTasks(response.data);
+    } catch (error: any) {
+      toast.error(error);
+    }
   };
 
   return (
-    <UserContext.Provider value={{ registerUser, loginUser, logout, user }}>
+    <UserContext.Provider
+      value={{
+        registerUser,
+
+        loginUser,
+        logout,
+        user,
+        tasks,
+        registerPointUser,
+        setTasks,
+        getTasks,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

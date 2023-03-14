@@ -27,7 +27,7 @@ export interface IUserRegister {
   password: string;
   office: string;
   shift: string;
-  isAdmin: boolean;
+  isAdm: boolean;
 }
 
 export interface IUserLogin {
@@ -48,21 +48,53 @@ export interface IUser {
 export const UserContext = createContext({} as IUserContext);
 
 export const UserContextProvider = ({ children }: IDefaultProps) => {
+
   const [user, setUser] = useState<IUser | null>(null);
   const [tasks, setTasks] = useState<ITasks[]>([]);
+
+
+  const token = localStorage.getItem("@TaskandPoint:token");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isAdmin = localStorage.getItem("@TaskandPoint:isAdmin");
+    const Id = () => {
+      if (token) {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+          window
+            .atob(base64)
+            .split("")
+            .map(function (c) {
+              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+        );
 
-    if (isAdmin === "true") {
-      navigate("/adminDashboard");
-    }
+        return JSON.parse(jsonPayload).sub;
+      }
+    };
 
-    if (isAdmin === "false") {
-      navigate("/userDashboard");
-    }
+    const isAdm = async (id: string) => {
+      if (token) {
+        try {
+          const response = await api.get(`/users/${id}`, {
+            headers: {
+              Authorization: `Bearer ${JSON.parse(token)}`,
+            },
+          });
+
+          response.data.isAdm
+            ? navigate("/adminDashboard")
+            : navigate("/userDashboard");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    isAdm(Id());
   }, []);
 
   useEffect(() => {
@@ -98,14 +130,9 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
 
       localStorage.setItem("@TaskandPoint:token", response.data.accessToken);
 
-      localStorage.setItem(
-        "@TaskandPoint:isAdmin",
-        JSON.stringify(response.data.user.isAdmin)
-      );
-
       toast.success("Login realizado com sucesso");
 
-      if (response.data.user.isAdmin === false) {
+      if (response.data.user.isAdm === false) {
         navigate("/userDashboard");
       } else {
         navigate("/adminDashboard");
@@ -123,7 +150,8 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
 
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
-    localStorage.removeItem("@TaskandPoint:isAdmin");
+
+    navigate("/");
   };
 
   const registerPointUser = () => {

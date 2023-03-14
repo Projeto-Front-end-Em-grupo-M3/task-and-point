@@ -15,6 +15,7 @@ interface IUserContext {
   logout: () => void;
   user: IUser | null;
   // pointsUser: IPoints[];
+
   tasks: ITasks[];
   registerPointUser: () => void;
   setTasks: React.Dispatch<React.SetStateAction<ITasks[]>>;
@@ -114,10 +115,13 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
 
       setUser(response.data.user);
 
-      localStorage.setItem("@TaskandPoint:token", response.data.accessToken);
+      localStorage.setItem(
+        "@TaskandPoint:token",
+        JSON.stringify(response.data.accessToken)
+      );
 
       toast.success("Login realizado com sucesso");
-
+      console.log(response.data.user);
       if (response.data.user.isAdm === false) {
         navigate("/userDashboard");
       } else {
@@ -125,12 +129,12 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
       }
     } catch (error: any) {
       console.log(error);
-      if (error.response.data === "Cannot find user") {
+      /* if (error.response.data === "Cannot find user") {
         toast.error("Esse email não existe");
       }
       if (error.response.data === "Incorrect password") {
         toast.error("Email ou Senha incorreto");
-      }
+      } */
     }
   };
 
@@ -165,6 +169,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     <UserContext.Provider
       value={{
         registerUser,
+
         loginUser,
         logout,
         user,

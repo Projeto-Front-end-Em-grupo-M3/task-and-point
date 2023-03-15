@@ -78,17 +78,19 @@ const UserDashboard = () => {
   return (
     <StyledDash>
       <Header content="Sair" />
-      <div className="info_div">
-        <h3>{user?.name}</h3>
-        <p>{user?.email}</p>
-        <p>{user?.office}</p>
-        <p>{user?.shift}</p>
+      <div className="info_user">
+        <h1>{user?.name}</h1>
+        <div>
+          <p>{user?.email}</p>
+          <p>{user?.office}</p>
+          <p>{user?.shift}</p>
+        </div>
       </div>
 
-      <div>
+      <div className="register_block">
         <button onClick={() => createPoint()}>Bater ponto</button>
         <ul>
-          <p>Lista de pontos batidos</p>
+          <h3>Lista de pontos batidos</h3>
           {allPoints.map((point) => {
             if (point.userId === user?.id) {
               return (
@@ -101,7 +103,8 @@ const UserDashboard = () => {
         </ul>
       </div>
 
-      <section className="employeesList_section taskList_section">
+      <section>
+        <h3>Lista de tarefas</h3>
         <ul>
           {tasksOfUser && tasksOfUser.length > 0 ? (
             tasksOfUser.map((task) => {

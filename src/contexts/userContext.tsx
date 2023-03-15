@@ -1,8 +1,14 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
-import { ITasks, IPoints } from "./AdminContext";
+import { ITasks, IPoints, AdminContext } from "./AdminContext";
 
 export interface IDefaultProps {
   children: ReactNode;
@@ -10,16 +16,13 @@ export interface IDefaultProps {
 
 interface IUserContext {
   registerUser: (formData: IUserRegister) => Promise<void>;
-  // registData: () => void;
   loginUser: (formData: IUserLogin) => Promise<void>;
   logout: () => void;
   user: IUser | null;
-  // pointsUser: IPoints[];
-
   tasks: ITasks[];
-  registerPointUser: () => void;
   setTasks: React.Dispatch<React.SetStateAction<ITasks[]>>;
   getTasks: (token: string | null) => void;
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
 }
 
 export interface IUserRegister {
@@ -49,52 +52,17 @@ export interface IUser {
 export const UserContext = createContext({} as IUserContext);
 
 export const UserContextProvider = ({ children }: IDefaultProps) => {
+  useEffect(() => {
+    const userJson = localStorage.getItem("@TaskandPoint:user");
+    if (userJson) {
+      setUser(JSON.parse(userJson));
+    }
+  }, []);
+
   const [user, setUser] = useState<IUser | null>(null);
   const [tasks, setTasks] = useState<ITasks[]>([]);
 
-  const token = localStorage.getItem("@TaskandPoint:token");
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const Id = () => {
-      if (token) {
-        const base64Url = token.split(".")[1];
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const jsonPayload = decodeURIComponent(
-          window
-            .atob(base64)
-            .split("")
-            .map(function (c) {
-              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-            })
-            .join("")
-        );
-
-        return JSON.parse(jsonPayload).sub;
-      }
-    };
-
-    const isAdm = async (id: string) => {
-      if (token) {
-        try {
-          const response = await api.get(`/users/${id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          response.data.isAdm
-            ? navigate("/adminDashboard")
-            : navigate("/userDashboard");
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-
-    isAdm(Id());
-  }, []);
 
   const registerUser = async (formData: IUserRegister) => {
     try {
@@ -118,6 +86,11 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
         JSON.stringify(response.data.accessToken)
       );
 
+      localStorage.setItem(
+        "@TaskandPoint:user",
+        JSON.stringify(response.data.user)
+      );
+
       toast.success("Login realizado com sucesso");
       if (response.data.user.isAdm === true) {
         navigate("/adminDashboard");
@@ -136,13 +109,8 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
 
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
-
+    localStorage.removeItem("@TaskandPoint:user");
     navigate("/");
-  };
-
-  const registerPointUser = () => {
-    const date = new Date();
-    const idUser = user?.id;
   };
 
   const getTasks = async (token: string | null) => {
@@ -163,14 +131,13 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     <UserContext.Provider
       value={{
         registerUser,
-
         loginUser,
         logout,
         user,
         tasks,
-        registerPointUser,
         setTasks,
         getTasks,
+        setUser,
       }}
     >
       {children}

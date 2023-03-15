@@ -73,15 +73,15 @@ const AdminDashboard = () => {
       );
       setUsers(searchResults);
 
-      if (searchResults.length === 0) {
+      if (searchResults.length === 0 && users) {
         toast.error("Usuário não encontrado");
-        setUsers(employeSearch);
+        setUsers(users);
       }
     }
 
-    if (searchValue === "") {
+    if (searchValue === "" && users) {
       toast.warning("Digite algo");
-      setUsers(employeSearch);
+      setUsers(users);
     }
 
     if (searchValue !== "") {

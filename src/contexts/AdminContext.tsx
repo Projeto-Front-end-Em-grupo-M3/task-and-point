@@ -1,7 +1,7 @@
 import { createContext, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { boolean } from "yup";
+
 import { api } from "../services/api";
 import { IDefaultProps } from "./userContext";
 
@@ -35,6 +35,8 @@ interface IAdminContext {
   getAllTasks: () => Promise<void>;
   token: string | null;
   getAllPoints: () => Promise<void>;
+  allPoints: IPoints[];
+  setAllPoints: React.Dispatch<SetStateAction<IPoints[]>>;
 }
 
 export interface IUser {
@@ -102,6 +104,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
       }
     }
   };
+  console.log(users);
 
   const getAdminInfo = async (id: number) => {
     if (token) {
@@ -224,10 +227,6 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     navigate("/login");
   };
 
-  useEffect(() => {
-    getAllPoints();
-  }, []);
-
   const getPointsUser = (id: number) => {
     const newPoints = allPoints.filter((point) => point.userId === id);
     setPointsUser(newPoints);
@@ -265,6 +264,8 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         getAllUsers,
         token,
         getAllPoints,
+        allPoints,
+        setAllPoints,
       }}
     >
       {children}

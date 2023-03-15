@@ -8,11 +8,12 @@ import { api } from "../../services/api";
 
 const UserDashboard = () => {
   const { user, setTasks } = useContext(UserContext);
-  const { tasks, allPoints, setAllPoints, token, getAllTasks } =
+  const { tasks, allPoints, setAllPoints, token, getAllTasks, getAllPoints } =
     useContext(AdminContext);
 
   useEffect(() => {
     getAllTasks();
+    getAllPoints();
   }, []);
 
   const tasksOfUser = tasks.filter((task) => task.name === user?.name);
@@ -42,8 +43,11 @@ const UserDashboard = () => {
             token
           )}`;
           await api.patch(`/tasks/${id}`, data);
+          toast.success("Tarefa finalizada");
         }
-      } catch (error) {}
+      } catch (error) {
+        toast.error("Tente novamente");
+      }
     }
   };
 
@@ -63,9 +67,10 @@ const UserDashboard = () => {
           token
         )}`;
         const response = await api.post(`/points`, data);
+        toast.success("Ponto registrado");
         setAllPoints([...allPoints, response.data]);
       } catch (error) {
-        console.log(error);
+        toast.error("Tente novamente");
       }
     }
   };
@@ -73,14 +78,28 @@ const UserDashboard = () => {
   return (
     <StyledDash>
       <Header content="Sair" />
-      <div>
+      <div className="info_div">
         <h3>{user?.name}</h3>
         <p>{user?.email}</p>
         <p>{user?.office}</p>
         <p>{user?.shift}</p>
       </div>
 
-      <button onClick={() => createPoint()}>Bater ponto</button>
+      <div>
+        <button onClick={() => createPoint()}>Bater ponto</button>
+        <ul>
+          <p>Lista de pontos batidos</p>
+          {allPoints.map((point) => {
+            if (point.userId === user?.id) {
+              return (
+                <li>
+                  <p>{point.point}</p>
+                </li>
+              );
+            }
+          })}
+        </ul>
+      </div>
 
       <section className="employeesList_section taskList_section">
         <ul>

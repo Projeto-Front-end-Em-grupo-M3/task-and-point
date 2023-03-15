@@ -1,7 +1,6 @@
 import { createContext, SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import { api } from "../services/api";
 import { IDefaultProps } from "./userContext";
 
@@ -17,14 +16,12 @@ interface IAdminContext {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   idButton: number;
   setIdButton: React.Dispatch<SetStateAction<number>>;
-  getTaskById: (id: number) => Promise<void>;
   tasks: ITasks[];
   setTasks: React.Dispatch<SetStateAction<ITasks[]>>;
   createTask: (data: ITasks) => Promise<void>;
   deleteTask: (id: any) => Promise<void>;
   tasksSearch: ITasks[];
   deleteUser: (id: number, name: string) => Promise<void>;
-  getPointsUser: (id: number) => void;
   pointsUser: IPoints[];
   logout: () => void;
   modalPoints: boolean;
@@ -100,7 +97,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setUsers(employes);
         setEmployeSearch(employes);
       } catch (error) {
-        console.error("Algo deu errado, tente novamente mais tarde");
+        console.error("Não foi possivel buscar os usuários. API desconectada");
       }
     }
   };
@@ -115,21 +112,9 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/users/${id}`);
         setAdm(response.data);
       } catch (error) {
-        console.error("Algo deu errado, tente novamente mais tarde");
-      }
-    }
-  };
-
-  const getTaskById = async (id: number) => {
-    if (token) {
-      try {
-        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
-          token
-        )}`;
-        const response = await api.get(`/tasks/${id}`);
-        setTasks(response.data.taskList);
-      } catch (error) {
-        console.error("Algo deu errado, tente novamente mais tarde");
+        console.error(
+          "Não foi possivel buscar os dados do usuário. API desconectada"
+        );
       }
     }
   };
@@ -144,7 +129,9 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks(response.data);
         setTasksSearch(response.data);
       } catch (error) {
-        console.error("Tente novamente");
+        console.error(
+          "Não foi possivel buscar tarefas cadastradas. API desconectada"
+        );
       }
     }
   };
@@ -159,7 +146,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks([...tasks, response.data]);
         toast.success("Atividade cadastrada");
       } catch (error) {
-        console.error("Tente novamente");
+        console.error("Não foi possivel criar a tarefa. Tente novamente");
       }
     }
   };
@@ -179,7 +166,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
 
         toast.success("Atividade excluída");
       } catch (error) {
-        console.error("Tente novamente");
+        console.error("Erro. Tente excluir novamente");
       }
     }
   };
@@ -204,7 +191,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setModal(false);
         toast.warning("usuário excluído");
       } catch (error) {
-        console.error("Tente novamente");
+        console.error("Erro. Tente excluir novamente");
       }
     }
   };
@@ -218,7 +205,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/points/`);
         setAllPoints(response.data);
       } catch (error) {
-        console.error("Tente novamente");
+        console.error("Erro de conexão com servidor.");
       }
     }
   };
@@ -227,11 +214,6 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     localStorage.removeItem("@TaskandPoint:token");
     toast.warning("Você saiu");
     navigate("/login");
-  };
-
-  const getPointsUser = (id: number) => {
-    const newPoints = allPoints.filter((point) => point.userId === id);
-    setPointsUser(newPoints);
   };
 
   return (
@@ -248,14 +230,12 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setModal,
         idButton,
         setIdButton,
-        getTaskById,
         tasks,
         setTasks,
         createTask,
         deleteTask,
         tasksSearch,
         deleteUser,
-        getPointsUser,
         pointsUser,
         logout,
         modalPoints,

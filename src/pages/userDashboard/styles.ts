@@ -174,6 +174,7 @@ export const StyledDash = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     height: 60px;
   }
 
@@ -190,7 +191,6 @@ export const StyledDash = styled.div`
     font-size: 16px;
     line-height: 12px;
     color: #f5f1ef;
-    cursor: pointer;
     transition: 0.4s;
   }
 

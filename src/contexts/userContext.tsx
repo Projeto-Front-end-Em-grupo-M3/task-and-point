@@ -102,7 +102,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
     } catch (error: any) {
       console.error(error);
       toast.error(
-        "Problema de conexão (API), tente novamente em alguns minutos"
+        "Problema de conexão com servidor, tente novamente em alguns minutos"
       );
     }
   };

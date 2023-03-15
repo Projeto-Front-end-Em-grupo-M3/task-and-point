@@ -193,12 +193,14 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         await api.delete(`/users/${id}`);
         const newUsers = users.filter((user) => user.id !== id);
         setUsers(newUsers);
+        setEmployeSearch(newUsers);
         const filteredTasks = tasks.filter((task) => task.name == name);
         filteredTasks.forEach((task) => {
           deleteTask(task.id, true);
         });
         const remainTasks = tasks.filter((task) => task.name !== name);
         setTasks(remainTasks);
+        setTasksSearch(remainTasks);
         setModal(false);
         toast.warning("usuário excluído");
       } catch (error) {

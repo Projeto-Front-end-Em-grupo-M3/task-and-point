@@ -149,6 +149,7 @@ export const StyledDash = styled.div`
 
   .taskList_section > ul > li {
     display: flex;
+    text-decoration-line: line-through;
     justify-content: space-between;
     align-items: center;
     max-width: 100%;

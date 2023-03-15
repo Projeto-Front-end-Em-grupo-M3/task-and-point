@@ -8,7 +8,12 @@ import { api } from "../../services/api";
 
 const UserDashboard = () => {
   const { user, setTasks } = useContext(UserContext);
-  const { tasks, allPoints, setAllPoints, token } = useContext(AdminContext);
+  const { tasks, allPoints, setAllPoints, token, getAllTasks } =
+    useContext(AdminContext);
+
+  useEffect(() => {
+    getAllTasks();
+  }, []);
 
   const tasksOfUser = tasks.filter((task) => task.name === user?.name);
 
@@ -77,12 +82,12 @@ const UserDashboard = () => {
 
       <button onClick={() => createPoint()}>Bater ponto</button>
 
-      <section className="employeesList_section">
+      <section className="employeesList_section taskList_section">
         <ul>
           {tasksOfUser && tasksOfUser.length > 0 ? (
             tasksOfUser.map((task) => {
               return (
-                <li key={crypto.randomUUID()}>
+                <li id="user_task" key={crypto.randomUUID()}>
                   <h3>{task.name}</h3>
                   <p>{task.task}</p>
                   <p>{task.status}</p>

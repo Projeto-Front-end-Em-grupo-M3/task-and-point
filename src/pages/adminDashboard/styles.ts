@@ -42,6 +42,8 @@ export const StyledDash = styled.div`
 
   #status_task {
     color: var(--Color-primary);
+    position: absolute;
+    right: 100px;
   }
 
   #icon {
@@ -147,6 +149,11 @@ export const StyledDash = styled.div`
       align-items: flex-start;
       padding: 10px 16px 10px 16px;
     }
+  }
+
+  #task {
+    position: absolute;
+    left: 290px;
   }
 
   form {

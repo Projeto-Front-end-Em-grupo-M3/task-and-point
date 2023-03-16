@@ -212,7 +212,7 @@ const AdminDashboard = () => {
                 return (
                   <li key={crypto.randomUUID()}>
                     <h2>{task.name}</h2>
-                    <p>{task.task}</p>
+                    <p id="task">{task.task}</p>
                     <p id="status_task">{task.status}</p>
                     <img
                       id="trashCan"

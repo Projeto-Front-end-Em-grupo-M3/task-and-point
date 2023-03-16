@@ -34,6 +34,7 @@ interface IAdminContext {
   getAllPoints: () => Promise<void>;
   allPoints: IPoints[];
   setAllPoints: React.Dispatch<SetStateAction<IPoints[]>>;
+  getPointsUser: (id: number) => void;
 }
 
 export interface IUser {
@@ -101,7 +102,6 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
       }
     }
   };
-  console.log(users);
 
   const getAdminInfo = async (id: number) => {
     if (token) {
@@ -216,6 +216,11 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     navigate("/login");
   };
 
+  const getPointsUser = (id: number) => {
+    const newPoints = allPoints.filter((point) => point.userId === id);
+    setPointsUser(newPoints);
+  };
+
   return (
     <AdminContext.Provider
       value={{
@@ -248,6 +253,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         getAllPoints,
         allPoints,
         setAllPoints,
+        getPointsUser,
       }}
     >
       {children}

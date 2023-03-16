@@ -213,7 +213,17 @@ const AdminDashboard = () => {
                   <li key={crypto.randomUUID()}>
                     <h2>{task.name}</h2>
                     <p>{task.task}</p>
-                    <p id="status_task">{task.status}</p>
+                    <p
+                      id="status_task"
+                      style={{
+                        color:
+                          task.status === "Em andamento"
+                            ? "#eb0202"
+                            : "#2380FB",
+                      }}
+                    >
+                      {task.status}
+                    </p>
                     <img
                       id="trashCan"
                       src={trashCan}

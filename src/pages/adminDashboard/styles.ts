@@ -42,6 +42,7 @@ export const StyledDash = styled.div`
 
   #status_task {
     color: var(--Color-primary);
+    font-weight: bold;
   }
 
   #icon {

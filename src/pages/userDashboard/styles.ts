@@ -1,5 +1,6 @@
+import { useContext } from "react";
 import styled from "styled-components";
-
+import { AdminContext } from "../../contexts/AdminContext";
 export const StyledDash = styled.div`
   font-family: var(--font-primary);
 
@@ -81,8 +82,20 @@ export const StyledDash = styled.div`
     padding: 10px;
   }
 
+  section > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
   section > ul > li {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+  }
+
+  section > ul > li > span {
+    color: ${({ color }) => color};
+    font-weight: bold;
   }
 `;

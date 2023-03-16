@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import { StyledDash } from "./styles";
 import { AdminContext } from "../../contexts/AdminContext";
 import { api } from "../../services/api";
+import Button from "../../components/Button";
 
 const UserDashboard = () => {
   const { user, setTasks } = useContext(UserContext);
@@ -109,11 +110,26 @@ const UserDashboard = () => {
           {tasksOfUser && tasksOfUser.length > 0 ? (
             tasksOfUser.map((task) => {
               return (
-                <li id="user_task" key={crypto.randomUUID()}>
+                <li key={crypto.randomUUID()}>
                   <h3>{task.name}</h3>
                   <p>{task.task}</p>
-                  <p>{task.status}</p>
-                  <button onClick={() => checkTask(task.id)}>Feita</button>
+                  <span
+                    style={{
+                      color:
+                        task.status === "Em andamento" ? "#eb0202" : "#2380FB",
+                    }}
+                  >
+                    {task.status}
+                  </span>
+                  <Button
+                    clickFunction={() => checkTask(task.id)}
+                    type={"button"}
+                    buttonText={
+                      task.status === "Em andamento"
+                        ? "Finalizar tarefa"
+                        : "Tarefa finalizada"
+                    }
+                  />
                 </li>
               );
             })

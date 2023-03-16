@@ -150,6 +150,11 @@ export const StyledDash = styled.div`
     }
   }
 
+  #task {
+    position: absolute;
+    left: 290px;
+  }
+
   form {
     display: flex;
     flex-direction: column;

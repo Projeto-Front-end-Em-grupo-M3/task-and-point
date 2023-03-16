@@ -6,6 +6,7 @@ import { StyledDash } from "./styles";
 import { AdminContext } from "../../contexts/AdminContext";
 import { api } from "../../services/api";
 import Button from "../../components/Button";
+import exitBtn from "../../assets/exit.svg";
 
 const UserDashboard = () => {
   const { user, setTasks } = useContext(UserContext);
@@ -76,33 +77,55 @@ const UserDashboard = () => {
     }
   };
 
-  return (
-    <StyledDash>
-      <Header content="Sair" />
-      <div className="info_user">
-        <h1>{user?.name}</h1>
-        <div>
-          <p>{user?.email}</p>
-          <p>{user?.office}</p>
-          <p>{user?.shift}</p>
-        </div>
-      </div>
+  const [modalPoints, setModalPoints] = useState(false);
 
-      <div className="register_block">
-        <button onClick={() => createPoint()}>Bater ponto</button>
-        <ul>
-          <h3>Lista de pontos batidos</h3>
-          {allPoints.map((point) => {
-            if (point.userId === user?.id) {
-              return (
-                <li>
-                  <p>{point.point}</p>
-                </li>
-              );
-            }
-          })}
-        </ul>
-      </div>
+  return (
+    <>
+      <Header content="Sair" />
+      <StyledDash>
+        <div className="info_user">
+          <h1>{user?.name}</h1>
+          <div>
+            <p>{user?.email}</p>
+            <p>{user?.office}</p>
+            <p>{user?.shift}</p>
+            <Button
+              clickFunction={() => setModalPoints(true)}
+              buttonText="Ver pontos batidos"
+              type="submit"
+            />
+          </div>
+        </div>
+
+        <button onClick={() => createPoint()} type="submit">
+          Bater Ponto
+        </button>
+        {modalPoints && (
+          <div className="register_block">
+            <img
+              id="exitIcon"
+              src={exitBtn}
+              onClick={() => setModalPoints(false)}
+              alt="exit"
+            />
+            <h3>Lista de pontos batidos</h3>
+            <ul>
+              {allPoints.length > 0 ? (
+                allPoints.map((point) => {
+                  if (point.userId === user?.id) {
+                    return (
+                      <li>
+                        <p>{point.point}</p>
+                      </li>
+                    );
+                  }
+                })
+              ) : (
+                <p>Nenhum ponto registrado ainda</p>
+              )}
+            </ul>
+          </div>
+        )}
 
       <section>
         <h3>Lista de tarefas</h3>

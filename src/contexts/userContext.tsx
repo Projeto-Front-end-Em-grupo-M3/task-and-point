@@ -71,6 +71,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
       toast.success("Cadastro realizado com sucesso");
       navigate("/login");
     } catch (error: any) {
+      console.log(error);
       toast.error("Esse email já existe");
     }
   };
@@ -100,9 +101,9 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
         navigate("/userDashboard");
       }
     } catch (error: any) {
-      if (error.response.data === "Cannot find user") {
+      if (error && error.response.data === "Cannot find user") {
         toast.error("Usuário não cadastrado");
-      } else if (error.response.data === "Incorrect password") {
+      } else if (error && error.response.data === "Incorrect password") {
         toast.error("Dados incorretos.");
       } else {
         toast.error(

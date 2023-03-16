@@ -127,41 +127,44 @@ const UserDashboard = () => {
           </div>
         )}
 
-      <section>
-        <h3>Lista de tarefas</h3>
-        <ul>
-          {tasksOfUser && tasksOfUser.length > 0 ? (
-            tasksOfUser.map((task) => {
-              return (
-                <li key={crypto.randomUUID()}>
-                  <h3>{task.name}</h3>
-                  <p>{task.task}</p>
-                  <span
-                    style={{
-                      color:
-                        task.status === "Em andamento" ? "#eb0202" : "#2380FB",
-                    }}
-                  >
-                    {task.status}
-                  </span>
-                  <Button
-                    clickFunction={() => checkTask(task.id)}
-                    type={"button"}
-                    buttonText={
-                      task.status === "Em andamento"
-                        ? "Finalizar tarefa"
-                        : "Tarefa finalizada"
-                    }
-                  />
-                </li>
-              );
-            })
-          ) : (
-            <p>Nenhuma atividade a fazer</p>
-          )}
-        </ul>
-      </section>
-    </StyledDash>
+        <section>
+          <h3>Lista de tarefas</h3>
+          <ul>
+            {tasksOfUser && tasksOfUser.length > 0 ? (
+              tasksOfUser.map((task) => {
+                return (
+                  <li key={crypto.randomUUID()}>
+                    <h3>{task.name}</h3>
+                    <p>{task.task}</p>
+                    <span
+                      style={{
+                        color:
+                          task.status === "Em andamento"
+                            ? "#eb0202"
+                            : "#2380FB",
+                      }}
+                    >
+                      {task.status}
+                    </span>
+                    <Button
+                      clickFunction={() => checkTask(task.id)}
+                      type={"button"}
+                      buttonText={
+                        task.status === "Em andamento"
+                          ? "Finalizar tarefa"
+                          : "Tarefa finalizada"
+                      }
+                    />
+                  </li>
+                );
+              })
+            ) : (
+              <p>Nenhuma atividade a fazer</p>
+            )}
+          </ul>
+        </section>
+      </StyledDash>
+    </>
   );
 };
 export default UserDashboard;

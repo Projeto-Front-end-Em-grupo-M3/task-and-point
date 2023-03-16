@@ -11,12 +11,7 @@ import { useContext, useEffect } from "react";
 const RegisterForm = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNjc4NzE4MDI2LCJleHAiOjE2Nzg3MjE2MjYsInN1YiI6IjEifQ.qLeDYmfXVt2O3xjBYGwMBqEhlK9CUnoS_ZNcn8fmQ4I";
-  }, []);
-
-  function parseJwt(token: string) {
+  /*  function parseJwt(token: string) {
     var base64Url = token.split(".")[1];
     var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     var jsonPayload = decodeURIComponent(
@@ -30,7 +25,7 @@ const RegisterForm = () => {
     );
 
     return JSON.parse(jsonPayload);
-  }
+  } */
 
   const schema = yup
     .object({

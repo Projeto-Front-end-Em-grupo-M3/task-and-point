@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import styled from "styled-components";
-import { AdminContext } from "../../contexts/AdminContext";
 export const StyledDash = styled.div`
   font-family: var(--font-primary);
   max-width: 100%;
@@ -15,12 +13,10 @@ export const StyledDash = styled.div`
     width: 99%;
     border: 1px solid rgba(233, 236, 239, 1);
     border-radius: 8px;
-    height: 96px;
     margin: 39px 0px 20px 0px;
-
     display: flex;
     flex-direction: column;
-    height: 150px;
+    height: 130px;
     justify-content: space-around;
 
     @media (max-width: 600px) {

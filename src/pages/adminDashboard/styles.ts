@@ -22,6 +22,16 @@ export const StyledDash = styled.div`
   #icon {
     width: 30px;
     height: 30px;
+    position: absolute;
+  }
+
+  #trashCan {
+    right: 10px;
+    @media (max-width: 970px) {
+      position: absolute;
+      left: 150px;
+      bottom: 20px;
+    }
   }
 
   #more {
@@ -32,17 +42,16 @@ export const StyledDash = styled.div`
     }
   }
 
-  #trashCan {
-    @media (max-width: 600px) {
-      position: absolute;
-      right: 10px;
-      top: 15px;
-    }
-  }
-
   #status_task {
     color: var(--Color-primary);
     font-weight: bold;
+    position: absolute;
+    right: 80px;
+    @media (max-width: 970px) {
+      position: absolute;
+      left: 10px;
+      bottom: 20px;
+    }
   }
 
   #icon {
@@ -53,6 +62,7 @@ export const StyledDash = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
+    padding-left: 70px;
   }
 
   #opacity {
@@ -120,14 +130,20 @@ export const StyledDash = styled.div`
     display: flex;
     width: 85%;
     justify-content: space-between;
-    @media (max-width: 600px) {
-      flex-direction: column;
-      height: 95px;
-    }
   }
 
   #tasks_section {
     margin-bottom: 50px;
+  }
+
+  #task {
+    width: 350px;
+    max-width: 100%;
+    line-height: 1.5;
+    @media (max-width: 970px) {
+      width: 600px;
+      height: 100%;
+    }
   }
 
   .employeesList_section > ul {
@@ -137,22 +153,20 @@ export const StyledDash = styled.div`
 
   .employeesList_section > ul > li {
     display: flex;
-    justify-content: space-between;
+    gap: 60px;
     align-items: center;
     max-width: 100%;
     height: 90px;
+    max-height: 100%;
     margin: 0px 16px 0px 16px;
     border-bottom: 1px solid rgba(224, 224, 224, 1);
-    @media (max-width: 600px) {
-      flex-direction: column;
+    @media (max-width: 900px) {
+      flex-direction: row;
       align-items: flex-start;
+      justify-content: center;
       padding: 10px 16px 10px 16px;
+      gap: 10px;
     }
-  }
-
-  #task {
-    position: absolute;
-    left: 290px;
   }
 
   form {

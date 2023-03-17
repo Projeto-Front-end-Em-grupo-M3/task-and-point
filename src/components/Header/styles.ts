@@ -10,10 +10,9 @@ export const StyledHeader = styled.header`
 
   nav {
     max-width: 100%;
-    width: 976px;
+    width: 1016px;
     height: 100%;
     margin: 0 auto;
-
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -134,14 +134,13 @@ const UserDashboard = () => {
               tasksOfUser.map((task) => {
                 return (
                   <li key={crypto.randomUUID()}>
-                    <h3>{task.name}</h3>
                     <p>{task.task}</p>
                     <span
                       style={{
                         color:
                           task.status === "Em andamento"
                             ? "#eb0202"
-                            : "#2380FB",
+                            : "#0C8B48",
                       }}
                     >
                       {task.status}

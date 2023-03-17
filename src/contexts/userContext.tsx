@@ -101,7 +101,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
         navigate("/userDashboard");
       }
     } catch (error: any) {
-      if (error && error.response.data === "Cannot find user") {
+      /* if (error && error.response.data === "Cannot find user") {
         toast.error("Usuário não cadastrado");
       } else if (error && error.response.data === "Incorrect password") {
         toast.error("Dados incorretos.");
@@ -109,7 +109,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
         toast.error(
           "Problema de conexão com servidor, tente novamente em alguns minutos"
         );
-      }
+      } */
     }
   };
 

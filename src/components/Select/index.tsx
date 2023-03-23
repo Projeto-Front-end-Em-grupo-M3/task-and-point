@@ -4,9 +4,10 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { UserContext } from "../../contexts/userContext";
 
 export default function BasicSelect() {
-  const [shift, setShift] = React.useState("");
+  const { shift, setShift } = React.useContext(UserContext);
 
   const handleChange = (event: SelectChangeEvent) => {
     setShift(event.target.value as string);

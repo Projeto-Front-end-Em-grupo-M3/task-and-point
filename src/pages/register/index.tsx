@@ -47,10 +47,12 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm<IUserRegister>({ resolver: yupResolver(schema) });
 
-  const { registerUser } = useContext(UserContext);
+  const { registerUser, shift } = useContext(UserContext);
 
   const submit: SubmitHandler<IUserRegister> = (formData: IUserRegister) => {
-    registerUser({ ...formData, isAdm: false });
+    const teste = registerUser({ ...formData, shift, isAdm: false });
+
+    console.log(teste);
   };
 
   return (

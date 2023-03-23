@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   ReactNode,
   useContext,
@@ -23,6 +23,8 @@ interface IUserContext {
   setTasks: React.Dispatch<React.SetStateAction<ITasks[]>>;
   getTasks: (token: string | null) => void;
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+  setShift: React.Dispatch<React.SetStateAction<string>>;
+  shift: string;
 }
 
 export interface IUserRegister {
@@ -61,13 +63,14 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
 
   const [user, setUser] = useState<IUser | null>(null);
   const [tasks, setTasks] = useState<ITasks[]>([]);
+  const [shift, setShift] = React.useState("");
 
   const navigate = useNavigate();
 
   const registerUser = async (formData: IUserRegister) => {
     try {
       const response = await api.post("/users", formData);
-
+      console.log(response);
       toast.success("Cadastro realizado com sucesso");
       navigate("/login");
     } catch (error: any) {
@@ -144,6 +147,8 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
         setTasks,
         getTasks,
         setUser,
+        shift,
+        setShift,
       }}
     >
       {children}

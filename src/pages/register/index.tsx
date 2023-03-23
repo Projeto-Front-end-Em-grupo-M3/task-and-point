@@ -7,6 +7,8 @@ import { IUserRegister, UserContext } from "../../contexts/userContext";
 import StyledForm from "./style";
 import Header from "../../components/Header";
 import { useContext, useEffect } from "react";
+import MultipleSelect from "../../components/Select";
+import BasicSelect from "../../components/Select";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -81,12 +83,14 @@ const RegisterForm = () => {
           error={errors.office}
           type="text"
         />
-        <Input
+        {/*         <Input
           label="Turno de Trabalho"
           register={register("shift")}
           error={errors.shift}
           type="text"
-        />
+        /> */}
+
+        <BasicSelect />
         <button type="submit">Cadastrar</button>
         <div>
           <h3>Já possui uma conta ?</h3>

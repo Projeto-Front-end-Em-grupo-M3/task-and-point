@@ -22,8 +22,7 @@ const StyledDiv = styled.div`
     width: 467px;
   }
   .logo > img {
-    /*     width: 50%;
- */
+    width: 50%;
     margin-bottom: 50px;
   }
   .intro > div > h2 {
@@ -81,20 +80,27 @@ const StyledDiv = styled.div`
   @media (max-width: 1050px) {
     flex-direction: column;
     max-height: 100%;
+    align-items: center;
+
     > div {
-      margin: 120px 0;
+      margin: 120px 0 0 0;
       width: auto;
       height: auto;
+    }
+
+    .frame > img {
+      width: 90vw;
+      margin-bottom: 120px;
     }
   }
   @media (max-width: 550px) {
     .intro > div,
     .intro > div > button,
     .frame > img {
-      max-width: 90vw;
+      width: 90vw;
     }
     > div {
-      margin: 80px 0;
+      margin-top: 60px;
     }
   }
 `;

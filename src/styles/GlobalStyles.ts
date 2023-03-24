@@ -54,7 +54,6 @@ table {
 button {
   cursor: pointer;
 }
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital@1&display=swap');
 
 :root {
 
@@ -95,5 +94,10 @@ body{
   font-size: 16px;
   font-family: var(--font-primary);
 
-}}
+}
+input, label{
+  font-family: var(--font-primary);
+}
+
+}
 `;

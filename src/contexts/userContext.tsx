@@ -70,12 +70,17 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
   const registerUser = async (formData: IUserRegister) => {
     try {
       const response = await api.post("/users", formData);
-      console.log(response);
       toast.success("Cadastro realizado com sucesso");
       navigate("/login");
     } catch (error: any) {
       console.log(error);
-      toast.error("Esse email já existe");
+      if (error.response.data === "Email already exists") {
+        toast.error("Esse email já está em uso");
+      } else {
+        toast.error(
+          "Problema de conexão com servidor, tente novamente em alguns minutos"
+        );
+      }
     }
   };
 
@@ -104,15 +109,15 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
         navigate("/userDashboard");
       }
     } catch (error: any) {
-      /* if (error && error.response.data === "Cannot find user") {
+      if (error && error.response.data === "Cannot find user") {
         toast.error("Usuário não cadastrado");
       } else if (error && error.response.data === "Incorrect password") {
-        toast.error("Dados incorretos.");
+        toast.error("Dados incorretos");
       } else {
         toast.error(
           "Problema de conexão com servidor, tente novamente em alguns minutos"
         );
-      } */
+      }
     }
   };
 

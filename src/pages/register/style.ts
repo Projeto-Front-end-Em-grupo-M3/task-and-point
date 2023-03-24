@@ -111,7 +111,7 @@ const StyledForm = styled.form`
   }
 
   @media (max-width: 520px) {
-    width: 85%;
+    width: 80%;
     padding: 32px 20px;
 
     > h2,

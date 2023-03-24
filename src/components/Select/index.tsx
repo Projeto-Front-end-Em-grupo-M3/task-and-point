@@ -14,19 +14,34 @@ export default function BasicSelect() {
   };
 
   return (
-    <Box sx={{ minWidth: 380 }}>
+    <Box sx={{ width: 380 }} style={{ maxWidth: "100%" }}>
       <FormControl fullWidth>
-        <InputLabel id="shift-select">Turno</InputLabel>
+        <InputLabel id="shift-select" style={{ fontFamily: "Nunito" }}>
+          Turno
+        </InputLabel>
+
         <Select
+          required
           labelId="shift-select"
           id="shift-select"
           value={shift}
           label="shift-select"
           onChange={handleChange}
+          style={{
+            fontFamily: "Nunito",
+            background: "#ffff",
+            boxShadow: " 0px 1px 12px -8px rgba(133,133,133,1)",
+          }}
         >
-          <MenuItem value={"Manhã"}>Manhã</MenuItem>
-          <MenuItem value={"Tarde"}>Tarde</MenuItem>
-          <MenuItem value={"Noite"}>Noite</MenuItem>
+          <MenuItem style={{ fontFamily: "Nunito" }} value={"Manhã"}>
+            Manhã
+          </MenuItem>
+          <MenuItem style={{ fontFamily: "Nunito" }} value={"Tarde"}>
+            Tarde
+          </MenuItem>
+          <MenuItem style={{ fontFamily: "Nunito" }} value={"Noite"}>
+            Noite
+          </MenuItem>
         </Select>
       </FormControl>
     </Box>

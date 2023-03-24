@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { SetStateAction } from "react";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form/dist/types";
-import { StyledFieldset } from "./style";
+import { Sfieldset } from "./style";
 interface IInput {
   label?: string;
   register?: UseFormRegisterReturn<string>;
@@ -16,8 +16,11 @@ interface IInput {
 }
 
 const Input = ({ label, register, error, value, type, onChange }: IInput) => (
-  <StyledFieldset>
+  <Sfieldset>
     <TextField
+      style={{
+        background: "#ffff",
+      }}
       value={value}
       label={label}
       type={type}
@@ -25,6 +28,6 @@ const Input = ({ label, register, error, value, type, onChange }: IInput) => (
       onChange={onChange}
     />
     <p> {error?.message} </p>
-  </StyledFieldset>
+  </Sfieldset>
 );
 export default Input;

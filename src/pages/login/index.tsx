@@ -14,9 +14,6 @@ const LoginPage = () => {
   const schema = yup
     .object({
       email: yup.string().required("E-mail inválido").email("E-mail inválido"),
-      password: yup
-        .string()
-        .matches(/.{6,}/, "Deve conter no mínimo 6 caracteres"),
     })
     .required();
 

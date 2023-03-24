@@ -8,7 +8,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Input from "../../components/Input";
-import { UserContext } from "../../contexts/userContext";
 import Button from "../../components/Button";
 import more from "../../assets/more.svg";
 import admIcon from "../../assets/admIcon.svg";

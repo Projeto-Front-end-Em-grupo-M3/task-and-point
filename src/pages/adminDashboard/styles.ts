@@ -101,10 +101,6 @@ export const StyledDash = styled.div`
     align-items: center;
   }
 
-  li {
-    position: relative;
-  }
-
   .employeesList_section {
     max-width: 100%;
     border: 1px solid rgba(224, 224, 224, 1);
@@ -121,7 +117,9 @@ export const StyledDash = styled.div`
     background-color: rgba(245, 245, 245, 1);
     border-radius: 8px 8px 0px 0px;
     padding: 0px 16px;
-    @media (max-width: 600px) {
+    display: none;
+
+    @media (max-width: 900px) {
       display: none;
     }
   }
@@ -159,13 +157,15 @@ export const StyledDash = styled.div`
     height: 90px;
     max-height: 100%;
     margin: 0px 16px 0px 16px;
+    position: relative;
     border-bottom: 1px solid rgba(224, 224, 224, 1);
     @media (max-width: 900px) {
-      flex-direction: row;
+      flex-direction: column;
       align-items: flex-start;
-      justify-content: center;
-      padding: 10px 16px 10px 16px;
-      gap: 10px;
+      justify-content: flex-start;
+      /*   padding: 10px 16px 10px 16px;
+      gap: 10px; */
+      height: 300px;
     }
   }
 

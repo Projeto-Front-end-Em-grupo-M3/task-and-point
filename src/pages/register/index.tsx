@@ -6,38 +6,23 @@ import { useNavigate } from "react-router-dom";
 import { IUserRegister, UserContext } from "../../contexts/userContext";
 import StyledForm from "./style";
 import Header from "../../components/Header";
-import { useContext, useEffect } from "react";
-import MultipleSelect from "../../components/Select";
+import { useContext } from "react";
 import BasicSelect from "../../components/Select";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
 
-  /*  function parseJwt(token: string) {
-    var base64Url = token.split(".")[1];
-    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    var jsonPayload = decodeURIComponent(
-      window
-        .atob(base64)
-        .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
-
-    return JSON.parse(jsonPayload);
-  } */
-
   const schema = yup
     .object({
-      name: yup.string().required("Nome inválido"),
-      email: yup.string().required("E-mail inválido").email("E-mail inválido"),
+      name: yup.string().required("Nome é obrigatório"),
+      email: yup
+        .string()
+        .required("E-mail é obrigatório")
+        .email("E-mail inválido"),
       password: yup
         .string()
         .matches(/.{6,}/, "Deve conter no mínimo 6 caracteres"),
-      office: yup.string().required("Cargo Inválido"),
-      shift: yup.string().required("Turno de Trabalho Inválido"),
+      office: yup.string().required("Cargo é obrigatório"),
     })
     .required();
 
@@ -50,9 +35,8 @@ const RegisterForm = () => {
   const { registerUser, shift } = useContext(UserContext);
 
   const submit: SubmitHandler<IUserRegister> = (formData: IUserRegister) => {
-    const teste = registerUser({ ...formData, shift, isAdm: false });
-
-    console.log(teste);
+    console.log({ ...formData, shift, isAdm: false });
+    registerUser({ ...formData, shift, isAdm: false });
   };
 
   return (
@@ -85,13 +69,6 @@ const RegisterForm = () => {
           error={errors.office}
           type="text"
         />
-        {/*         <Input
-          label="Turno de Trabalho"
-          register={register("shift")}
-          error={errors.shift}
-          type="text"
-        /> */}
-
         <BasicSelect />
         <button type="submit">Cadastrar</button>
         <div>

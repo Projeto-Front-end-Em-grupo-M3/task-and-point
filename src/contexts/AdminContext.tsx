@@ -112,9 +112,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/users/${id}`);
         setAdm(response.data);
       } catch (error) {
-        console.error(
-          "Não foi possivel buscar os dados do usuário. API desconectada"
-        );
+        console.error(error);
       }
     }
   };
@@ -129,9 +127,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks(response.data);
         setTasksSearch(response.data);
       } catch (error) {
-        console.error(
-          "Não foi possivel buscar tarefas cadastradas. API desconectada"
-        );
+        console.error(error);
       }
     }
   };
@@ -146,7 +142,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks([...tasks, response.data]);
         toast.success("Atividade cadastrada");
       } catch (error) {
-        console.error("Não foi possivel criar a tarefa. Tente novamente");
+        console.error(error);
       }
     }
   };
@@ -212,6 +208,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
 
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
+    localStorage.removeItem("@TaskandPoint:user");
     toast.warning("Você saiu");
     navigate("/login");
   };

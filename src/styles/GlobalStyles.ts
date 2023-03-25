@@ -75,29 +75,52 @@ button {
   --radius: 8px;
   
   h1{
-    font-size: 38px;
+    font-size: 36px;
     font-weight: bold;
+    
+    @media (max-width:570px) {
+      font-size: 26px;
+    }
   }
+
   h2{
     font-size: 22px;
     font-weight: bold;
+
+    @media (max-width:570px) {
+      font-size: 16px;
+    }
   }
+
   h3{
     font-size: 16px;
     font-weight: bold;
+
+    @media (max-width:570px) {
+      font-size: 12px;
+    }
   }
+
   h4{
     font-size: 12px;
     font-weight: bold;
+
+    @media (max-width:570px) {
+      font-size: 8px;
+    }
   }
+  
 body{
   font-size: 16px;
   font-family: var(--font-primary);
 
+  @media (max-width:570px) {
+    font-size: 12px;
+  }
 }
+
 input, label{
   font-family: var(--font-primary);
 }
-
 }
 `;

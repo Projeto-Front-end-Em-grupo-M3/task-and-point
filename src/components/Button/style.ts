@@ -17,4 +17,9 @@ export const StyledButton = styled.button`
     outline: none;
     background-color: var(--Color-primary-2);
   }
+
+  @media (max-width: 570px) {
+    font-size: 12px;
+    height: 30px;
+  }
 `;

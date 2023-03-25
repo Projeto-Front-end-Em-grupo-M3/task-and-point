@@ -26,9 +26,6 @@ export const StyledHeader = styled.header`
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    @media (max-width: 500px) {
-      padding: 0px 0px;
-    }
   }
 
   button:hover {

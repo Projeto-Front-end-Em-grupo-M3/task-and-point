@@ -143,9 +143,11 @@ const AdminDashboard = () => {
           <div className="employeesList_header">
             <div className="sub_employeesList_header">
               <p>Nome</p>
-              <p>Email</p>
-              <p>Cargo</p>
-              <p>Turno</p>
+              <div>
+                <p>Email</p>
+                <p>Cargo</p>
+                <p>Turno</p>
+              </div>
             </div>
           </div>
           <ul>
@@ -155,11 +157,14 @@ const AdminDashboard = () => {
                   <li key={crypto.randomUUID()}>
                     <div className="sub_employeesList_header">
                       <h2>{user.name}</h2>
-                      <p>{user.email}</p>
-                      <p>{user.office}</p>
-                      <span>{user.shift}</span>
+                      <div>
+                        <p>{user.email}</p>
+                        <p>{user.office}</p>
+                        <span>{user.shift}</span>
+                      </div>
                     </div>
                     <img
+                      className="btn_add_more"
                       src={more}
                       id="more"
                       onClick={() => openModal(user.id)}

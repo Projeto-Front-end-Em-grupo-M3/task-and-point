@@ -22,47 +22,50 @@ export const StyledDash = styled.div`
   #icon {
     width: 30px;
     height: 30px;
-    position: absolute;
+
+    @media (max-width: 570px) {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   #trashCan {
     right: 10px;
     @media (max-width: 970px) {
-      position: absolute;
+      // position: absolute;
       left: 150px;
       bottom: 20px;
     }
   }
 
   #more {
-    position: absolute;
-    right: 16px;
     @media (max-width: 600px) {
-      top: 20px;
+      // top: 20px;
     }
   }
 
   #status_task {
     color: var(--Color-primary);
     font-weight: bold;
-    position: absolute;
+    // position: absolute;
     right: 80px;
     @media (max-width: 970px) {
-      position: absolute;
+      // position: absolute;
       left: 10px;
       bottom: 20px;
     }
   }
 
   #icon {
-    margin: 0px 20px 0px 20px;
+    margin: 0px 20px;
   }
+
   .sub_info_div {
     width: fit-content;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding-left: 70px;
+    padding: 0 70px;
   }
 
   #opacity {
@@ -99,6 +102,28 @@ export const StyledDash = styled.div`
     flex-direction: row;
     gap: 8px;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #test,
+  #test > fieldset > div {
+    @media (max-width: 570px) {
+      width: 100%;
+    }
+  }
+
+  fieldset > div > div {
+    @media (max-width: 570px) {
+      height: 40px;
+      width: 100%;
+    }
+  }
+
+  fieldset > div > label {
+    @media (max-width: 570px) {
+      margin-top: -7px;
+    }
   }
 
   .employeesList_section {
@@ -111,23 +136,51 @@ export const StyledDash = styled.div`
   .employeesList_header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-arround;
     max-width: 100%;
-    height: 51px;
+    min-height: 51px;
     background-color: rgba(245, 245, 245, 1);
     border-radius: 8px 8px 0px 0px;
     padding: 0px 16px;
-    display: none;
-
-    @media (max-width: 900px) {
-      display: none;
-    }
   }
   .sub_employeesList_header {
     max-width: 100%;
     display: flex;
-    width: 85%;
+    width: 95%;
     justify-content: space-between;
+    align-items: center;
+  }
+
+  .sub_employeesList_header > div {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+
+    @media (max-width: 720px) {
+      flex-direction: column;
+      gap: 12px;
+      padding: 6px 0;
+    }
+  }
+
+  .sub_employeesList_header > p {
+    display: flex;
+    width: 25%;
+    justify-content: center;
+  }
+
+  .sub_employeesList_header > div > p,
+  .sub_employeesList_header > div > span {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn_add_more {
+    position: relative;
+    right: 0px;
   }
 
   #tasks_section {
@@ -138,10 +191,6 @@ export const StyledDash = styled.div`
     width: 350px;
     max-width: 100%;
     line-height: 1.5;
-    @media (max-width: 970px) {
-      width: 600px;
-      height: 100%;
-    }
   }
 
   .employeesList_section > ul {
@@ -149,30 +198,27 @@ export const StyledDash = styled.div`
     height: fit-content;
   }
 
+  .employeesList_section > ul > h1,
+  .employeesList_section > ul > p {
+    padding: 64px 32px;
+  }
+
   .employeesList_section > ul > li {
     display: flex;
-    gap: 60px;
+    justify-content: space-between;
+    gap: 10px;
     align-items: center;
     max-width: 100%;
     height: 90px;
     max-height: 100%;
     margin: 0px 16px 0px 16px;
-    position: relative;
     border-bottom: 1px solid rgba(224, 224, 224, 1);
-    @media (max-width: 900px) {
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      /*   padding: 10px 16px 10px 16px;
-      gap: 10px; */
-      height: 300px;
-    }
   }
 
   form {
     display: flex;
     flex-direction: column;
-    max-width: 100%;
+    width: 100%;
     padding: 25px 0px;
   }
 
@@ -190,6 +236,10 @@ export const StyledDash = styled.div`
       align-items: flex-start;
       height: 200px;
     }
+
+    @media (max-width: 570px) {
+      height: 150px;
+    }
   }
 
   form > div > select {
@@ -203,6 +253,10 @@ export const StyledDash = styled.div`
 
     :focus {
       border: 2px solid #2380fb;
+    }
+    @media (max-width: 570px) {
+      padding: 10px;
+      width: 100%;
     }
   }
 `;

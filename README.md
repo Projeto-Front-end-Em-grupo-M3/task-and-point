@@ -1,18 +1,55 @@
+# Task&Point
 
-# Projeto Task&Point
+Task&Point é uma aplicação web que permite o registro eletrônico de ponto da pessoa usuária e o gerenciamento de tarefas por parte da pessoa administradora. O objetivo do projeto é simplificar o controle de ponto e a atribuição de tarefas em empresas e organizações que têm essa carência, como estabelecimentos de pequeno/médio porte e/ou empresas em fase de treinamento, cujas rotinas cotidianas contemplam tarefas diversas.
 
-Este é o projeto Front-End, projeto final, do terceiro módulo da Kenzie Academy Brasil. Sendo o último módulo de Front-End, o projeto tem como objetivo colocar em prática tudo que aprendemos ao decorrer dos três primeiros módulos (6 meses) do curso. O tema é livre, e o tema escolhido neste projeto foi resolver organizzação de tarefas e marcar pontos.
+## Funcionalidades
 
-## Qual o problema a ser solucionado ?
+Registro de ponto eletrônico: As pessoas usuárias poderão fazer o cadastro, login e registrar pontos de forma eletrônica.
 
-Na rotina de alguns estabelecimentos de pequeno/médio porte, é comum que diariamente cada pessoa da equipe de trabalho tenha diferentes atribuições. Essas ocorrem verbalmente de chefe para funcionáries, o que pode gerar falta de comunicação e falta de controle nas atividades. Além disso, o controle de ponto (quando há) é por escrito em papel, o que é informal não é fidedigno.
+Gerenciamento de tarefas: A pessoa administradora poderá criar tarefas e atribuí-las às pessoas usuárias cadastradas.
 
-## Qual a solução que a aplicação traz ?
+Acompanhamento de tarefas: As pessoas usuárias poderão visualizar as tarefas atribuídas. Além disso, poderão marcar as tarefas como concluídas.
 
-Uma aplicação com acesso _admin_ e acesso _user_, em que a pessoa _admin_ faz seu login como empresa e tem acesso a um dashboard no qual consegue atribuir tarefas às pessoas usuárias cadastradas. A pessoa _admin_ também tem acesso aos registros de ponto e às informações (nome, cargo, shift de trabalho da pessoa usuária)
+Relatórios de ponto e tarefas: A pessoa administradora poderá visualizar os pontos registrados e acompanhar o andamento das tarefas atribuídas.
 
-Já a pessoa funcionária (_user_) consegue fazer seu registro, login e na sua dashboard pode bater o ponto, visualizar quais são suas tarefas do dia, bem como marca-las como concluídas.
+Gerenciamento de pessoas: A pessoa administradora poderá demitir uma pessoa usuária, deletando seu cadastro.
 
-Sendo assim a aplicação formaliza a folha ponto e a distribuição de tarefas, reduzindo as possíveis falhas de comunicação.
+## Tecnologias
 
+Bibliotecas
 
+- react router dom
+- react hook form
+- mui material
+- react icons
+- react toastify
+- yup
+- axios
+- styled-components
+- toastify
+
+Tecnologias e ferramentas:
+
+- React TS
+- ContextAPI
+- Json-Server como API fake
+- Vite
+- Yarn
+- Vercel: hospedagem do front
+- Render: hospedagem da API fake
+- Identação Prettier
+- Trello
+- Figma
+- Notion
+
+## Como usar
+
+Para utilizar o Task&Poinr, é necessário acessar esse link: <a href="https://task-and-point.vercel.app/">Task&Point</a>
+
+Credenciais Adm:
+Email: admin@mail.com
+Senha: 123456
+
+Credenciais User chumbado (teste):
+Email: costinha@mail.com
+Senha: 123456

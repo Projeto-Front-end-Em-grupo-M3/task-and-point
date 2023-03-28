@@ -55,7 +55,6 @@ const UserDashboard = () => {
 
   const createPoint = async () => {
     const date = new Date().toLocaleString();
-    console.log(date);
 
     const data = {
       point: date,

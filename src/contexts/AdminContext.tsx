@@ -98,7 +98,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setUsers(employes);
         setEmployeSearch(employes);
       } catch (error) {
-        console.error("Não foi possivel buscar os usuários. API desconectada");
+        toast.error("Não foi possivel buscar os usuários. API desconectada");
       }
     }
   };
@@ -112,7 +112,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/users/${id}`);
         setAdm(response.data);
       } catch (error) {
-        console.error(error);
+        toast.error("Não foi possivel buscar a informação. API desconectada");
       }
     }
   };
@@ -127,7 +127,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks(response.data);
         setTasksSearch(response.data);
       } catch (error) {
-        console.error(error);
+        toast.error("Não foi possivel buscar a informação. API desconectada");
       }
     }
   };
@@ -143,7 +143,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasksSearch([...tasks, response.data]);
         toast.success("Atividade cadastrada");
       } catch (error) {
-        console.error(error);
+        toast.error("Um erro ocorreu, tente novamente em alguns minutos");
       }
     }
   };
@@ -164,7 +164,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
 
         toast.success("Atividade excluída");
       } catch (error) {
-        console.error("Erro. Tente excluir novamente");
+        toast.error("Erro. Tente excluir novamente");
       }
     }
   };
@@ -187,9 +187,9 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks(remainTasks);
         setTasksSearch(remainTasks);
         setModal(false);
-        toast.warning("usuário excluído");
+        toast.warning("Usuário excluído");
       } catch (error) {
-        console.error("Erro. Tente excluir novamente");
+        toast.error("Erro. Tente excluir novamente");
       }
     }
   };
@@ -203,7 +203,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/points/`);
         setAllPoints(response.data);
       } catch (error) {
-        console.error("Erro de conexão com servidor.");
+        toast.error("Erro de conexão com servidor.");
       }
     }
   };

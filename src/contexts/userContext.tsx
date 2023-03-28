@@ -73,7 +73,6 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
       toast.success("Cadastro realizado com sucesso");
       navigate("/login");
     } catch (error: any) {
-      console.log(error);
       if (error.response.data === "Email already exists") {
         toast.error("Esse email já está em uso");
       } else {

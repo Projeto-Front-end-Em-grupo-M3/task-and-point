@@ -22,6 +22,7 @@ export const StyledDash = styled.div`
   #icon {
     width: 30px;
     height: 30px;
+    cursor: pointer;
 
     @media (max-width: 570px) {
       width: 20px;
@@ -32,25 +33,16 @@ export const StyledDash = styled.div`
   #trashCan {
     right: 10px;
     @media (max-width: 970px) {
-      // position: absolute;
       left: 150px;
       bottom: 20px;
-    }
-  }
-
-  #more {
-    @media (max-width: 600px) {
-      // top: 20px;
     }
   }
 
   #status_task {
     color: var(--Color-primary);
     font-weight: bold;
-    // position: absolute;
     right: 80px;
     @media (max-width: 970px) {
-      // position: absolute;
       left: 10px;
       bottom: 20px;
     }

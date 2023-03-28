@@ -98,7 +98,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setUsers(employes);
         setEmployeSearch(employes);
       } catch (error) {
-        toast.error("Não foi possivel buscar os usuários. API desconectada");
+        console.error("Não foi possivel buscar os usuários. API desconectada");
       }
     }
   };
@@ -127,7 +127,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks(response.data);
         setTasksSearch(response.data);
       } catch (error) {
-        toast.error("Não foi possivel buscar a informação. API desconectada");
+        console.error("Não foi possivel buscar a informação. API desconectada");
       }
     }
   };
@@ -143,7 +143,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasksSearch([...tasks, response.data]);
         toast.success("Atividade cadastrada");
       } catch (error) {
-        toast.error("Um erro ocorreu, tente novamente em alguns minutos");
+        console.error("Um erro ocorreu, tente novamente em alguns minutos");
       }
     }
   };
@@ -203,7 +203,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/points/`);
         setAllPoints(response.data);
       } catch (error) {
-        toast.error("Erro de conexão com servidor.");
+        console.error("Erro de conexão com servidor.");
       }
     }
   };

@@ -136,7 +136,7 @@ export const UserContextProvider = ({ children }: IDefaultProps) => {
 
       setTasks(response.data);
     } catch (error: any) {
-      toast.error(error);
+      console.error(error);
     }
   };
 

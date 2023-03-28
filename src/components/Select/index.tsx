@@ -31,6 +31,7 @@ export default function BasicSelect() {
             fontFamily: "Nunito",
             background: "#ffff",
             boxShadow: " 0px 1px 12px -8px rgba(133,133,133,1)",
+            marginTop: "0px",
           }}
         >
           <MenuItem style={{ fontFamily: "Nunito" }} value={"Manhã"}>

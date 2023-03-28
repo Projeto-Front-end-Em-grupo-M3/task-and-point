@@ -12,7 +12,6 @@ const StyledForm = styled.form`
   gap: 16px;
   width: 400px;
   min-height: 511px;
-
   background: #ffffff;
   box-shadow: 5px 6px 60px rgba(128, 128, 128, 0.5);
   border-radius: 16px;
@@ -25,6 +24,11 @@ const StyledForm = styled.form`
     line-height: 25px;
 
     color: #262626;
+  }
+
+  > fieldset {
+    display: flex;
+    justify-content: center;
   }
 
   > fieldset > div {

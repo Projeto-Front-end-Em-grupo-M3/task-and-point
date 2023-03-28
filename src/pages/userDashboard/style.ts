@@ -2,50 +2,55 @@ import styled from "styled-components";
 export const StyledDash = styled.div`
   font-family: var(--font-primary);
   max-width: 100%;
-  width: 976px;
+  width: 1206px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 50px;
+  }
 
   .info_user {
     max-width: 100%;
-    width: 99%;
+    width: 100%;
     border: 1px solid rgba(233, 236, 239, 1);
     border-radius: 8px;
     margin: 39px 0px 20px 0px;
+
+    padding: 20px;
+
     display: flex;
     flex-direction: column;
     height: 130px;
     justify-content: space-around;
 
-    @media (max-width: 600px) {
+    @media (max-width: 900px) {
       flex-direction: column;
 
-      height: 225px;
+      height: 170px;
       justify-content: space-around;
       align-items: center;
     }
   }
 
   .info_user > h1 {
-    padding: 16px;
     @media (max-width: 600px) {
-      font-size: 32px;
+      font-size: 16px;
     }
   }
 
   .info_user > div {
+    max-width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    padding: 16px;
-
-    @media (max-width: 600px) {
+    @media (max-width: 900px) {
+      display: flex;
       flex-direction: column;
-      height: 95px;
-      gap: 5px;
+      height: 120px;
+      gap: 10px;
     }
   }
 
@@ -55,21 +60,23 @@ export const StyledDash = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: relative;
     gap: 20px;
     width: 400px;
     background-color: var(--grey-2);
     border-radius: var(--radius);
     padding-bottom: 20px;
-    margin-top: 20px;
+    margin: 20px 0px;
   }
 
   #exitIcon {
     width: 30px;
     height: 30px;
-    position: absolute;
-    top: 3px;
-    left: 360px;
+    padding-right: 20px;
+
+    @media (max-width: 570px) {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   #hit_point > {
@@ -78,7 +85,7 @@ export const StyledDash = styled.div`
     margin: 0 auto;
   }
 
-  > button {
+  button {
     max-width: 100%;
     width: 280px;
     padding: 0px 10px;
@@ -99,16 +106,26 @@ export const StyledDash = styled.div`
     color: var(--grey-4);
     transition: 0.4ms;
   }
-  .register_block > h3,
-  #p_task_list {
-    background-color: var(--grey-1);
+  .register_block > div {
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
+    background-color: var(--grey-1);
     text-align: center;
+    margin: 0px 20px;
     padding: 10px 0px;
     border-radius: 8px 8px 0px 0px;
   }
 
+  .register_block > div > h3 {
+    padding-left: 20px;
+  }
+
   .register_block > ul {
+    max-width: 100%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -121,10 +138,9 @@ export const StyledDash = styled.div`
 
   section {
     max-width: 100%;
-    width: 95%;
+    width: 100%;
     border: 1px solid rgba(224, 224, 224, 1);
     border-radius: 8px;
-
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -133,12 +149,14 @@ export const StyledDash = styled.div`
   }
 
   section > ul {
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 15px;
   }
 
   section > ul > li {
+    max-width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;

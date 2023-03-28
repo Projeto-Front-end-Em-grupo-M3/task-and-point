@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AdminContext, IUser } from "../../contexts/AdminContext";
+import { AdminContext, IUser } from "../../contexts/adminContext";
 import Button from "../Button";
 import { DivMainModal, DivMainModalWrapper } from "./styles";
 

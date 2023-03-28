@@ -8,7 +8,7 @@ import React, {
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
-import { ITasks, IPoints, AdminContext } from "./AdminContext";
+import { ITasks } from "./adminContext";
 
 export interface IDefaultProps {
   children: ReactNode;

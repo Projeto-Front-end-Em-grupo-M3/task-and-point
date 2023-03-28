@@ -1,16 +1,12 @@
-import { ITasks } from "../../contexts/AdminContext"
+import { ITasks } from "../../contexts/adminContext";
 
 const TaskCard = (task: ITasks) => {
-    return <li>
-        <span>
-            {
-                task.task
-            }
-        </span>
-        <input
-            type="checkbox" 
-        />
+  return (
+    <li>
+      <span>{task.task}</span>
+      <input type="checkbox" />
     </li>
-}
+  );
+};
 
-export default TaskCard
+export default TaskCard;

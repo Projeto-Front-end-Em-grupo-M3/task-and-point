@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/userContext";
 import { toast } from "react-toastify";
 import Header from "../../components/Header";
-import { StyledDash } from "./styles";
-import { AdminContext } from "../../contexts/AdminContext";
+import { StyledDash } from "./style";
+import { AdminContext } from "../../contexts/adminContext";
 import { api } from "../../services/api";
 import Button from "../../components/Button";
 import exitBtn from "../../assets/exit.svg";
@@ -83,85 +83,91 @@ const UserDashboard = () => {
     <>
       <Header content="Sair" />
       <StyledDash>
-        <div className="info_user">
-          <h1>{user?.name}</h1>
-          <div>
-            <p>{user?.email}</p>
-            <p>{user?.office}</p>
-            <p>{user?.shift}</p>
-            <Button
-              clickFunction={() => setModalPoints(true)}
-              buttonText="Ver pontos batidos"
-              type="submit"
-            />
+        <div className="container">
+          <div className="info_user">
+            <h1>{user?.name}</h1>
+            <div>
+              <p>{user?.email}</p>
+              <p>{user?.office}</p>
+              <p>{user?.shift}</p>
+              <Button
+                clickFunction={() => setModalPoints(true)}
+                buttonText="Ver pontos batidos"
+                type="submit"
+              />
+            </div>
           </div>
-        </div>
 
-        <button onClick={() => createPoint()} type="submit">
-          Bater Ponto
-        </button>
-        {modalPoints && (
-          <div className="register_block">
-            <img
-              id="exitIcon"
-              src={exitBtn}
-              onClick={() => setModalPoints(false)}
-              alt="exit"
-            />
-            <h3>Lista de pontos batidos</h3>
+          <button onClick={() => createPoint()} type="submit">
+            Bater Ponto
+          </button>
+          {modalPoints && (
+            <div className="register_block">
+              <div>
+                <h3>Lista de pontos batidos</h3>
+                <img
+                  id="exitIcon"
+                  src={exitBtn}
+                  onClick={() => setModalPoints(false)}
+                  alt="exit"
+                />
+              </div>
+              <ul>
+                {allPoints.length > 0 ? (
+                  allPoints.map((point) => {
+                    if (point.userId === user?.id) {
+                      return (
+                        <li>
+                          <p>{point.point}</p>
+                        </li>
+                      );
+                    }
+                  })
+                ) : (
+                  <p>Nenhum ponto registrado ainda</p>
+                )}
+              </ul>
+            </div>
+          )}
+
+          <section>
+            <div>
+              <h3>Lista de tarefas</h3>
+            </div>
             <ul>
-              {allPoints.length > 0 ? (
-                allPoints.map((point) => {
-                  if (point.userId === user?.id) {
-                    return (
-                      <li>
-                        <p>{point.point}</p>
-                      </li>
-                    );
-                  }
+              {tasksOfUser && tasksOfUser.length > 0 ? (
+                tasksOfUser.map((task) => {
+                  return (
+                    <li key={crypto.randomUUID()}>
+                      <p>{task.task}</p>
+                      <span
+                        style={{
+                          color:
+                            task.status === "Em andamento"
+                              ? "#eb0202"
+                              : "#0C8B48",
+                        }}
+                      >
+                        {task.status}
+                      </span>
+                      <Button
+                        clickFunction={() => checkTask(task.id)}
+                        type={"button"}
+                        buttonText={
+                          task.status === "Em andamento"
+                            ? "Finalizar tarefa"
+                            : "Tarefa finalizada"
+                        }
+                      />
+                    </li>
+                  );
                 })
               ) : (
-                <p>Nenhum ponto registrado ainda</p>
+                <p>Nenhuma atividade a fazer</p>
               )}
             </ul>
-          </div>
-        )}
-
-        <section>
-          <h3>Lista de tarefas</h3>
-          <ul>
-            {tasksOfUser && tasksOfUser.length > 0 ? (
-              tasksOfUser.map((task) => {
-                return (
-                  <li key={crypto.randomUUID()}>
-                    <p>{task.task}</p>
-                    <span
-                      style={{
-                        color:
-                          task.status === "Em andamento"
-                            ? "#eb0202"
-                            : "#0C8B48",
-                      }}
-                    >
-                      {task.status}
-                    </span>
-                    <Button
-                      clickFunction={() => checkTask(task.id)}
-                      type={"button"}
-                      buttonText={
-                        task.status === "Em andamento"
-                          ? "Finalizar tarefa"
-                          : "Tarefa finalizada"
-                      }
-                    />
-                  </li>
-                );
-              })
-            ) : (
-              <p>Nenhuma atividade a fazer</p>
-            )}
-          </ul>
-        </section>
+          </section>
+        </div>
       </StyledDash>
     </>
   );

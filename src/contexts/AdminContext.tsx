@@ -140,6 +140,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         )}`;
         const response = await api.post(`/tasks`, data);
         setTasks([...tasks, response.data]);
+        setTasksSearch([...tasks, response.data]);
         toast.success("Atividade cadastrada");
       } catch (error) {
         console.error(error);
@@ -158,6 +159,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const newTasks = tasks.filter((task) => task.id !== id);
         if (!isDeleteUser) {
           setTasks(newTasks);
+          setTasksSearch(newTasks);
         }
 
         toast.success("Atividade excluída");

@@ -11,8 +11,6 @@ const StyledDiv = styled.div`
   }
   .intro {
     width: 50%;
-    /* padding-left: 50px;
- */
     display: flex;
     flex-direction: column;
     align-items: center;

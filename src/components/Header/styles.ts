@@ -2,20 +2,20 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const StyledHeader = styled.header`
-  max-width: 100%;
-  width: 100vw;
   height: 88px;
   background-color: #f8f9fa;
   box-shadow: 0px 4px 32px -12px rgba(0, 0, 0, 0.25);
 
   nav {
     max-width: 100%;
-    width: 1016px;
     height: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #f8f9fa;
+    margin-left: 40px;
+    margin-right: 40px;
   }
 
   button {
@@ -26,6 +26,11 @@ export const StyledHeader = styled.header`
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
+    @media (max-width: 470px) {
+      margin-right: 0;
+      padding: 0;
+      background-color: transparent;
+    }
   }
 
   button:hover {
@@ -38,7 +43,8 @@ export const StyledHeader = styled.header`
     width: 186px;
     height: 39px;
     @media (max-width: 500px) {
-      width: 166px;
+      margin-left: 0;
+      width: 140px;
       height: 34px;
     }
   }
@@ -58,8 +64,10 @@ export const StyledLink = styled(Link)`
   text-align: center;
   display: flex;
   align-items: center;
-  @media (max-width: 500px) {
-    padding: 0px 8px;
+  @media (max-width: 470px) {
+    margin-right: 0;
+    padding: 0;
+    background-color: transparent;
   }
 
   :hover {

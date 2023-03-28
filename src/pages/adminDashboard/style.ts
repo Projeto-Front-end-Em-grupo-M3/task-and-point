@@ -103,7 +103,6 @@ export const StyledDash = styled.div`
     gap: 8px;
     align-items: center;
     justify-content: center;
-    width: 100%;
   }
 
   #test,

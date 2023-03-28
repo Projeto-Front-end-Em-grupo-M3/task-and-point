@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AdminContext } from "../../contexts/AdminContext";
+import { AdminContext } from "../../contexts/adminContext";
 import { StyledHeader, StyledLink } from "./styles";
 import darkLetterLogo from "../../assets/darkLetterLogo.svg";
 

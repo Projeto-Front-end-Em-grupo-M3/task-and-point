@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { AdminContext, ITasks } from "../../contexts/AdminContext";
+import { AdminContext, ITasks } from "../../contexts/adminContext";
 import { toast } from "react-toastify";
 import Header from "../../components/Header";
 import MainModal from "../../components/MainModal";
-import { StyledDash } from "./styles";
+import { StyledDash } from "./style";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";

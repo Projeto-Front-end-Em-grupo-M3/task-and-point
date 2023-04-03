@@ -43,7 +43,8 @@ Tecnologias e ferramentas:
 
 ## Como usar
 
-Para utilizar o Task&Poinr, é necessário acessar esse link: <a href="https://task-and-point.vercel.app/">Task&Point</a>
+*Por gentileza, tenha em mente que por tratar-se de uma Fake API, no primeiro acesso é necessário um tempo de espera de alguns minutos até que as requisições funcionem.*
+Para utilizar o Task&Point, é necessário acessar esse link: <a href="https://task-and-point.vercel.app/">Task&Point</a>
 
 Credenciais Adm:
 Email: admin@mail.com

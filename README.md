@@ -26,7 +26,6 @@ Bibliotecas
 - yup
 - axios
 - styled-components
-- toastify
 
 Tecnologias e ferramentas:
 

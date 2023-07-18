@@ -1,14 +1,12 @@
 import { TextField } from "@mui/material";
 import { SetStateAction } from "react";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form/dist/types";
-import { StyledDiv } from "./style";
-
+import { Sfieldset } from "./style";
 interface IInput {
-  label: string;
-  register: UseFormRegisterReturn<string>;
+  label?: string;
+  register?: UseFormRegisterReturn<string>;
   error?: FieldError;
-  type: "text" | "password" | "email";
-  placeholder?: string;
+  type: "text" | "password" | "email" | "checkbox";
   value?: string;
   onChange?: (event: {
     target: {
@@ -17,26 +15,19 @@ interface IInput {
   }) => void;
 }
 
-const Input = ({
-  label,
-  register,
-  error,
-  type,
-  placeholder,
-  value,
-  onChange,
-}: IInput) => (
-  <fieldset>
+const Input = ({ label, register, error, value, type, onChange }: IInput) => (
+  <Sfieldset>
     <TextField
+      style={{
+        background: "#ffff",
+      }}
+      value={value}
       label={label}
       type={type}
       {...register}
-      placeholder={placeholder}
-      value={value}
       onChange={onChange}
     />
     <p> {error?.message} </p>
-  </fieldset>
+  </Sfieldset>
 );
-
 export default Input;

@@ -1,146 +1,174 @@
-import { SetStateAction, useContext, useEffect, useState } from "react";
-import { UserContext, IUserLogin, IUser } from "../../contexts/userContext";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts/userContext";
 import { toast } from "react-toastify";
 import Header from "../../components/Header";
-import Input from "../../components/Input";
-import { StyledDash } from "./styles";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { ITasks, IPoints } from "../../contexts/AdminContext";
+import { StyledDash } from "./style";
+import { AdminContext } from "../../contexts/adminContext";
+import { api } from "../../services/api";
+import Button from "../../components/Button";
+import exitBtn from "../../assets/exit.svg";
 
-const schema = yup
-  .object({
-    task: yup.string().required("Digite a atividade"),
-  })
-  .required();
+const UserDashboard = () => {
+  const { user, setTasks } = useContext(UserContext);
+  const { tasks, allPoints, setAllPoints, token, getAllTasks, getAllPoints } =
+    useContext(AdminContext);
 
-const userDashboard = () => {
-    const navigate = useNavigate();
+  useEffect(() => {
+    getAllTasks();
+    getAllPoints();
+  }, []);
 
-    const {
-        user,
-        registerUser,
-        loginUser,
-        logout,
-        pointsUser,
-        tasks,
-    } = useContext(UserContext);
+  const tasksOfUser = tasks.filter((task) => task.name === user?.name);
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<ITasks>({ resolver: yupResolver(schema) });    
-    
-    const submit: SubmitHandler<IUserLogin> = (formData: IUserLogin) => {
-        loginUser(formData);
-    };
+  const [taskId, setTaskId] = useState(0);
 
-    const onSubmit: SubmitHandler<ITasks> = (data) => {
-        createTask({ ...data, status: "Em andamento" });
-        reset();
-    };
+  const checkTask = async (id: number) => {
+    setTaskId(id);
+    const newTasks = [...tasks];
+    const taskIndex = newTasks.findIndex((task) => task.id === id);
 
-    const [searchValue, setSearchValue] = useState("");
+    if (taskIndex !== -1) {
+      const task = newTasks[taskIndex];
+      task.status = "Finalizada";
 
-    const search = (event: { preventDefault: () => void }) => {
-        event.preventDefault();
+      setTasks(newTasks);
 
-        const date = new Date().getHours; 
+      const data = {
+        name: task.name,
+        task: task.task,
+        status: "Finalizada",
+      };
 
-        if (searchValue !== "") {
-            const searchTasks = tasksSearch.filter((task) =>
-              task.name.toLowerCase().includes(searchValue.toLowerCase())
-            );
-            setTasks(searchTasks);
-      
-            if (searchTasks.length === 0) {
-              setTasks(tasksSearch);
-            }
+      try {
+        if (token) {
+          api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+            token
+          )}`;
+          await api.patch(`/tasks/${id}`, data);
+          toast.success("Tarefa finalizada");
         }
+      } catch (error) {
+        toast.error("Tente novamente");
+      }
+    }
+  };
 
-        if (searchValue === "") {
-            setTasks(tasksSearch);
-        }
+  const createPoint = async () => {
+    const date = new Date().toLocaleString();
 
-        setSearchValue("");
+    const data = {
+      point: date,
+      name: user?.name,
+      userId: user?.id,
     };
 
+    if (token) {
+      try {
+        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
+          token
+        )}`;
+        const response = await api.post(`/points`, data);
+        toast.success("Ponto registrado");
+        setAllPoints([...allPoints, response.data]);
+      } catch (error) {
+        toast.error("Tente novamente");
+      }
+    }
+  };
 
-    return(
+  const [modalPoints, setModalPoints] = useState(false);
+
+  return (
     <>
-        <Header/>
-        <StyledDash>
-            <div className="info_div">
-                <div className="ident_user">
-                    <img src="./src/assets/img/user1.svg" className="img_avatar" alt="avatar"></img>
-                    <h1>Usuário: {user ? user.name : null}</h1>
-                </div>
-                <div className="info_user_div">
-                    <p>Email: {user ? user.email : null}</p>
-                    <p>Cargo: {user ? user.office : null}</p>
-                    <p>Turno de Trabalho: {user ? user.shift : null}</p>
-                </div>
+      <Header content="Sair" />
+      <StyledDash>
+        <div className="container">
+          <div className="info_user">
+            <h1>{user?.name}</h1>
+            <div>
+              <p>{user?.email}</p>
+              <p>{user?.office}</p>
+              <p>{user?.shift}</p>
+              <Button
+                clickFunction={() => setModalPoints(true)}
+                buttonText="Ver pontos batidos"
+                type="submit"
+              />
             </div>
+          </div>
 
-            <div className="buttonPont_div">
-                <button type="submit" 
-                    onClick={(event) => {
-                        event.preventDefault();
-                        navigate("/register");
-                    }}
-                >
-                    Registar ponto
-                </button>
+          <button onClick={() => createPoint()} type="submit">
+            Bater Ponto
+          </button>
+          {modalPoints && (
+            <div className="register_block">
+              <div>
+                <h3>Lista de pontos batidos</h3>
+                <img
+                  id="exitIcon"
+                  src={exitBtn}
+                  onClick={() => setModalPoints(false)}
+                  alt="exit"
+                />
+              </div>
+              <ul>
+                {allPoints.length > 0 ? (
+                  allPoints.map((point) => {
+                    if (point.userId === user?.id) {
+                      return (
+                        <li>
+                          <p>{point.point}</p>
+                        </li>
+                      );
+                    }
+                  })
+                ) : (
+                  <p>Nenhum ponto registrado ainda</p>
+                )}
+              </ul>
             </div>
+          )}
 
-            <div className="search_div">
-                <div className="info_login">
-                    <p>Lista de tarefas</p>
-                    <span>Acompanhe as próximas atividades a executar</span>
-                </div>
-
-                <div className="search_input">
-                    <input
-                        type="text"
-                        placeholder="Digitar pesquisa"
-                        value={searchValue}
-                        onChange={(event) => setSearchValue(event.target.value)}
-                        className="search_input"
-                    />
-
-                    <button type="submit" onClick={search} className="button_search">
-                        Pesquisar
-                    </button>
-                </div>
-            </div>
-
-            <section className="taskList_section">
-            <div className="taskList_header">
-                <div><p></p></div>
+          <section>
+            <div>
+              <h3>Lista de tarefas</h3>
             </div>
             <ul>
-                {tasks && tasks.length > 0 ? (
-                    tasks.map((task) => {
-                        return (
-                        <li key={crypto.randomUUID()}>
-                            <span>{task.task}</span>
-                            <button type="button" onClick={() => (task.status)}>
-                            "Concluído"
-                            </button>
-                        </li>
-                        );
-                    })
-                ) : (
-                <h1>Nenhuma tarefa cadastrada</h1>
-                )}
+              {tasksOfUser && tasksOfUser.length > 0 ? (
+                tasksOfUser.map((task) => {
+                  return (
+                    <li key={crypto.randomUUID()}>
+                      <p>{task.task}</p>
+                      <span
+                        style={{
+                          color:
+                            task.status === "Em andamento"
+                              ? "#eb0202"
+                              : "#0C8B48",
+                        }}
+                      >
+                        {task.status}
+                      </span>
+                      <Button
+                        clickFunction={() => checkTask(task.id)}
+                        type={"button"}
+                        buttonText={
+                          task.status === "Em andamento"
+                            ? "Finalizar tarefa"
+                            : "Tarefa finalizada"
+                        }
+                      />
+                    </li>
+                  );
+                })
+              ) : (
+                <p>Nenhuma atividade a fazer</p>
+              )}
             </ul>
-            </section>
-        </StyledDash></>
-    )
+          </section>
+        </div>
+      </StyledDash>
+    </>
+  );
 };
-
-export default userDashboard;
+export default UserDashboard;

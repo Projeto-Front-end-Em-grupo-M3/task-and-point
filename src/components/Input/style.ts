@@ -1,3 +1,9 @@
 import styled from "styled-components";
+export const Sfieldset = styled.fieldset`
+  font-family: "Nunito";
+  width: 100%;
 
-export const StyledDiv = styled.div``;
+  > div {
+    font-family: "Nunito";
+  }
+`;

@@ -16,20 +16,25 @@ interface IAdminContext {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   idButton: number;
   setIdButton: React.Dispatch<SetStateAction<number>>;
-  getTaskById: (id: number) => Promise<void>;
   tasks: ITasks[];
   setTasks: React.Dispatch<SetStateAction<ITasks[]>>;
   createTask: (data: ITasks) => Promise<void>;
   deleteTask: (id: any) => Promise<void>;
   tasksSearch: ITasks[];
-  deleteUser: (id: number) => Promise<void>;
-  getPointsUser: (id: number) => void;
+  deleteUser: (id: number, name: string) => Promise<void>;
   pointsUser: IPoints[];
   logout: () => void;
   modalPoints: boolean;
   setModalPoints: React.Dispatch<SetStateAction<boolean>>;
   modalDelete: boolean;
   setModalDelete: React.Dispatch<SetStateAction<boolean>>;
+  getAllUsers: () => Promise<void>;
+  getAllTasks: () => Promise<void>;
+  token: string | null;
+  getAllPoints: () => Promise<void>;
+  allPoints: IPoints[];
+  setAllPoints: React.Dispatch<SetStateAction<IPoints[]>>;
+  getPointsUser: (id: number) => void;
 }
 
 export interface IUser {
@@ -77,6 +82,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
     getAllUsers();
     getAdminInfo(1);
     getAllTasks();
+    getAllPoints();
   }, []);
 
   const getAllUsers = async () => {
@@ -92,7 +98,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setUsers(employes);
         setEmployeSearch(employes);
       } catch (error) {
-        toast.error("Algo deu errado, tente novamente mais tarde");
+        console.error("Não foi possivel buscar os usuários. API desconectada");
       }
     }
   };
@@ -106,21 +112,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/users/${id}`);
         setAdm(response.data);
       } catch (error) {
-        toast.error("Algo deu errado, tente novamente mais tarde");
-      }
-    }
-  };
-
-  const getTaskById = async (id: number) => {
-    if (token) {
-      try {
-        api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
-          token
-        )}`;
-        const response = await api.get(`/tasks/${id}`);
-        setTasks(response.data.taskList);
-      } catch (error) {
-        toast.error("Algo deu errado, tente novamente mais tarde");
+        toast.error("Não foi possivel buscar a informação. API desconectada");
       }
     }
   };
@@ -135,7 +127,7 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setTasks(response.data);
         setTasksSearch(response.data);
       } catch (error) {
-        toast.error("Tente novamente");
+        console.error("Não foi possivel buscar a informação. API desconectada");
       }
     }
   };
@@ -148,30 +140,36 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         )}`;
         const response = await api.post(`/tasks`, data);
         setTasks([...tasks, response.data]);
+        setTasksSearch([...tasks, response.data]);
         toast.success("Atividade cadastrada");
       } catch (error) {
-        toast.error("Tente novamente");
+        console.error("Um erro ocorreu, tente novamente em alguns minutos");
       }
     }
   };
 
-  const deleteTask = async (id: number) => {
+  const deleteTask = async (id: number, isDeleteUser: boolean = false) => {
     if (token) {
       try {
         api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
           token
         )}`;
         await api.delete(`/tasks/${id}`);
+
         const newTasks = tasks.filter((task) => task.id !== id);
-        setTasks(newTasks);
+        if (!isDeleteUser) {
+          setTasks(newTasks);
+          setTasksSearch(newTasks);
+        }
+
         toast.success("Atividade excluída");
       } catch (error) {
-        toast.error("Tente novamente");
+        toast.error("Erro. Tente excluir novamente");
       }
     }
   };
 
-  const deleteUser = async (id: number) => {
+  const deleteUser = async (id: number, name: string) => {
     if (token) {
       try {
         api.defaults.headers.common.Authorization = `Bearer ${JSON.parse(
@@ -180,10 +178,18 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         await api.delete(`/users/${id}`);
         const newUsers = users.filter((user) => user.id !== id);
         setUsers(newUsers);
+        setEmployeSearch(newUsers);
+        const filteredTasks = tasks.filter((task) => task.name == name);
+        filteredTasks.forEach((task) => {
+          deleteTask(task.id, true);
+        });
+        const remainTasks = tasks.filter((task) => task.name !== name);
+        setTasks(remainTasks);
+        setTasksSearch(remainTasks);
         setModal(false);
-        toast.warning("usuário excluído");
+        toast.warning("Usuário excluído");
       } catch (error) {
-        toast.error("Tente novamente");
+        toast.error("Erro. Tente excluir novamente");
       }
     }
   };
@@ -197,21 +203,17 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         const response = await api.get(`/points/`);
         setAllPoints(response.data);
       } catch (error) {
-        toast.error("Tente novamente");
+        console.error("Erro de conexão com servidor.");
       }
     }
   };
 
   const logout = () => {
     localStorage.removeItem("@TaskandPoint:token");
-    localStorage.removeItem("@TaskandPoint:isAdmin");
+    localStorage.removeItem("@TaskandPoint:user");
     toast.warning("Você saiu");
-    navigate("/");
+    navigate("/login");
   };
-
-  useEffect(() => {
-    getAllPoints();
-  }, []);
 
   const getPointsUser = (id: number) => {
     const newPoints = allPoints.filter((point) => point.userId === id);
@@ -232,20 +234,25 @@ export const AdminContextProvider = ({ children }: IDefaultProps) => {
         setModal,
         idButton,
         setIdButton,
-        getTaskById,
         tasks,
         setTasks,
         createTask,
         deleteTask,
         tasksSearch,
         deleteUser,
-        getPointsUser,
         pointsUser,
         logout,
         modalPoints,
         setModalPoints,
         modalDelete,
         setModalDelete,
+        getAllTasks,
+        getAllUsers,
+        token,
+        getAllPoints,
+        allPoints,
+        setAllPoints,
+        getPointsUser,
       }}
     >
       {children}

@@ -1,24 +1,26 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-//import logo from "../../assets/logo.png";
-import { AdminContext } from "../../contexts/AdminContext";
-import { StyledHeader } from "./styles";
+import { AdminContext } from "../../contexts/adminContext";
+import { StyledHeader, StyledLink } from "./styles";
+import darkLetterLogo from "../../assets/darkLetterLogo.svg";
 
-const Header = () => {
+interface IContentProps {
+  content: string;
+}
+
+const Header = ({ content }: IContentProps) => {
   const { logout } = useContext(AdminContext);
-
-  /*   const navigate = useNavigate(); */
-  /*   const logOut = () => {
-    localStorage.removeItem("@task-and-point-token");
-    setUsers(null);
-    navigate("/");
-  }; */
 
   return (
     <StyledHeader>
       <nav>
-        {/* <img src={logo} alt="logo" /> */}
-        <button onClick={() => logout()}>Sair</button>
+        <img src={darkLetterLogo} alt="logo" />
+        {content == "Sair" && <button onClick={logout}>{content}</button>}
+        {content == "Inscreva-se" && (
+          <StyledLink to="/register">{content}</StyledLink>
+        )}
+        {content == "Conecte-se" && (
+          <StyledLink to="/login">{content}</StyledLink>
+        )}
       </nav>
     </StyledHeader>
   );

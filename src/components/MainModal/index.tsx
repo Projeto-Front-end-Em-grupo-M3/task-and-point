@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { AdminContext } from "../../contexts/AdminContext";
+import { useContext, useState } from "react";
+import { AdminContext, IUser } from "../../contexts/adminContext";
+import Button from "../Button";
 import { DivMainModal, DivMainModalWrapper } from "./styles";
-import { UserContext } from "../../contexts/userContext";
 
 const MainModal = () => {
   const {
@@ -9,15 +9,11 @@ const MainModal = () => {
     modal,
     idButton,
     users,
-    getTaskById,
-    tasks,
     deleteUser,
     getPointsUser,
     pointsUser,
     modalPoints,
     setModalPoints,
-    modalDelete,
-    setModalDelete,
   } = useContext(AdminContext);
 
   const openModalPoints = (idButton: number) => {
@@ -26,12 +22,15 @@ const MainModal = () => {
   };
 
   const user = users?.find((user) => user.id == idButton);
+  const userName = user?.name as string;
+
+  const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
 
   return (
     <>
       {modal && (
         <DivMainModalWrapper>
-          <DivMainModal>
+          <DivMainModal key={crypto.randomUUID()}>
             {user && (
               <>
                 <header key={crypto.randomUUID()}>
@@ -40,54 +39,78 @@ const MainModal = () => {
                     <p>{user.office}</p>
                     <span>{user.shift}</span>
                   </div>
-                  <button onClick={() => setModal(false)}>fechar</button>
+                  <Button
+                    buttonText="Fechar"
+                    type={"submit"}
+                    clickFunction={() => setModal(false)}
+                  />
                 </header>
               </>
             )}
 
-            <div>
-              <button
+            <div className="main_div">
+              <Button
                 type="button"
-                onClick={() => setModalDelete(true) /* deleteUser(idButton) */}
-              >
-                Demitir
-              </button>
-              {modalDelete && (
-                <div>
+                buttonText="Demitir"
+                clickFunction={() => setConfirmDeleteModal(true)}
+              />
+
+              {confirmDeleteModal ? (
+                <div className="dismiss_confirm">
                   <p>Tem certeza que deseja demitir essa pessoa?</p>
                   <div>
-                    <button onClick={() => deleteUser(idButton)}>
-                      Sim, desejo demitir
-                    </button>
-                    <button onClick={() => setModalDelete(false)}>
-                      Cancelar
-                    </button>
+                    <Button
+                      clickFunction={() => deleteUser(idButton, userName)}
+                      buttonText="Sim, desejo demitir"
+                      type={"submit"}
+                    />
+                    <Button
+                      clickFunction={() => setConfirmDeleteModal(false)}
+                      buttonText="Cancelar"
+                      type={"submit"}
+                    />
                   </div>
                 </div>
-              )}
-              <button type="button" onClick={() => openModalPoints(idButton)}>
-                Ver folha ponto
-              </button>
-              {modalPoints && pointsUser.length > 0 ? (
-                <ul>
-                  {pointsUser.map(
-                    (point) =>
-                      point.userId == idButton && (
-                        <li>
-                          <p>{point.name}</p>
-                          <p>{point.point}</p>
-                        </li>
-                      )
-                  )}
-                  <button onClick={() => setModalPoints(false)}>X</button>
-                </ul>
               ) : (
-                modalPoints && (
-                  <div>
-                    <p>Sem pontos registrados ainda</p>
-                    <button onClick={() => setModalPoints(false)}>X</button>
-                  </div>
-                )
+                <>
+                  <Button
+                    type="button"
+                    buttonText="Ver folha ponto"
+                    clickFunction={() => openModalPoints(idButton)}
+                  />
+
+                  {modalPoints && pointsUser.length > 0 ? (
+                    <div className="modal_points">
+                      <ul className="list_points">
+                        {pointsUser.map(
+                          (point) =>
+                            point.userId == idButton && (
+                              <li key={crypto.randomUUID()}>
+                                <p>{point.name}</p>
+                                <span>{point.point}</span>
+                              </li>
+                            )
+                        )}
+                      </ul>
+                      <Button
+                        clickFunction={() => setModalPoints(false)}
+                        buttonText="X"
+                        type={"button"}
+                      />
+                    </div>
+                  ) : (
+                    modalPoints && (
+                      <div className="no-points">
+                        <h3>Sem pontos registrados ainda</h3>
+                        <Button
+                          clickFunction={() => setModalPoints(false)}
+                          buttonText="X"
+                          type={"button"}
+                        />
+                      </div>
+                    )
+                  )}
+                </>
               )}
             </div>
           </DivMainModal>

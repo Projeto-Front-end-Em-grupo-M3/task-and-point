@@ -2,23 +2,27 @@ import Input from "../../components/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IUserRegister, UserContext } from "../../contexts/userContext";
 import StyledForm from "./style";
+import Header from "../../components/Header";
+import { useContext } from "react";
+import BasicSelect from "../../components/Select";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
 
   const schema = yup
     .object({
-      name: yup.string().required("Nome inválido"),
-      email: yup.string().required("E-mail inválido").email("E-mail inválido"),
+      name: yup.string().required("Nome é obrigatório"),
+      email: yup
+        .string()
+        .required("E-mail é obrigatório")
+        .email("E-mail inválido"),
       password: yup
         .string()
         .matches(/.{6,}/, "Deve conter no mínimo 6 caracteres"),
-      office: yup.string().required("Cargo Inválido"),
-      shift: yup.string().required("Turno de Trabalho Inválido"),
+      office: yup.string().required("Cargo é obrigatório"),
     })
     .required();
 
@@ -28,14 +32,16 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm<IUserRegister>({ resolver: yupResolver(schema) });
 
-  const { registerUser } = useContext(UserContext);
+  const { registerUser, shift } = useContext(UserContext);
 
   const submit: SubmitHandler<IUserRegister> = (formData: IUserRegister) => {
-    registerUser({ ...formData, isAdmin: false });
+    registerUser({ ...formData, shift, isAdm: false });
   };
 
   return (
     <>
+      <Header content={"Conecte-se"} />
+
       <StyledForm onSubmit={handleSubmit(submit)}>
         <h2>Crie sua conta</h2>
         <Input
@@ -62,19 +68,15 @@ const RegisterForm = () => {
           error={errors.office}
           type="text"
         />
-        <Input
-          label="Turno de Trabalho"
-          register={register("shift")}
-          error={errors.shift}
-          type="text"
-        />
+        <BasicSelect />
         <button type="submit">Cadastrar</button>
         <div>
           <h3>Já possui uma conta ?</h3>
           <button
             onClick={(event) => {
               event.preventDefault();
-              navigate("/");
+
+              navigate("/login");
             }}
           >
             Conecte-se
